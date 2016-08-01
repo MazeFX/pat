@@ -24,9 +24,11 @@ __copyright__ = "Copyright 2016 MazeFX Solutions"
 
 import sys
 import unittest
-from PyQt5.QtGui import QApplication
+from PyQt5.QtWidgets import QApplication
 from PyQt5.QtTest import QTest
 from PyQt5.QtCore import Qt
+
+from forms import LetterForm
 
 app = QApplication(sys.argv)
 
@@ -35,10 +37,18 @@ class LetterTest(unittest.TestCase):
     """Test the gui for letter functions"""
 
     def setUp(self):
+        self.form = LetterForm()
         pass
 
-    def test_user_can_a_new_letter(self):
+    def tearDown(self):
         pass
+
+    def test_user_can_add_a_new_letter(self):
+        # User wants to add a new letter to the database
+        # User enters the letter attributes
+        letter_date_input = self.form.letter_date_input
+
+        self.fail('Finish the Test!')
 
 
 if __name__ == "__main__":
