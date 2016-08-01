@@ -46,7 +46,7 @@ class LetterTest(unittest.TestCase):
     def test_user_can_add_a_new_letter(self):
         # User wants to add a new letter to the database
         # User enters the letter attributes
-        letter_date_input = self.form.letter_date_input
+        letter_date_input = self.form.qtness.letter_date_input
 
         self.fail('Finish the Test!')
 

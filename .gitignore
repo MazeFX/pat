@@ -42,6 +42,10 @@ node_modules/
 .sass-cache
 .map
 
+# Qt designer files
+.pro
+.pro.user
+
 # virtual environments
 .env
 
