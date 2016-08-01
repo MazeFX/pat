@@ -1,0 +1,32 @@
+
+TODO - Keep track of project goals and direction
+
+
+Description of the different task tags used in this project.
+------------------------------------------------------------
+
+* GIFS  - General in file structure
+
+* DOCS  - Write some documentation
+
+* TODO  - A normal todo task
+
+* FIXME - Something is broken here (description of error occurse, maybe logfile)
+
+* IDEA  - When I put a bull and a frog together.. will I get a bullfrog??
+
+Goal list.
+----------
+
+##########################################################################
+#                                                                        #
+#   ###  ###  #### #   #   ##### #   #  #####    ###   ###   ###  #####  #
+#  #   # #  # #     # #      #   #   #  #       #     #   # #   #   #    #
+#  #   # ###  ###    #       #   #####  ####    # ##  #   # #####   #    #
+#  #   # #  # #      #       #   #   #  #       #   # #   # #   #   #    #
+#   ###  ###  ####   #       #   #   #  #####    ###   ###  #   #   #    #
+#                                                                        #
+##########################################################################
+
+* TODO - Set up first functional test for Qt project
+
