@@ -14,7 +14,7 @@ Python Test docstring.
 import sys
 from PyQt5 import QtWidgets
 
-import MyQtness.qss as qss
+import qdarkstyle
 from MyQtness.ui_letter_form import Ui_letter_form
 
 
@@ -25,7 +25,8 @@ class LetterForm(QtWidgets.QMainWindow):
 
         self.qtness = Ui_letter_form()
         self.qtness.setupUi(self)
-        stylesheet = qss.get_style('style')
+        # TODO  - Create own functions for loading the rc file, own style
+        stylesheet = qdarkstyle.load_stylesheet_pyqt5()
         self.setStyleSheet(stylesheet)
 
 if __name__ == '__main__':
