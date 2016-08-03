@@ -4,7 +4,7 @@
 # DOCS - Write some documentation
 
 """
-File: tests.py
+File: test_forms.py
 Creator: MazeFX
 Date: 3-8-2016
 

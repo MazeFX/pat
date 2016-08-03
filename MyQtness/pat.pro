@@ -18,7 +18,9 @@ SOURCES += main.cpp\
 HEADERS  += letter_form.h
 
 FORMS    += letter_form.ui \
-    ui/letter_form.ui
+    ui/letter_form.ui \
+    ui/login_dialog.ui \
+    ui/mainwindow.ui
 
 DISTFILES += \
     __pycache__/ui_letter_form.cpython-35.pyc \
