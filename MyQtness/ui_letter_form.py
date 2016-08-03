@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'letter_form.ui'
+# Form implementation generated from reading ui file 'C:\PDE\projects\qt\pat\MyQtness\ui\letter_form.ui'
 #
 # Created by: PyQt5 UI code generator 5.7
 #
