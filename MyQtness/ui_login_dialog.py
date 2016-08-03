@@ -8,16 +8,16 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
-        Dialog.resize(329, 140)
-        self.buttonBox = QtWidgets.QDialogButtonBox(Dialog)
+class Ui_LoginDialog(object):
+    def setupUi(self, LoginDialog):
+        LoginDialog.setObjectName("LoginDialog")
+        LoginDialog.resize(329, 140)
+        self.buttonBox = QtWidgets.QDialogButtonBox(LoginDialog)
         self.buttonBox.setGeometry(QtCore.QRect(20, 90, 291, 32))
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
         self.buttonBox.setObjectName("buttonBox")
-        self.formLayoutWidget = QtWidgets.QWidget(Dialog)
+        self.formLayoutWidget = QtWidgets.QWidget(LoginDialog)
         self.formLayoutWidget.setGeometry(QtCore.QRect(20, 20, 291, 61))
         self.formLayoutWidget.setObjectName("formLayoutWidget")
         self.formLayout_2 = QtWidgets.QFormLayout(self.formLayoutWidget)
@@ -37,24 +37,24 @@ class Ui_Dialog(object):
         self.passwordLineEdit.setObjectName("passwordLineEdit")
         self.formLayout_2.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.passwordLineEdit)
 
-        self.retranslateUi(Dialog)
-        self.buttonBox.accepted.connect(Dialog.accept)
-        self.buttonBox.rejected.connect(Dialog.reject)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi(LoginDialog)
+        self.buttonBox.accepted.connect(LoginDialog.accept)
+        self.buttonBox.rejected.connect(LoginDialog.reject)
+        QtCore.QMetaObject.connectSlotsByName(LoginDialog)
 
-    def retranslateUi(self, Dialog):
+    def retranslateUi(self, LoginDialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
-        self.userNameLabel.setText(_translate("Dialog", "User name"))
-        self.passwordLabel.setText(_translate("Dialog", "Password"))
+        LoginDialog.setWindowTitle(_translate("LoginDialog", "Dialog"))
+        self.userNameLabel.setText(_translate("LoginDialog", "User name"))
+        self.passwordLabel.setText(_translate("LoginDialog", "Password"))
 
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    Dialog = QtWidgets.QDialog()
-    ui = Ui_Dialog()
-    ui.setupUi(Dialog)
-    Dialog.show()
+    LoginDialog = QtWidgets.QDialog()
+    ui = Ui_LoginDialog()
+    ui.setupUi(LoginDialog)
+    LoginDialog.show()
     sys.exit(app.exec_())
 

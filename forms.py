@@ -10,15 +10,13 @@ Date: 1-8-2016
 
 Python Test docstring.
 """
-
-import sys
-from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import QMainWindow
 
 import qdarkstyle
 from MyQtness.ui_letter_form import Ui_letter_form
 
 
-class LetterForm(QtWidgets.QMainWindow):
+class LetterForm(QMainWindow):
 
     def __init__(self, *kwargs):
         super(LetterForm, self).__init__(*kwargs)
@@ -28,10 +26,3 @@ class LetterForm(QtWidgets.QMainWindow):
         # TODO  - Create own functions for loading the rc file, own style
         stylesheet = qdarkstyle.load_stylesheet_pyqt5()
         self.setStyleSheet(stylesheet)
-
-if __name__ == '__main__':
-
-    app = QtWidgets.QApplication(sys.argv)
-    main = LetterForm()
-    main.show()
-    sys.exit(app.exec_())

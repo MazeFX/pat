@@ -17,14 +17,13 @@ sub-forms and widgets.
 
 import sys
 from PyQt5 import QtWidgets
-from PyQt5.QtGui import QApplication
-from logindialog import LoginDialog
-from mainwindow import MainWindow
-import helper
+from dialogs import LoginDialog
+from MyQtness.ui_main_window import Ui_MainWindow
+#import helper
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    helper.dbConnect()
+    #helper.dbConnect()
 
     loginDialog = LoginDialog()
 
@@ -32,14 +31,14 @@ if __name__ == "__main__":
     result = -1
     while not isAuth:
         result = loginDialog.exec_()
-        if result == LoginDialog.Success or result == LoginDialog.Rejected:
+        if result == loginDialog.Success or result == loginDialog.Rejected:
             isAuth = True
         else:
             isAuth = False
 
-    if result == LoginDialog.Success:
-        w = MainWindow()
+    if result == loginDialog.Success:
+        w = Ui_MainWindow()
         w.show()
-        a.exec_()
+        app.exec_()
 
     sys.exit(-1)
