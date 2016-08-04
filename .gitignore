@@ -49,6 +49,9 @@ node_modules/
 # virtual environments
 .env
 
+# SQLite database files
+.db
+
 # User-uploaded media
 
 #Temp junk files and test snippets
