@@ -30,12 +30,14 @@ if __name__ == "__main__":
     result = -1
     while not isAuth:
         result = loginDialog.exec_()
-        if result == loginDialog.Success or result == loginDialog.Rejected:
+        print('result = ', result)
+        if result == loginDialog.Success or LoginDialog.Rejected:
             isAuth = True
         else:
             isAuth = False
 
     if result == loginDialog.Success:
+        print('result = ', result)
         w = Ui_MainWindow()
         w.show()
         app.exec_()

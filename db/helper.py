@@ -35,3 +35,11 @@ def create_new_db():
     new_letter = Letter(sender='Een geldwolf', user='1')
     session.add(new_letter)
     session.commit()
+
+
+def get_db_session():
+    engine = create_engine('sqlite:///db/db_development.db')
+
+    DBSession = sessionmaker(bind=engine)
+    session = DBSession()
+    return session

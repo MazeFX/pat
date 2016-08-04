@@ -38,17 +38,16 @@ except AttributeError:
 
 
 class LoginDialog(QDialog, Ui_LoginDialog):
-    Success, Failed, Rejected = range(0, 3)
+    Rejected, Failed, Success = range(0, 3)
 
     def __init__(self):
         QDialog.__init__(self)
         self.setupUi(self)
-        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("accepted()")), self.onAccept)
-        QtCore.QObject.connect(self.buttonBox, QtCore.SIGNAL(_fromUtf8("rejected()")), self.onReject)
 
-    def onAccept(self):
+    def accept(self):
         auth = Auth()
-        if auth.doLogin(str(self.txtUsername.text()), str(self.txtPassword.text())):
+        if auth.doLogin(str(self.userNameLineEdit.text()), str(self.passwordLineEdit.text())):
+            print('password is correct: login in...')
             self.setResult(self.Success)
         else:
             msgBox = QMessageBox(self)
@@ -59,5 +58,5 @@ class LoginDialog(QDialog, Ui_LoginDialog):
             msgBox.exec_()
             self.setResult(self.Failed)
 
-    def onReject(self):
+    def rejected(self):
         self.setResult(self.Rejected)

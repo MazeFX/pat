@@ -1,15 +1,15 @@
-from PyQt4.QtSql import *
-import db.helper import DbHelper
+from db.helper import get_db_session
+from db.models import User
 
 
 class Auth:
 
     def doLogin(self, username, password):
-        query = QSqlQuery()
-        query.prepare("select id from qtapp_users where username = :username and password = :password")
-        query.bindValue(":username", username)
-        query.bindValue(":password", helper.computeHash(password))
-        query.exec_()
-        if query.next():
-            return True
+        session = get_db_session()
+
+        our_user = session.query(User).filter_by(name=username).first()
+        if our_user:
+            if our_user.password == password:
+                return True
+
         return False
