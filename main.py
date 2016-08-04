@@ -19,11 +19,10 @@ import sys
 from PyQt5 import QtWidgets
 from dialogs import LoginDialog
 from MyQtness.ui_main_window import Ui_MainWindow
-import db.helper as db_helper
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
-    db_connection = db_helper.db_connect()
 
     loginDialog = LoginDialog()
 

@@ -1,5 +1,5 @@
 from PyQt4.QtSql import *
-import helper
+import db.helper import DbHelper
 
 
 class Auth:
