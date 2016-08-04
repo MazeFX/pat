@@ -14,6 +14,8 @@ Python Test docstring.
 from PyQt5 import QtCore
 from PyQt5.QtWidgets import QApplication, QDialog, QMessageBox
 
+import qdarkstyle
+
 from auth import Auth
 from MyQtness.ui_login_dialog import Ui_LoginDialog
 
@@ -38,25 +40,30 @@ except AttributeError:
 
 
 class LoginDialog(QDialog, Ui_LoginDialog):
-    Rejected, Failed, Success = range(0, 3)
+    Rejected, Success, Failed = range(0, 3)
 
     def __init__(self):
         QDialog.__init__(self)
         self.setupUi(self)
 
-    def accept(self):
+        stylesheet = qdarkstyle.load_stylesheet_pyqt5()
+        self.setStyleSheet(stylesheet)
+
+        self.buttonBox.accepted.connect(self.on_accept)
+        self.buttonBox.rejected.connect(self.on_reject)
+
+    def on_accept(self):
         auth = Auth()
         if auth.doLogin(str(self.userNameLineEdit.text()), str(self.passwordLineEdit.text())):
-            print('password is correct: login in...')
             self.setResult(self.Success)
         else:
             msgBox = QMessageBox(self)
             msgBox.setIcon(QMessageBox.Warning)
-            msgBox.setWindowTitle(_translate("LoginDialog", "Pythonthusiast", None))
+            msgBox.setWindowTitle(_translate("LoginDialog", "PAT Login message", None))
             msgBox.setText(_translate("LoginDialog", "Either incorrect username and/or password. Try again!", None))
             msgBox.setStandardButtons(QMessageBox.Ok)
             msgBox.exec_()
             self.setResult(self.Failed)
 
-    def rejected(self):
+    def on_reject(self):
         self.setResult(self.Rejected)

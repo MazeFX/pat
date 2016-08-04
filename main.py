@@ -16,13 +16,26 @@ sub-forms and widgets.
 """
 
 import sys
-from PyQt5 import QtWidgets
+from PyQt5.QtWidgets import QApplication, QMainWindow
+
+import qdarkstyle
+
 from dialogs import LoginDialog
 from MyQtness.ui_main_window import Ui_MainWindow
 
 
+class MainApp(QMainWindow, Ui_MainWindow):
+
+    def __init__(self, *kwargs):
+        super(MainApp, self).__init__(*kwargs)
+
+        self.setupUi(self)
+        # TODO  - Create own functions for loading the rc file, own style
+        stylesheet = qdarkstyle.load_stylesheet_pyqt5()
+        self.setStyleSheet(stylesheet)
+
 if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
+    app = QApplication(sys.argv)
 
     loginDialog = LoginDialog()
 
@@ -30,15 +43,16 @@ if __name__ == "__main__":
     result = -1
     while not isAuth:
         result = loginDialog.exec_()
-        print('result = ', result)
-        if result == loginDialog.Success or LoginDialog.Rejected:
+
+        if result == loginDialog.Success or result == LoginDialog.Rejected:
             isAuth = True
+
         else:
             isAuth = False
 
+
     if result == loginDialog.Success:
-        print('result = ', result)
-        w = Ui_MainWindow()
+        w = MainApp()
         w.show()
         app.exec_()
 
