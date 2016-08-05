@@ -22,8 +22,8 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QWidget
 import qdarkstyle
 
 from dialogs import LoginDialog
-from forms import LetterForm
 from MyQtness.ui_main_window import Ui_MainWindow
+from tabs import LetterTab
 
 
 class MainApp(QMainWindow, Ui_MainWindow):
@@ -59,12 +59,13 @@ class MainApp(QMainWindow, Ui_MainWindow):
 
     def add_letter(self):
         print('signal recieved for action add letter.')
-        self.tab_letter = LetterForm()
+        self.tab_letter = LetterTab()
         print('Letterform initialized.')
         self.tab_letter.setObjectName("tab_letter")
         self.tabWidget.addTab(self.tab_letter, "")
         print('Letterform added to mainwindow.')
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_letter), self._translate("MainWindow", "Letters"))
+        self.tabWidget.setCurrentIndex(self.tabWidget.indexOf(self.tab_letter))
 
     def close_tab(self, index):
         self.tabWidget.removeTab(index)

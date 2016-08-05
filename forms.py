@@ -10,9 +10,9 @@ Date: 1-8-2016
 
 Python Test docstring.
 """
+from PyQt5 import QtCore
 from PyQt5.QtWidgets import QWidget
 
-import qdarkstyle
 from MyQtness.ui_letter_form import Ui_LetterForm
 
 
@@ -23,5 +23,14 @@ class LetterForm(QWidget, Ui_LetterForm):
 
         self.setupUi(self)
         # TODO  - Create own functions for loading the rc file, own style
-        #stylesheet = qdarkstyle.load_stylesheet_pyqt5()
-        #self.setStyleSheet(stylesheet)
+        self.pushButtonAdd.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.pushButtonAdd.clicked.connect(self.on_add)
+        self.pushButtonReset.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.pushButtonReset.clicked.connect(self.on_reset)
+
+    def on_add(self):
+        print('Add signal sent and recieved.')
+
+
+    def on_reset(self):
+        print('Reset signal sent and recieved.')
