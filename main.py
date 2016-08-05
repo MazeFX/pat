@@ -16,15 +16,18 @@ sub-forms and widgets.
 """
 
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt5 import QtCore
+from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget
 
 import qdarkstyle
 
 from dialogs import LoginDialog
+from forms import LetterForm
 from MyQtness.ui_main_window import Ui_MainWindow
 
 
 class MainApp(QMainWindow, Ui_MainWindow):
+    _translate = QtCore.QCoreApplication.translate
 
     def __init__(self, *kwargs):
         super(MainApp, self).__init__(*kwargs)
@@ -34,11 +37,22 @@ class MainApp(QMainWindow, Ui_MainWindow):
         stylesheet = qdarkstyle.load_stylesheet_pyqt5()
         self.setStyleSheet(stylesheet)
 
+        self.actionAddLetter.triggered.connect(self.add_letter)
+
+    def add_letter(self):
+        print('signal recieved for action add letter.')
+        self.tab_3 = QWidget()
+        self.tab_3.setObjectName("tab_3")
+        self.tabWidget.addTab(self.tab_3, "")
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), self._translate("MainWindow", "Tab 3"))
+
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
 
     loginDialog = LoginDialog()
 
+    '''
     isAuth = False
     result = -1
     while not isAuth:
@@ -50,10 +64,10 @@ if __name__ == "__main__":
         else:
             isAuth = False
 
-
     if result == loginDialog.Success:
-        w = MainApp()
-        w.show()
-        app.exec_()
+        '''
+    w = MainApp()
+    w.show()
+    app.exec_()
 
     sys.exit(-1)

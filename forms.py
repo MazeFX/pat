@@ -16,13 +16,12 @@ import qdarkstyle
 from MyQtness.ui_letter_form import Ui_letter_form
 
 
-class LetterForm(QMainWindow):
+class LetterForm(QMainWindow, Ui_letter_form):
 
     def __init__(self, *kwargs):
         super(LetterForm, self).__init__(*kwargs)
 
-        self.qtness = Ui_letter_form()
-        self.qtness.setupUi(self)
+        self.setupUi(self)
         # TODO  - Create own functions for loading the rc file, own style
-        stylesheet = qdarkstyle.load_stylesheet_pyqt5()
-        self.setStyleSheet(stylesheet)
+        #stylesheet = qdarkstyle.load_stylesheet_pyqt5()
+        #self.setStyleSheet(stylesheet)
