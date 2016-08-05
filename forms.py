@@ -10,13 +10,13 @@ Date: 1-8-2016
 
 Python Test docstring.
 """
-from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QWidget
 
 import qdarkstyle
-from MyQtness.ui_letter_form import Ui_letter_form
+from MyQtness.ui_letter_form import Ui_LetterForm
 
 
-class LetterForm(QMainWindow, Ui_letter_form):
+class LetterForm(QWidget, Ui_LetterForm):
 
     def __init__(self, *kwargs):
         super(LetterForm, self).__init__(*kwargs)
