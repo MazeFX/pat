@@ -51,7 +51,7 @@ class myTableView(QWidget):
         tv.setMinimumSize(400, 300)
 
         # hide grid
-        tv.setShowGrid(False)
+        tv.setShowGrid(True)
 
         # set the font
 
@@ -62,6 +62,8 @@ class myTableView(QWidget):
         # set horizontal header properties
         hh = tv.horizontalHeader()
         hh.setStretchLastSection(True)
+        hh.setSectionsMovable(True)
+        hh.setSortIndicatorShown(True)
 
         # set column width to fit contents
         tv.resizeColumnsToContents()
@@ -73,8 +75,7 @@ class myTableView(QWidget):
 
         # enable sorting
         tv.setSortingEnabled(True)
-        tv.setDragEnabled(True)
-        tv.horizontalHeader().setSortIndicatorShown(True)
+
 
         return tv
 
