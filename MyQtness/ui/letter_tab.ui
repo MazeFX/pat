@@ -16,6 +16,9 @@
   <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
     <widget class="QTableView" name="tableView">
+     <property name="dragEnabled">
+      <bool>true</bool>
+     </property>
      <property name="sortingEnabled">
       <bool>true</bool>
      </property>

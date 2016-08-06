@@ -11,21 +11,21 @@ Date: 5-8-2016
 Python Test docstring.
 """
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QWidget, QTableWidget, QTableWidgetItem
+import operator
+
+from PyQt5.QtCore import Qt, QAbstractTableModel, QVariant
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QTableView
 
 
-class myTableView(QTableWidget):
+class myTableView(QWidget):
 
-    def __init__(self, *kwargs):
-        super(myTableView, self).__init__(*kwargs)
-
-        self.setSortingEnabled(True)
-        self.setObjectName("tableView")
-        self.horizontalHeader().setSortIndicatorShown(True)
+    def __init__(self, *args):
+        super(myTableView, self).__init__(args[0])
 
         # create table
-        self.get_table_data()
+        tablemaker = args[1]
+        print('1st tHis is the tablemaker.table_data: ')
+        self.get_table_data(tablemaker)
         table = self.createTable()
 
         # layout
@@ -33,23 +33,20 @@ class myTableView(QTableWidget):
         layout.addWidget(table)
         self.setLayout(layout)
 
-    def get_table_data(self):
-        stdouterr = os.popen4("dir c:\\")[1].read()
-        lines = stdouterr.splitlines()
-        lines = lines[5:]
-        lines = lines[:-2]
-        self.tabledata = [re.split(r"\s+", line, 4)
-                          for line in lines]
+    def get_table_data(self, tablemaker):
+        self.tabledata = tablemaker.table_data
+        print('2de tHis is the tablemaker.table_data: ', tablemaker.table_data)
+        self.headerdata = tablemaker.header_data
 
     def createTable(self):
         # create the view
         tv = QTableView()
+        print('QTableView created.')
 
         # set the table model
-        header = ['date', 'time', '', 'size', 'filename']
-        tm = MyTableModel(self.tabledata, header, self)
+        tm = MyTableModel(self.tabledata, self.headerdata, self)
         tv.setModel(tm)
-
+        print('QTableView model set.')
         # set the minimum size
         tv.setMinimumSize(400, 300)
 
@@ -57,8 +54,6 @@ class myTableView(QTableWidget):
         tv.setShowGrid(False)
 
         # set the font
-        font = QFont("Courier New", 8)
-        tv.setFont(font)
 
         # hide vertical header
         vh = tv.verticalHeader()
@@ -73,13 +68,16 @@ class myTableView(QTableWidget):
 
         # set row height
         nrows = len(self.tabledata)
-        for row in xrange(nrows):
+        for row in range(nrows):
             tv.setRowHeight(row, 18)
 
         # enable sorting
         tv.setSortingEnabled(True)
+        tv.setDragEnabled(True)
+        tv.horizontalHeader().setSortIndicatorShown(True)
 
         return tv
+
 
 class MyTableModel(QAbstractTableModel):
     def __init__(self, datain, headerdata, parent=None, *args):
@@ -111,8 +109,8 @@ class MyTableModel(QAbstractTableModel):
     def sort(self, Ncol, order):
         """Sort table by given column number.
         """
-        self.emit(SIGNAL("layoutAboutToBeChanged()"))
+        self.layoutAboutToBeChanged.emit()
         self.arraydata = sorted(self.arraydata, key=operator.itemgetter(Ncol))
         if order == Qt.DescendingOrder:
             self.arraydata.reverse()
-        self.emit(SIGNAL("layoutChanged()"))
+        self.layoutChanged.emit()

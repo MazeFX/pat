@@ -14,17 +14,23 @@ Python Test docstring.
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QTableView
 
 from forms import LetterForm
+from db.models import Letter
+from db.helper import get_table
 from MyQtness.myWidgets import myTableView
 
 
 class LetterTab(QWidget):
 
-    def __init__(self, *kwargs):
-        super(LetterTab, self).__init__(*kwargs)
+    def __init__(self, *args):
+        super(LetterTab, self).__init__(*args)
 
         self.horizontalLayout = QHBoxLayout(self)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.tableView = myTableView(self)
+        print('Lettertab horizontal view created.')
+        tableViewTable = get_table(Letter)
+        print('TableViewTable is created.', tableViewTable)
+        self.tableView = myTableView(self, tableViewTable)
+        print('myTableView in lettertab is present.')
         self.letterForm = LetterForm()
         self.horizontalLayout.addWidget(self.letterForm)
         self.horizontalLayout.addWidget(self.tableView)
