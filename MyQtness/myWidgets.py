@@ -12,9 +12,10 @@ Python Test docstring.
 """
 
 import operator
+import datetime
 
 from PyQt5.QtCore import Qt, QAbstractTableModel, QVariant
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QTableView
+from PyQt5.QtWidgets import QWidget, QVBoxLayout, QTableView, QAbstractItemView
 
 
 class myTableView(QWidget):
@@ -47,27 +48,18 @@ class myTableView(QWidget):
         tm = MyTableModel(self.tabledata, self.headerdata, self)
         tv.setModel(tm)
         print('QTableView model set.')
-        # set the minimum size
-        tv.setMinimumSize(400, 300)
 
-        # hide grid
+        # TableView settings
         tv.setShowGrid(True)
-
-        # set the font
-
-        # hide vertical header
-        vh = tv.verticalHeader()
-        vh.setVisible(False)
-
-        # set horizontal header properties
-        hh = tv.horizontalHeader()
-        hh.setStretchLastSection(True)
-        hh.setSectionsMovable(True)
-        hh.setSortIndicatorShown(True)
-
-        # set column width to fit contents
-        tv.resizeColumnsToContents()
-
+        tv.setTabKeyNavigation(False)
+        tv.setProperty("showDropIndicator", False)
+        tv.setDragEnabled(False)
+        tv.setDragDropOverwriteMode(False)
+        tv.setAlternatingRowColors(True)
+        tv.setSelectionMode(QAbstractItemView.SingleSelection)
+        tv.setSelectionBehavior(QAbstractItemView.SelectRows)
+        tv.setTextElideMode(Qt.ElideMiddle)
+        tv.setSortingEnabled(True)
         # set row height
         nrows = len(self.tabledata)
         for row in range(nrows):
@@ -75,12 +67,27 @@ class myTableView(QWidget):
 
         # enable sorting
         tv.setSortingEnabled(True)
+        # set column width to fit contents
+        tv.resizeColumnsToContents()
 
+        # hide vertical header
+        vh = tv.verticalHeader()
+        vh.setVisible(False)
+        vh.setHighlightSections(False)
+
+        # set horizontal header properties
+        hh = tv.horizontalHeader()
+        hh.setStretchLastSection(False)
+        hh.setSectionsMovable(True)
+        hh.setSortIndicatorShown(True)
+        hh.setHighlightSections(False)
 
         return tv
 
 
 class MyTableModel(QAbstractTableModel):
+    # TODO - clean def arguments to baseclass
+
     def __init__(self, datain, headerdata, parent=None, *args):
         """ datain: a list of lists
             headerdata: a list of strings
@@ -92,12 +99,14 @@ class MyTableModel(QAbstractTableModel):
     def rowCount(self, parent):
         return len(self.arraydata)
 
-    def columnCount(self, parent):
+    def columnCount(self, parent=None, *args, **kwargs):
         return len(self.arraydata[0])
 
     def data(self, index, role):
         if not index.isValid():
             return QVariant()
+        elif role == Qt.TextAlignmentRole:
+            return Qt.AlignCenter
         elif role != Qt.DisplayRole:
             return QVariant()
         return QVariant(self.arraydata[index.row()][index.column()])
@@ -115,3 +124,16 @@ class MyTableModel(QAbstractTableModel):
         if order == Qt.DescendingOrder:
             self.arraydata.reverse()
         self.layoutChanged.emit()
+
+    def submit(self):
+        print('Model Submit called..')
+        return 0
+
+
+    def insertRow(self, p_int, parent=None, *args, **kwargs):
+        print('Model InsertRow called..')
+        self.arraydata.append(['', datetime.datetime(2016, 8, 6, 16, 20, 26, 779096),
+                               1, 'Test insert', 'from row', 'Een geldwolf', 1])
+
+
+
