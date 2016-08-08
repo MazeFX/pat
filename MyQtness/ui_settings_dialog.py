@@ -8,36 +8,36 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
-        Dialog.resize(400, 300)
-        self.verticalLayout = QtWidgets.QVBoxLayout(Dialog)
+class Ui_SettingsDialog(object):
+    def setupUi(self, SettingsDialog):
+        SettingsDialog.setObjectName("SettingsDialog")
+        SettingsDialog.resize(400, 300)
+        self.verticalLayout = QtWidgets.QVBoxLayout(SettingsDialog)
         self.verticalLayout.setObjectName("verticalLayout")
         self.formLayout = QtWidgets.QFormLayout()
         self.formLayout.setFormAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
         self.formLayout.setSpacing(15)
         self.formLayout.setObjectName("formLayout")
-        self.databaseLabel = QtWidgets.QLabel(Dialog)
-        self.databaseLabel.setObjectName("databaseLabel")
-        self.formLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.databaseLabel)
-        self.databaseLineEdit = QtWidgets.QLineEdit(Dialog)
-        self.databaseLineEdit.setObjectName("databaseLineEdit")
-        self.formLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.databaseLineEdit)
+        self.currentDatabaseLabel = QtWidgets.QLabel(SettingsDialog)
+        self.currentDatabaseLabel.setObjectName("currentDatabaseLabel")
+        self.formLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.currentDatabaseLabel)
+        self.currentDatabaseComboBox = QtWidgets.QComboBox(SettingsDialog)
+        self.currentDatabaseComboBox.setObjectName("currentDatabaseComboBox")
+        self.formLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.currentDatabaseComboBox)
         self.verticalLayout.addLayout(self.formLayout)
-        self.buttonBox = QtWidgets.QDialogButtonBox(Dialog)
+        self.buttonBox = QtWidgets.QDialogButtonBox(SettingsDialog)
         self.buttonBox.setOrientation(QtCore.Qt.Horizontal)
         self.buttonBox.setStandardButtons(QtWidgets.QDialogButtonBox.Cancel|QtWidgets.QDialogButtonBox.Ok)
         self.buttonBox.setObjectName("buttonBox")
         self.verticalLayout.addWidget(self.buttonBox)
 
-        self.retranslateUi(Dialog)
-        self.buttonBox.accepted.connect(Dialog.accept)
-        self.buttonBox.rejected.connect(Dialog.reject)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi(SettingsDialog)
+        self.buttonBox.accepted.connect(SettingsDialog.accept)
+        self.buttonBox.rejected.connect(SettingsDialog.reject)
+        QtCore.QMetaObject.connectSlotsByName(SettingsDialog)
 
-    def retranslateUi(self, Dialog):
+    def retranslateUi(self, SettingsDialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
-        self.databaseLabel.setText(_translate("Dialog", "Database"))
+        SettingsDialog.setWindowTitle(_translate("SettingsDialog", "Dialog"))
+        self.currentDatabaseLabel.setText(_translate("SettingsDialog", "Current database"))
 

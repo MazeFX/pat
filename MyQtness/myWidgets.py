@@ -18,71 +18,39 @@ from PyQt5.QtCore import Qt, QAbstractTableModel, QVariant
 from PyQt5.QtWidgets import QWidget, QVBoxLayout, QTableView, QAbstractItemView
 
 
-class myTableView(QWidget):
+class MyTableView(QTableView):
 
     def __init__(self, *args):
-        super(myTableView, self).__init__(args[0])
-
-        # create table
-        tablemaker = args[1]
-        print('1st tHis is the tablemaker.table_data: ')
-        self.get_table_data(tablemaker)
-        table = self.createTable()
-
-        # layout
-        layout = QVBoxLayout()
-        layout.addWidget(table)
-        self.setLayout(layout)
-
-    def get_table_data(self, tablemaker):
-        self.tabledata = tablemaker.table_data
-        print('2de tHis is the tablemaker.table_data: ', tablemaker.table_data)
-        self.headerdata = tablemaker.header_data
-
-    def createTable(self):
-        # create the view
-        tv = QTableView()
-        print('QTableView created.')
-
-        # set the table model
-        tm = MyTableModel(self.tabledata, self.headerdata, self)
-        tv.setModel(tm)
-        print('QTableView model set.')
+        super(MyTableView, self).__init__(*args)
 
         # TableView settings
-        tv.setShowGrid(True)
-        tv.setTabKeyNavigation(False)
-        tv.setProperty("showDropIndicator", False)
-        tv.setDragEnabled(False)
-        tv.setDragDropOverwriteMode(False)
-        tv.setAlternatingRowColors(True)
-        tv.setSelectionMode(QAbstractItemView.SingleSelection)
-        tv.setSelectionBehavior(QAbstractItemView.SelectRows)
-        tv.setTextElideMode(Qt.ElideMiddle)
-        tv.setSortingEnabled(True)
-        # set row height
-        nrows = len(self.tabledata)
-        for row in range(nrows):
-            tv.setRowHeight(row, 18)
+        self.setShowGrid(True)
+        self.setTabKeyNavigation(False)
+        self.setProperty("showDropIndicator", False)
+        self.setDragEnabled(False)
+        self.setDragDropOverwriteMode(False)
+        self.setAlternatingRowColors(True)
+        self.setSelectionMode(QAbstractItemView.SingleSelection)
+        self.setSelectionBehavior(QAbstractItemView.SelectRows)
+        self.setTextElideMode(Qt.ElideMiddle)
+        self.setSortingEnabled(True)
 
         # enable sorting
-        tv.setSortingEnabled(True)
+        self.setSortingEnabled(True)
         # set column width to fit contents
-        tv.resizeColumnsToContents()
+        self.resizeColumnsToContents()
 
         # hide vertical header
-        vh = tv.verticalHeader()
+        vh = self.verticalHeader()
         vh.setVisible(False)
         vh.setHighlightSections(False)
 
         # set horizontal header properties
-        hh = tv.horizontalHeader()
+        hh = self.horizontalHeader()
         hh.setStretchLastSection(False)
         hh.setSectionsMovable(True)
         hh.setSortIndicatorShown(True)
         hh.setHighlightSections(False)
-
-        return tv
 
 
 class MyTableModel(QAbstractTableModel):
@@ -100,7 +68,7 @@ class MyTableModel(QAbstractTableModel):
         return len(self.arraydata)
 
     def columnCount(self, parent=None, *args, **kwargs):
-        return len(self.arraydata[0])
+        return len(self.headerdata)
 
     def data(self, index, role):
         if not index.isValid():
@@ -110,6 +78,15 @@ class MyTableModel(QAbstractTableModel):
         elif role != Qt.DisplayRole:
             return QVariant()
         return QVariant(self.arraydata[index.row()][index.column()])
+
+    def setData(self, index, value, role=None):
+        print('Setdata is called..')
+        print('Setting index: ', index.row(), ',', index.column(), ' with value: ', value)
+        if index.isValid():
+            self.arraydata[index.row()][index.column()] = value
+            print('Array value is now: ', self.arraydata[index.row()][index.column()])
+            return True
+        return False
 
     def headerData(self, col, orientation, role):
         if orientation == Qt.Horizontal and role == Qt.DisplayRole:

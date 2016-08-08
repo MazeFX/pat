@@ -14,9 +14,9 @@ Python Test docstring.
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QTableView
 
 from forms import LetterForm
-from db.models import Letter
-from db.helper import get_table
-from MyQtness.myWidgets import myTableView
+from db.models import AlchemicalTableModel, Letter
+from db.helper import DbHelper
+from MyQtness.myWidgets import MyTableView
 
 
 class LetterTab(QWidget):
@@ -27,11 +27,24 @@ class LetterTab(QWidget):
         self.horizontalLayout = QHBoxLayout(self)
         self.horizontalLayout.setObjectName("horizontalLayout")
         print('Lettertab horizontal view created.')
-        tableViewTable = get_table(Letter)
-        print('TableViewTable is created.', tableViewTable)
-        self.tableView = myTableView(self, tableViewTable)
-        print('myTableView in lettertab is present.')
+
+        model = AlchemicalTableModel(
+            DbHelper().get_db_session(),
+            Letter,
+            [('Date', Letter.date, 'date', {}),
+             ('Subject', Letter.subject, 'subject', {}),
+             # ('Sender', Letter.sender, 'sender', {}),
+             ('Reference', Letter.reference, 'reference', {}),
+             ('User', Letter.user, 'user', {}),
+             ('Letter Scan', Letter.scan_file, 'scan_file', {}),
+             ('Date created', Letter.date_created, 'date_created', {})])
+
+        self.tableView = MyTableView()
+        self.tableView.setModel(model)
+
         self.letterForm = LetterForm()
+        self.letterForm.setModel(model)
+
         self.horizontalLayout.addWidget(self.letterForm)
         self.horizontalLayout.addWidget(self.tableView)
 

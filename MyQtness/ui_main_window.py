@@ -36,6 +36,9 @@ class Ui_MainWindow(object):
         self.actionAddLetter.setObjectName("actionAddLetter")
         self.actionAbout = QtWidgets.QAction(MainWindow)
         self.actionAbout.setObjectName("actionAbout")
+        self.actionSettings = QtWidgets.QAction(MainWindow)
+        self.actionSettings.setObjectName("actionSettings")
+        self.menuPAT.addAction(self.actionSettings)
         self.menuLetter.addAction(self.actionAddLetter)
         self.menuHelp.addAction(self.actionAbout)
         self.menubar.addAction(self.menuPAT.menuAction())
@@ -54,4 +57,5 @@ class Ui_MainWindow(object):
         self.actionAddLetter.setText(_translate("MainWindow", "Add"))
         self.actionAddLetter.setToolTip(_translate("MainWindow", "Add new letter"))
         self.actionAbout.setText(_translate("MainWindow", "About"))
+        self.actionSettings.setText(_translate("MainWindow", "Settings"))
 

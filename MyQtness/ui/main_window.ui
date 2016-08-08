@@ -35,6 +35,7 @@
     <property name="title">
      <string>PAT</string>
     </property>
+    <addaction name="actionSettings"/>
    </widget>
    <widget class="QMenu" name="menuLetter">
     <property name="title">
@@ -64,6 +65,11 @@
   <action name="actionAbout">
    <property name="text">
     <string>About</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="text">
+    <string>Settings</string>
    </property>
   </action>
  </widget>

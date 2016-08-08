@@ -16,25 +16,25 @@ sub-forms and widgets.
 """
 
 import sys
-from PyQt5 import QtCore
+from PyQt5.QtCore import QCoreApplication, QSettings
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QWidget
 
 import qdarkstyle
 
-from dialogs import LoginDialog
+from dialogs import LoginDialog, SettingsDialog
 from MyQtness.ui_main_window import Ui_MainWindow
 from tabs import LetterTab
 
 
 class MainApp(QMainWindow, Ui_MainWindow):
-    _translate = QtCore.QCoreApplication.translate
+    _translate = QCoreApplication.translate
     # TODO - add dutch translation files
 
-    def __init__(self, *kwargs):
-        super(MainApp, self).__init__(*kwargs)
+    def __init__(self, *args):
+        super(MainApp, self).__init__(*args)
+        self.load_settings()
 
         self.setupUi(self)
-
         self.tabWidget = QTabWidget(self.centralwidget)
         self.tabWidget.setTabsClosable(True)
         self.tabWidget.setMovable(True)
@@ -52,6 +52,7 @@ class MainApp(QMainWindow, Ui_MainWindow):
 
         self._retranslateUi(self)
         self.actionAddLetter.triggered.connect(self.add_letter)
+        self.actionSettings.triggered.connect(self.show_settings)
         self.tabWidget.tabCloseRequested.connect(self.close_tab)
 
     def _retranslateUi(self, MainWindow):
@@ -66,12 +67,29 @@ class MainApp(QMainWindow, Ui_MainWindow):
         print('Letterform added to mainwindow.')
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_letter), self._translate("MainWindow", "Letters"))
         self.tabWidget.setCurrentIndex(self.tabWidget.indexOf(self.tab_letter))
+        int_value = self.settings.value('db_name', type=int)
+        print("choosen database setting: %s" % repr(int_value))
 
     def close_tab(self, index):
         self.tabWidget.removeTab(index)
 
+    def load_settings(self):
+        self.settings = QSettings()
+        int_value = self.settings.value('db_name', type=int)
+        print("load choosen database setting: %s" % repr(int_value))
+
+    def show_settings(self):
+        print('Showing the Settings Dialog..')
+
+        settings_dialog = SettingsDialog()
+        settings_dialog.exec_()
+
+
 if __name__ == "__main__":
     app = QApplication(sys.argv)
+    app.setApplicationName('PAT')
+    app.setOrganizationName("MazeFX Solutions")
+    app.setOrganizationDomain("MazeFX.pythonanywhere.com")
 
     loginDialog = LoginDialog()
 

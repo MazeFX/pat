@@ -11,21 +11,16 @@ Date: 3-8-2016
 Python Test docstring.
 """
 
-from PyQt5 import QtCore
+from PyQt5.QtCore import QSettings
+
 from PyQt5.QtWidgets import QApplication, QDialog, QMessageBox
 
 import qdarkstyle
 
 from auth import Auth
 from MyQtness.ui_login_dialog import Ui_LoginDialog
+from MyQtness.ui_settings_dialog import Ui_SettingsDialog
 
-try:
-    _fromUtf8 = QtCore.QString.fromUtf8
-
-except AttributeError:
-
-    def _fromUtf8(s):
-        return s
 
 try:
     _encoding = QApplication.UnicodeUTF8
@@ -67,3 +62,37 @@ class LoginDialog(QDialog, Ui_LoginDialog):
 
     def on_reject(self):
         self.setResult(self.Rejected)
+
+
+class SettingsDialog(QDialog, Ui_SettingsDialog):
+    Rejected, Success, Failed = range(0, 3)
+
+    def __init__(self):
+        QDialog.__init__(self)
+        self.setupUi(self)
+        self.currentDatabaseComboBox.addItems(['DB for development',
+                                               'DB for storage'])
+
+        self.load_settings()
+
+        stylesheet = qdarkstyle.load_stylesheet_pyqt5()
+        self.setStyleSheet(stylesheet)
+
+        self.buttonBox.accepted.connect(self.on_accept)
+        self.buttonBox.rejected.connect(self.on_reject)
+
+    def on_accept(self):
+        chosen_database = self.currentDatabaseComboBox.currentIndex()
+        self.settings.setValue('db_name', chosen_database)
+
+        self.setResult(self.Success)
+
+    def on_reject(self):
+        self.setResult(self.Rejected)
+
+    def load_settings(self):
+        self.settings = QSettings()
+
+        chosen_database = self.settings.value('db_name', type='int')
+        self.currentDatabaseComboBox.setCurrentIndex(chosen_database)
+

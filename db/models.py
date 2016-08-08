@@ -14,8 +14,13 @@ Python Test docstring.
 
 import datetime
 
-from sqlalchemy import Column, ForeignKey, Integer, String, Date, DateTime
+from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtCore import QAbstractTableModel, QVariant, Qt
+
+from sqlalchemy import Column, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
+
+from db.qvariantalchemy import String, Integer, DateTime, Date
 
 
 Base = declarative_base()
@@ -43,7 +48,6 @@ class QtConvert(object):
         return props
 
 
-
 class User(Base, QtConvert):
     __tablename__ = 'user'
 
@@ -58,15 +62,143 @@ class User(Base, QtConvert):
             self.id, self.name, self.fullname)
 
 
-class Letter(Base, QtConvert):
+class Letter(Base):
     __tablename__ = 'letter'
-    # Here we define columns for the table address.
-    # Notice that each column is also a normal Python instance attribute.
+
     id = Column(Integer, primary_key=True)
     date = Column(Date)
     sender = Column(String(250))
-    user = Column(Integer, ForeignKey('user.id'), nullable=False)
+    subject = Column(String(250))
     reference = Column(String(250))
+    user = Column(Integer, ForeignKey('user.id'), nullable=False)
     scan_file = Column(String(250))
     date_created = Column(DateTime, default=datetime.datetime.now)
+
+
+class AlchemicalTableModel(QAbstractTableModel):
+    """
+    A Qt Table Model that binds to a SQL Alchemy query
+
+    Example:
+    >>> model = AlchemicalTableModel(Session, [('Name', Entity.name)])
+    >>> table = QTableView(parent)
+    >>> table.setModel(model)
+    """
+
+    def __init__(self, session, model, columns):
+        super(AlchemicalTableModel, self).__init__()
+        #TODO self.sort_data = None
+        self.session = session
+        self.fields = columns
+        self.query = session.query(model)
+        self.model = model
+
+        self.results = None
+        self.count = None
+        self.sort = None
+        self.filter = None
+
+        self.refresh()
+
+    def headerData(self, col, orientation, role):
+        if orientation == Qt.Horizontal and role == Qt.DisplayRole:
+            return QVariant(self.fields[col][0])
+        return QVariant()
+
+    def setFilter(self, filter):
+        """Sets or clears the filter, clear the filter by setting to None"""
+        self.filter = filter
+        self.refresh()
+
+    def refresh(self):
+        """Recalculates, self.results and self.count"""
+
+        self.layoutAboutToBeChanged.emit()
+
+        q = self.query
+        if self.sort is not None:
+            order, col = self.sort
+            col = self.fields[col][1]
+            if order == Qt.DescendingOrder:
+                col = col.desc()
+        else:
+            col = None
+
+        if self.filter is not None:
+            q = q.filter(self.filter)
+
+        q = q.order_by(col)
+
+        self.results = q.all()
+        self.count = q.count()
+        self.layoutChanged.emit()
+
+    def flags(self, index):
+        _flags = Qt.ItemIsEnabled | Qt.ItemIsSelectable
+
+        if self.sort is not None:
+            order, col = self.sort
+
+            if self.fields[col][3].get('dnd', False) and index.column() == col:
+                _flags |= Qt.ItemIsDragEnabled | Qt.ItemIsDropEnabled
+
+        if self.fields[index.column()][3].get('editable', False):
+            _flags |= Qt.ItemIsEditable
+
+        return _flags
+
+    def supportedDropActions(self):
+        return Qt.MoveAction
+
+    def dropMimeData(self, data, action, row, col, parent):
+        if action != Qt.MoveAction:
+            return
+
+        return False
+
+    def rowCount(self, parent):
+        return self.count or 0
+
+    def columnCount(self, parent):
+        return len(self.fields)
+
+    def data(self, index, role):
+        if not index.isValid():
+            return QVariant()
+
+        elif role not in (Qt.DisplayRole, Qt.EditRole):
+            return QVariant()
+        elif role == Qt.TextAlignmentRole:
+            return Qt.AlignCenter
+
+        row = self.results[index.row()]
+        name = self.fields[index.column()][2]
+
+        return str(getattr(row, name))
+
+    def setData(self, index, value, role=None):
+        print('setting data for: ', index, 'with value: ', value)
+        row = self.results[index.row()]
+        name = self.fields[index.column()][2]
+
+        try:
+            setattr(row, name, value)
+            self.session.commit()
+        except Exception as ex:
+            QMessageBox.critical(None, 'SQL Error', str(ex))
+            return False
+        else:
+            self.dataChanged.emit(index, index)
+            return True
+
+    def sort(self, col, order):
+        """Sort table by given column number."""
+        self.sort = order, col
+        self.refresh()
+
+    def insertRow(self, p_int, parent=None, *args, **kwargs):
+        print('insertRow from model is called.')
+        new_object = self.model()
+        self.session.add(new_object)
+
 
