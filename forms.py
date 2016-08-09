@@ -42,7 +42,7 @@ class LetterForm(QWidget, Ui_LetterForm):
         self.pushButtonReset.setFocusPolicy(Qt.NoFocus)
         self.pushButtonReset.clicked.connect(self.on_reset)
 
-        self.toggle_edit_mode(False)
+        self.toggle_edit_mode(False, None)
 
     def setModel(self, model):
         self.model = model
@@ -56,8 +56,9 @@ class LetterForm(QWidget, Ui_LetterForm):
         self.mapper.addMapping(self.referenceLineEdit, 3)
         self.mapper.addMapping(self.UserLineEdit, 4)
 
-    def toggle_edit_mode(self, flag):
-        print('Setting edit mode for letter form: ', flag)
+    def toggle_edit_mode(self, flag, mode):
+        print('Setting edit mode for letter form: ', flag, mode)
+        self.edit_mode = mode
         self.dateDateEdit.setEnabled(flag)
         self.subjectLineEdit.setEnabled(flag)
         self.senderLineEdit.setEnabled(flag)
@@ -68,26 +69,30 @@ class LetterForm(QWidget, Ui_LetterForm):
     def on_add(self):
         print('Add signal sent and recieved.')
         row = self.model.rowCount(None)
-        self.model.insertRow(row)
+        self.model.insertNewRow(row)
         self.mapper.setCurrentIndex(row)
         now = QDate.currentDate()
         self.dateDateEdit.setDate(now)
         self.subjectLineEdit.setFocus()
-        self.toggle_edit_mode(True)
+        self.toggle_edit_mode(True, 'add')
         print('New row at index: ', row)
         print('mapper index: ', self.mapper.currentIndex())
 
     def on_edit(self):
         print('Edit signal sent and recieved.')
         self.mapper.setCurrentIndex(1)
-        self.toggle_edit_mode(True)
+        print('mapper index: ', self.mapper.currentIndex())
+        self.toggle_edit_mode(True, 'edit')
 
     def on_delete(self):
         print('Delete signal sent and recieved.')
 
     def on_save(self):
         print('Save signal sent and recieved.')
-        self.mapper.submit()
+        if self.edit_mode == 'add':
+            self.mapper.submit()
+            self.model.insertNewRow(self.mapper.currentIndex())
+        self.toggle_edit_mode(False, None)
 
     def on_reset(self):
         print('Reset signal sent and recieved.')

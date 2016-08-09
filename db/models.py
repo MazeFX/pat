@@ -74,6 +74,10 @@ class Letter(Base):
     scan_file = Column(String(250))
     date_created = Column(DateTime, default=datetime.datetime.now)
 
+    def __repr__(self):
+        return "<Letter(id= '%s', sender='%s', subject='%s')>" % (
+            self.id, self.sender, self.subject)
+
 
 class AlchemicalTableModel(QAbstractTableModel):
     """
@@ -165,11 +169,10 @@ class AlchemicalTableModel(QAbstractTableModel):
     def data(self, index, role):
         if not index.isValid():
             return QVariant()
-
-        elif role not in (Qt.DisplayRole, Qt.EditRole):
-            return QVariant()
         elif role == Qt.TextAlignmentRole:
             return Qt.AlignCenter
+        elif role not in (Qt.DisplayRole, Qt.EditRole):
+            return QVariant()
 
         row = self.results[index.row()]
         name = self.fields[index.column()][2]
@@ -196,9 +199,22 @@ class AlchemicalTableModel(QAbstractTableModel):
         self.sort = order, col
         self.refresh()
 
-    def insertRow(self, p_int, parent=None, *args, **kwargs):
-        print('insertRow from model is called.')
+    def createNewRow(self, index):
+        print('createNewRow from model is called.')
+        new_row = []
+        for x in self.fields:
+            new_row.append('')
+        self.results.append(new_row)
+
+    def insertNewRow(self, index):
         new_object = self.model()
+        new_object.user = 0
+        '''
+        for x in range(len(self.fields)):
+            setattr(new_object, self.fields[x][2], self.result[index][x])
+        print('newobject = ', new_object)
+        '''
         self.session.add(new_object)
+        self.session.commit()
 
 
