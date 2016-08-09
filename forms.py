@@ -91,7 +91,8 @@ class LetterForm(QWidget, Ui_LetterForm):
         print('Save signal sent and recieved.')
         if self.edit_mode == 'add':
             self.mapper.submit()
-            self.model.insertNewRow(self.mapper.currentIndex())
+        if self.edit_mode == 'edit':
+            self.mapper.submit()
         self.toggle_edit_mode(False, None)
 
     def on_reset(self):

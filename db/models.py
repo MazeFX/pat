@@ -216,5 +216,6 @@ class AlchemicalTableModel(QAbstractTableModel):
         '''
         self.session.add(new_object)
         self.session.commit()
+        self.refresh()
 
 
