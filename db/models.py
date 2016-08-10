@@ -147,6 +147,13 @@ class AlchemicalTableModel(QAbstractTableModel):
     def columnCount(self, parent):
         return len(self.fields)
 
+    def get_column_index(self, name):
+        for x in range(len(self.fields)):
+            if name == self.fields[x][2]:
+                return x
+        print('TableModel - No column index found')
+        return None
+
     def data(self, index, role):
         if not index.isValid():
             return QVariant()

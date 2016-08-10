@@ -14,8 +14,8 @@ Python Test docstring.
 import operator
 import datetime
 
-from PyQt5.QtCore import Qt, QAbstractTableModel, QVariant
-from PyQt5.QtWidgets import QWidget, QVBoxLayout, QTableView, QAbstractItemView
+from PyQt5.QtCore import Qt
+from PyQt5.QtWidgets import QTableView, QAbstractItemView, QComboBox
 
 
 class MyTableView(QTableView):
@@ -51,66 +51,6 @@ class MyTableView(QTableView):
         hh.setSectionsMovable(True)
         hh.setSortIndicatorShown(True)
         hh.setHighlightSections(False)
-
-
-class MyTableModel(QAbstractTableModel):
-    # TODO - clean def arguments to baseclass
-
-    def __init__(self, datain, headerdata, parent=None, *args):
-        """ datain: a list of lists
-            headerdata: a list of strings
-        """
-        QAbstractTableModel.__init__(self, parent, *args)
-        self.arraydata = datain
-        self.headerdata = headerdata
-
-    def rowCount(self, parent):
-        return len(self.arraydata)
-
-    def columnCount(self, parent=None, *args, **kwargs):
-        return len(self.headerdata)
-
-    def data(self, index, role):
-        if not index.isValid():
-            return QVariant()
-        elif role == Qt.TextAlignmentRole:
-            return Qt.AlignCenter
-        elif role != Qt.DisplayRole:
-            return QVariant()
-        return QVariant(self.arraydata[index.row()][index.column()])
-
-    def setData(self, index, value, role=None):
-        print('Setdata is called..')
-        print('Setting index: ', index.row(), ',', index.column(), ' with value: ', value)
-        if index.isValid():
-            self.arraydata[index.row()][index.column()] = value
-            print('Array value is now: ', self.arraydata[index.row()][index.column()])
-            return True
-        return False
-
-    def headerData(self, col, orientation, role):
-        if orientation == Qt.Horizontal and role == Qt.DisplayRole:
-            return QVariant(self.headerdata[col])
-        return QVariant()
-
-    def sort(self, Ncol, order):
-        """Sort table by given column number.
-        """
-        self.layoutAboutToBeChanged.emit()
-        self.arraydata = sorted(self.arraydata, key=operator.itemgetter(Ncol))
-        if order == Qt.DescendingOrder:
-            self.arraydata.reverse()
-        self.layoutChanged.emit()
-
-    def submit(self):
-        print('Model Submit called..')
-        return 0
-
-
-    def insertRow(self, p_int, parent=None, *args, **kwargs):
-        print('Model InsertRow called..')
-        self.arraydata.append(['', datetime.datetime(2016, 8, 6, 16, 20, 26, 779096),
-                               1, 'Test insert', 'from row', 'Een geldwolf', 1])
 
 
 
