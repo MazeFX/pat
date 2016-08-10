@@ -36,7 +36,7 @@ class LetterTab(QWidget):
              ('Subject', Letter.subject, 'subject', {}),
              ('Sender', Letter.sender, 'sender', {}),
              ('Reference', Letter.reference, 'reference', {}),
-             ('User', Letter.user, 'user', {}),
+             ('User', Letter.user, 'user.fullname', {}),
              ('Letter Scan', Letter.scan_file, 'scan_file', {}),
              ('Date created', Letter.date_created, 'date_created', {})])
 
@@ -58,3 +58,4 @@ class HomeTab(QWidget, Ui_HomeTab):
         super(HomeTab, self).__init__(*kwargs)
 
         self.setupUi(self)
+        # TODO - test font implementation on headers

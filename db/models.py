@@ -157,7 +157,10 @@ class AlchemicalTableModel(QAbstractTableModel):
 
         row = self.results[index.row()]
         name = self.fields[index.column()][2]
-
+        if '.' in name:
+            foreign_column = name.split('.')
+            foreign_item = getattr(row, foreign_column[0])
+            return str(getattr(foreign_item, foreign_column[1]))
         return str(getattr(row, name))
 
     def setData(self, index, value, role=None):
