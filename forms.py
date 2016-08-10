@@ -10,7 +10,7 @@ Date: 1-8-2016
 
 Python Test docstring.
 """
-from PyQt5.QtCore import Qt, QDate
+from PyQt5.QtCore import Qt, QDate, QByteArray
 from PyQt5.QtWidgets import QWidget, QDataWidgetMapper
 
 from db.models import AlchemicalTableModel, User
@@ -55,6 +55,7 @@ class LetterForm(QWidget, Ui_LetterForm):
         self.mapper.addMapping(self.senderComboBox, 2)
         self.mapper.addMapping(self.referenceLineEdit, 3)
         self.mapper.addMapping(self.userComboBox, 4)
+
         self.set_controls()
 
     def set_controls(self):
@@ -64,6 +65,11 @@ class LetterForm(QWidget, Ui_LetterForm):
             [('Full Name', User.fullname, 'fullname', {})])
         self.userComboBox.setModel(user_model)
         self.userComboBox.setModelColumn(0)
+        self.userComboBox.currentIndexChanged.connect(self.selectionchange)
+
+    def selectionchange(self, index):
+        print('chosen index: ', index)
+        self.userComboBox.setRootModelIndex(index)
 
     def toggle_edit_mode(self, flag, mode):
         print('Setting edit mode for letter form: ', flag, mode)

@@ -172,8 +172,19 @@ class AlchemicalTableModel(QAbstractTableModel):
 
     def setData(self, index, value, role=None):
         print('setting data for: ', index, 'with value: ', value)
+        print('index column', index.column(), 'with row: ', index.row())
         row = self.results[index.row()]
         name = self.fields[index.column()][2]
+
+        if '.' in name:
+            name = name.split('.')[0]
+
+        if index.column() == 4:
+            print('====== setting the user =======')
+            print('sending value : ', value)
+            print('with type : ', type(value))
+            print('While current: ', getattr(row, name))
+            print('with type : ', type(getattr(row, name)))
 
         try:
             setattr(row, name, value)
