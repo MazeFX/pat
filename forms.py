@@ -52,18 +52,18 @@ class LetterForm(QWidget, Ui_LetterForm):
         self.mapper.setModel(self.model)
         self.mapper.addMapping(self.dateDateEdit, 0)
         self.mapper.addMapping(self.subjectLineEdit, 1)
-        self.mapper.addMapping(self.senderLineEdit, 2)
+        self.mapper.addMapping(self.senderComboBox, 2)
         self.mapper.addMapping(self.referenceLineEdit, 3)
-        self.mapper.addMapping(self.UserLineEdit, 4)
+        self.mapper.addMapping(self.userComboBox, 4)
 
     def toggle_edit_mode(self, flag, mode):
         print('Setting edit mode for letter form: ', flag, mode)
         self.edit_mode = mode
         self.dateDateEdit.setEnabled(flag)
         self.subjectLineEdit.setEnabled(flag)
-        self.senderLineEdit.setEnabled(flag)
+        self.senderComboBox.setEnabled(flag)
         self.referenceLineEdit.setEnabled(flag)
-        self.UserLineEdit.setEnabled(flag)
+        self.userComboBox.setEnabled(flag)
         self.scanFileDrop.setEnabled(flag)
 
     def on_add(self):

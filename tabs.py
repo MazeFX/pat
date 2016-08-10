@@ -17,6 +17,7 @@ from forms import LetterForm
 from db.models import AlchemicalTableModel, Letter
 from db.helper import DbHelper
 from MyQtness.myWidgets import MyTableView
+from MyQtness.ui_home_tab import Ui_HomeTab
 
 
 class LetterTab(QWidget):
@@ -49,3 +50,11 @@ class LetterTab(QWidget):
         self.horizontalLayout.addWidget(self.tableView)
 
         self.setLayout(self.horizontalLayout)
+
+
+class HomeTab(QWidget, Ui_HomeTab):
+
+    def __init__(self, *kwargs):
+        super(HomeTab, self).__init__(*kwargs)
+
+        self.setupUi(self)

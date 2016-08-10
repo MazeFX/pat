@@ -83,8 +83,6 @@ class Date(types.TypeDecorator):
     def process_bind_param(self, value, dialect):
         print('--------- From Date type:  -------------')
         print('-value = ', value)
-        print('-value after pydate = ', value.toPyDate())
-        print('-pydate type = ', type(value.toPyDate()))
         return gen_process_bind_param(
             datetime.date, lambda value: value.toPyDate(),
             self, value, dialect)

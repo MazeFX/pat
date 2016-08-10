@@ -19,6 +19,7 @@ from PyQt5.QtCore import QAbstractTableModel, QVariant, Qt
 
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import relationship
 
 from db.qvariantalchemy import String, Integer, DateTime, Date
 
@@ -27,7 +28,7 @@ Base = declarative_base()
 
 
 class User(Base):
-    __tablename__ = 'user'
+    __tablename__ = 'users'
 
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
@@ -41,16 +42,18 @@ class User(Base):
 
 
 class Letter(Base):
-    __tablename__ = 'letter'
+    __tablename__ = 'letters'
 
     id = Column(Integer, primary_key=True)
     date = Column(Date)
     sender = Column(String(250))
     subject = Column(String(250))
     reference = Column(String(250))
-    user = Column(Integer, ForeignKey('user.id'), nullable=False)
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
     scan_file = Column(String(250))
     date_created = Column(DateTime, default=datetime.datetime.now)
+
+    user = relationship('User', foreign_keys=[user_id])
 
     def __repr__(self):
         return "<Letter(id= '%s', sender='%s', subject='%s')>" % (

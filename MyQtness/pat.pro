@@ -23,7 +23,8 @@ FORMS    += letter_form.ui \
     ui/mainwindow.ui \
     ui/main_window.ui \
     ui/letter_tab.ui \
-    ui/settings_dialog.ui
+    ui/settings_dialog.ui \
+    ui/home_tab.ui
 
 DISTFILES += \
     __pycache__/ui_letter_form.cpython-35.pyc \

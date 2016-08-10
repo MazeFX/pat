@@ -23,7 +23,8 @@ import qdarkstyle
 
 from dialogs import LoginDialog, SettingsDialog
 from MyQtness.ui_main_window import Ui_MainWindow
-from tabs import LetterTab
+from tabs import LetterTab, HomeTab
+
 
 
 class MainApp(QMainWindow, Ui_MainWindow):
@@ -40,8 +41,8 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.tabWidget.setMovable(True)
         self.tabWidget.setTabBarAutoHide(True)
         self.tabWidget.setObjectName("tabWidget")
-        self.tab_home = QWidget()
-        self.tab_home.setObjectName("tabHome")
+        self.tab_home = HomeTab()
+        self.tab_home.setObjectName("tab_home")
         self.tabWidget.addTab(self.tab_home, "")
 
         self.verticalLayout.addWidget(self.tabWidget)

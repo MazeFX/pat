@@ -36,26 +36,28 @@ class DbHelper(object):
         session = DBSession()
 
         # Insert a Person in the person table
-        new_user = User(name='MazeFX', fullname='MazeFX the Greatest', password='Test')
+        new_user = User(name='Nick', fullname='Nick Geense', password='Test')
+        session.add(new_user)
+        new_user = User(name='Stefanie', fullname='Stefanie Lacet', password='Test')
         session.add(new_user)
         session.commit()
 
         # Insert an Address in the address table
         new_letter1 = Letter(date=None,
                              sender='Een geldwolf',
-                             user='1',
+                             user_id=1,
                              reference='Reference for 1',
                              scan_file='Scan file path')
         session.add(new_letter1)
         new_letter2 = Letter(date=None,
                              sender='Een geldwolf',
-                             user='1',
+                             user_id=2,
                              reference='Reference for 2',
                              scan_file='Scan file path')
         session.add(new_letter2)
         new_letter3 = Letter(date=None,
                              sender='Een geldwolf',
-                             user='1',
+                             user_id=1,
                              reference='Reference for 3',
                              scan_file='Scan file path')
 
