@@ -26,29 +26,7 @@ from db.qvariantalchemy import String, Integer, DateTime, Date
 Base = declarative_base()
 
 
-class QtConvert(object):
-
-    def convert_for_qt(self):
-        props = list(x for x in self.__dict__.keys() if not x.startswith('_'))
-        props.sort()
-        values = []
-        for prop in props:
-            x = getattr(self, prop)
-            if x is not None:
-                values.append(x)
-            else:
-                values.append('')
-        print('values returned are: ', values)
-        return values
-
-    def get_headers_for_qt(self):
-        props = list(x for x in self.__dict__.keys() if not x.startswith('_'))
-        print('props for header are: ', props)
-        props.sort()
-        return props
-
-
-class User(Base, QtConvert):
+class User(Base):
     __tablename__ = 'user'
 
     id = Column(Integer, primary_key=True)
