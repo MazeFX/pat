@@ -13,48 +13,92 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QHBoxLayout" name="horizontalLayout">
    <item>
-    <widget class="QLabel" name="Header1">
-     <property name="font">
-      <font>
-       <pointsize>50</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>P.A.T.</string>
-     </property>
-    </widget>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLabel" name="Header1">
+       <property name="font">
+        <font>
+         <pointsize>50</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="text">
+        <string>P.A.T.</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="Header2">
+       <property name="font">
+        <font>
+         <pointsize>14</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Personal Admin Tool</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>550</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
    </item>
    <item>
-    <widget class="QLabel" name="Header2">
-     <property name="font">
-      <font>
-       <pointsize>14</pointsize>
-      </font>
+    <layout class="QVBoxLayout" name="verticalLayout_2">
+     <property name="topMargin">
+      <number>15</number>
      </property>
-     <property name="text">
-      <string>Personal Admin Tool</string>
+     <property name="rightMargin">
+      <number>30</number>
      </property>
-    </widget>
-   </item>
-   <item>
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>550</height>
-      </size>
-     </property>
-    </spacer>
+     <item alignment="Qt::AlignRight">
+      <widget class="PyAnalogClock" name="pyClock" native="true">
+       <property name="styleSheet">
+        <string notr="true">PyAnalogClock {
+padding-right: 20px;
+}</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>550</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PyAnalogClock</class>
+   <extends>QWidget</extends>
+   <header>MyQtness.analogclock.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

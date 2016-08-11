@@ -12,7 +12,9 @@ class Ui_HomeTab(object):
     def setupUi(self, HomeTab):
         HomeTab.setObjectName("HomeTab")
         HomeTab.resize(951, 714)
-        self.verticalLayout = QtWidgets.QVBoxLayout(HomeTab)
+        self.horizontalLayout = QtWidgets.QHBoxLayout(HomeTab)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.verticalLayout = QtWidgets.QVBoxLayout()
         self.verticalLayout.setObjectName("verticalLayout")
         self.Header1 = QtWidgets.QLabel(HomeTab)
         font = QtGui.QFont()
@@ -30,6 +32,19 @@ class Ui_HomeTab(object):
         self.verticalLayout.addWidget(self.Header2)
         spacerItem = QtWidgets.QSpacerItem(40, 550, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.verticalLayout.addItem(spacerItem)
+        self.horizontalLayout.addLayout(self.verticalLayout)
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_2.setContentsMargins(-1, 15, 30, -1)
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.pyClock = PyAnalogClock(HomeTab)
+        self.pyClock.setStyleSheet("PyAnalogClock {\n"
+"padding-right: 20px;\n"
+"}")
+        self.pyClock.setObjectName("pyClock")
+        self.verticalLayout_2.addWidget(self.pyClock, 0, QtCore.Qt.AlignRight)
+        spacerItem1 = QtWidgets.QSpacerItem(40, 550, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.verticalLayout_2.addItem(spacerItem1)
+        self.horizontalLayout.addLayout(self.verticalLayout_2)
 
         self.retranslateUi(HomeTab)
         QtCore.QMetaObject.connectSlotsByName(HomeTab)
@@ -40,3 +55,4 @@ class Ui_HomeTab(object):
         self.Header1.setText(_translate("HomeTab", "P.A.T."))
         self.Header2.setText(_translate("HomeTab", "Personal Admin Tool"))
 
+from MyQtness.analogclock import PyAnalogClock

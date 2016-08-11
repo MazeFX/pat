@@ -28,4 +28,8 @@ FORMS    += letter_form.ui \
 
 DISTFILES += \
     __pycache__/ui_letter_form.cpython-35.pyc \
-    ui_letter_form.py
+    ui_letter_form.py \
+    ui/MyCustom.py \
+    ui/test.py
+
+PYQTDESIGNERPATH = custom_widget_plugin
