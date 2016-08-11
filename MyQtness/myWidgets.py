@@ -53,4 +53,9 @@ class MyTableView(QTableView):
         hh.setHighlightSections(False)
 
 
+class MyComboBox(QComboBox):
+
+    def __init__(self, *args):
+        super(MyComboBox, self).__init__(*args)
+
 

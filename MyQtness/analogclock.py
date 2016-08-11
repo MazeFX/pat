@@ -74,7 +74,7 @@ class PyAnalogClock(QWidget):
         timer.start(1000)
 
         self.setWindowTitle("Analog Clock")
-        self.resize(200, 200)
+        self.resize(600, 600)
 
         self.hourHand = QPolygon([
             QPoint(7, 8),
@@ -87,8 +87,8 @@ class PyAnalogClock(QWidget):
             QPoint(0, -70)
         ])
 
-        self.hourColor = QColor(0, 127, 0)
-        self.minuteColor = QColor(0, 127, 127, 191)
+        self.hourColor = QColor(255, 255, 255)
+        self.minuteColor = QColor(0, 0, 127, 191)
 
     def paintEvent(self, event):
 
@@ -113,7 +113,7 @@ class PyAnalogClock(QWidget):
         painter.setPen(self.hourColor)
 
         for i in range(0, 12):
-            painter.drawLine(88, 0, 96, 0)
+            painter.drawLine(84, 0, 96, 0)
             painter.rotate(30.0)
 
         painter.setPen(Qt.NoPen)
@@ -128,7 +128,7 @@ class PyAnalogClock(QWidget):
 
         for j in range(0, 60):
             if (j % 5) != 0:
-                painter.drawLine(92, 0, 96, 0)
+                painter.drawLine(90, 0, 96, 0)
             painter.rotate(6.0)
 
         painter.end()

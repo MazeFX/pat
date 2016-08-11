@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>951</width>
-    <height>714</height>
+    <height>716</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -60,13 +60,25 @@
    <item>
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <property name="topMargin">
-      <number>15</number>
+      <number>30</number>
      </property>
      <property name="rightMargin">
       <number>30</number>
      </property>
      <item alignment="Qt::AlignRight">
       <widget class="PyAnalogClock" name="pyClock" native="true">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>300</width>
+         <height>300</height>
+        </size>
+       </property>
        <property name="styleSheet">
         <string notr="true">PyAnalogClock {
 padding-right: 20px;

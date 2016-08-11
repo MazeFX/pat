@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_HomeTab(object):
     def setupUi(self, HomeTab):
         HomeTab.setObjectName("HomeTab")
-        HomeTab.resize(951, 714)
+        HomeTab.resize(951, 716)
         self.horizontalLayout = QtWidgets.QHBoxLayout(HomeTab)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.verticalLayout = QtWidgets.QVBoxLayout()
@@ -34,9 +34,15 @@ class Ui_HomeTab(object):
         self.verticalLayout.addItem(spacerItem)
         self.horizontalLayout.addLayout(self.verticalLayout)
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()
-        self.verticalLayout_2.setContentsMargins(-1, 15, 30, -1)
+        self.verticalLayout_2.setContentsMargins(-1, 30, 30, -1)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.pyClock = PyAnalogClock(HomeTab)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pyClock.sizePolicy().hasHeightForWidth())
+        self.pyClock.setSizePolicy(sizePolicy)
+        self.pyClock.setMinimumSize(QtCore.QSize(300, 300))
         self.pyClock.setStyleSheet("PyAnalogClock {\n"
 "padding-right: 20px;\n"
 "}")

@@ -69,7 +69,6 @@ class LetterForm(QWidget, Ui_LetterForm):
 
     def selectionchange(self, index):
         print('chosen index: ', index)
-        self.userComboBox.setRootModelIndex(index)
 
     def toggle_edit_mode(self, flag, mode):
         print('Setting edit mode for letter form: ', flag, mode)
