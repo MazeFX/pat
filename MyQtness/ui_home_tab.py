@@ -48,7 +48,7 @@ class Ui_HomeTab(object):
 "}")
         self.pyClock.setObjectName("pyClock")
         self.verticalLayout_2.addWidget(self.pyClock, 0, QtCore.Qt.AlignRight)
-        spacerItem1 = QtWidgets.QSpacerItem(40, 550, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem1 = QtWidgets.QSpacerItem(40, 250, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
         self.verticalLayout_2.addItem(spacerItem1)
         self.horizontalLayout.addLayout(self.verticalLayout_2)
 

@@ -10,12 +10,13 @@ Date: 1-8-2016
 
 Python Test docstring.
 """
-from PyQt5.QtCore import Qt, QDate, QByteArray
+from PyQt5.QtCore import Qt, QDate
 from PyQt5.QtWidgets import QWidget, QDataWidgetMapper
 
 from db.models import AlchemicalTableModel, User
 from db.helper import DbHelper
 from MyQtness.ui_letter_form import Ui_LetterForm
+from MyQtness.myWidgets import MyItemDelegate
 
 
 
@@ -54,7 +55,7 @@ class LetterForm(QWidget, Ui_LetterForm):
         self.mapper.addMapping(self.subjectLineEdit, 1)
         self.mapper.addMapping(self.senderComboBox, 2)
         self.mapper.addMapping(self.referenceLineEdit, 3)
-        self.mapper.addMapping(self.userComboBox, 4, b"itemIndex")
+        self.mapper.addMapping(self.userComboBox, 4)
 
         self.set_controls()
 
@@ -63,8 +64,11 @@ class LetterForm(QWidget, Ui_LetterForm):
             DbHelper().get_db_session(),
             User,
             [('Full Name', User.fullname, 'fullname', {})])
+
+        delegate = MyItemDelegate(self)
+        self.mapper.setItemDelegate(delegate)
         self.userComboBox.setModel(user_model)
-        self.userComboBox.setModelColumn(0)
+
         self.userComboBox.currentIndexChanged.connect(self.selectionchange)
 
     def selectionchange(self, index):

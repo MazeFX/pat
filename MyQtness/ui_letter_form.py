@@ -100,10 +100,10 @@ class Ui_LetterForm(object):
         self.label_3.setObjectName("label_3")
         self.verticalLayout_2.addWidget(self.label_3)
         self.formLayout.setWidget(5, QtWidgets.QFormLayout.FieldRole, self.scanFileDrop)
-        self.userComboBox = MyComboBox(LetterForm)
+        self.userComboBox = QtWidgets.QComboBox(LetterForm)
         self.userComboBox.setObjectName("userComboBox")
         self.formLayout.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.userComboBox)
-        self.senderComboBox = MyComboBox(LetterForm)
+        self.senderComboBox = QtWidgets.QComboBox(LetterForm)
         self.senderComboBox.setObjectName("senderComboBox")
         self.formLayout.setWidget(3, QtWidgets.QFormLayout.FieldRole, self.senderComboBox)
         self.verticalLayout.addLayout(self.formLayout)
@@ -140,4 +140,3 @@ class Ui_LetterForm(object):
         self.pushButtonSave.setText(_translate("LetterForm", "Save"))
         self.pushButtonReset.setText(_translate("LetterForm", "Reset"))
 
-from MyQtness.myWidgets import MyComboBox

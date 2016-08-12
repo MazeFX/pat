@@ -15,7 +15,7 @@ import operator
 import datetime
 
 from PyQt5.QtCore import Qt, pyqtProperty, pyqtSignal
-from PyQt5.QtWidgets import QTableView, QAbstractItemView, QComboBox
+from PyQt5.QtWidgets import QTableView, QAbstractItemView, QComboBox, QItemDelegate
 
 
 class MyTableView(QTableView):
@@ -71,3 +71,23 @@ class MyComboBox(QComboBox):
 
     itemIndex = pyqtProperty(int, fget=getItemIndex, fset=setItemIndex)
 
+
+class MyItemDelegate(QItemDelegate):
+
+    def __init__(self, *args):
+        super(MyItemDelegate, self).__init__(*args)
+
+    def setEditorData(self, widget, modelIndex):
+        print('Itemdelegate - setEditorData; modelindex: ', modelIndex)
+        if hasattr(widget, 'currentIndex'):
+            print('Trying to set current index for: ', widget)
+            print('at index: ', modelIndex.row(), ', ', modelIndex.column())
+            print('with value: ', modelIndex.data())
+            if modelIndex.data() != '':
+                widget.setCurrentIndex(int(modelIndex.data()))
+
+    def setModelData(self, widget, abstractItemModel, modelIndex):
+        print('Itemdelegate - setModelData; modelindex: ', modelIndex)
+        if hasattr(widget, 'currentIndex'):
+            index = widget.currentIndex() - 1
+            abstractItemModel.setData(modelIndex, index)

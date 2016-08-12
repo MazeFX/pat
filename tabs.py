@@ -36,7 +36,7 @@ class LetterTab(QWidget):
              ('Subject', Letter.subject, 'subject', {}),
              ('Sender', Letter.sender, 'sender', {}),
              ('Reference', Letter.reference, 'reference', {}),
-             ('User', Letter.user, 'user.fullname', {}),
+             ('User', Letter.user, 'user.id', {}),
              ('Letter Scan', Letter.scan_file, 'scan_file', {}),
              ('Date created', Letter.date_created, 'date_created', {})])
 
