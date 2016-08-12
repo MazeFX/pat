@@ -14,7 +14,7 @@ Python Test docstring.
 import operator
 import datetime
 
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, pyqtProperty, pyqtSignal
 from PyQt5.QtWidgets import QTableView, QAbstractItemView, QComboBox
 
 
@@ -55,7 +55,19 @@ class MyTableView(QTableView):
 
 class MyComboBox(QComboBox):
 
+    # Emitted when selection of combobox changes
+    indexChanged = pyqtSignal(int)
+
     def __init__(self, *args):
         super(MyComboBox, self).__init__(*args)
 
+    def getItemIndex(self):
+        print('Getting the item index', self.currentIndex())
+        return self.currentIndex()
+
+    def setItemIndex(self, index):
+        print('Setting the item index', index)
+        self.setCurrentIndex(index)
+
+    itemIndex = pyqtProperty(int, fget=getItemIndex, fset=setItemIndex)
 

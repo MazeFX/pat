@@ -54,7 +54,7 @@ class LetterForm(QWidget, Ui_LetterForm):
         self.mapper.addMapping(self.subjectLineEdit, 1)
         self.mapper.addMapping(self.senderComboBox, 2)
         self.mapper.addMapping(self.referenceLineEdit, 3)
-        self.mapper.addMapping(self.userComboBox, 4)
+        self.mapper.addMapping(self.userComboBox, 4, b"itemIndex")
 
         self.set_controls()
 
