@@ -13,7 +13,7 @@ Python Test docstring.
 from PyQt5.QtCore import Qt, QDate
 from PyQt5.QtWidgets import QWidget, QDataWidgetMapper
 
-from db.models import AlchemicalTableModel, User
+from db.models import AlchemicalTableModel, User, Relation
 from db.helper import DbHelper
 from MyQtness.ui_letter_form import Ui_LetterForm
 from MyQtness.myWidgets import MyItemDelegate
@@ -60,20 +60,21 @@ class LetterForm(QWidget, Ui_LetterForm):
         self.set_controls()
 
     def set_controls(self):
+        session = DbHelper().get_app_db_session()
         user_model = AlchemicalTableModel(
-            DbHelper().get_db_session(),
+            session,
             User,
             [('Full Name', User.fullname, 'fullname', {})])
+
+        relation_model = AlchemicalTableModel(
+            session,
+            Relation,
+            [('Name', Relation.name, 'name', {})])
 
         delegate = MyItemDelegate(self)
         self.mapper.setItemDelegate(delegate)
         self.userComboBox.setModel(user_model)
-        self.senderComboBox.setModel(user_model)
-
-        self.userComboBox.currentIndexChanged.connect(self.selectionchange)
-
-    def selectionchange(self, index):
-        print('chosen index: ', index)
+        self.senderComboBox.setModel(relation_model)
 
     def toggle_edit_mode(self, flag, mode):
         print('Setting edit mode for letter form: ', flag, mode)

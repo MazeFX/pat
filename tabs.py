@@ -30,7 +30,7 @@ class LetterTab(QWidget):
         print('Lettertab horizontal view created.')
 
         model = AlchemicalTableModel(
-            DbHelper().get_db_session(),
+            DbHelper().get_app_db_session(),
             Letter,
             [('Date', Letter.date, 'date', {}),
              ('Subject', Letter.subject, 'subject', {}),

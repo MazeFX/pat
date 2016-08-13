@@ -47,18 +47,38 @@ class Letter(Base):
 
     id = Column(Integer, primary_key=True)
     date = Column(Date)
-    sender = Column(String(250))
+    sender_id = Column(Integer, ForeignKey('relations.id'), nullable=False)
     subject = Column(String(250))
     reference = Column(String(250))
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
     scan_file = Column(String(250))
+    letter_type = Column(Integer)
     date_created = Column(DateTime, default=datetime.datetime.now)
 
     user = relationship('User', foreign_keys=[user_id])
+    sender = relationship('Relation', foreign_keys=[sender_id])
 
     def __repr__(self):
         return "<Letter(id= '%s', sender='%s', subject='%s')>" % (
             self.id, self.sender, self.subject)
+
+
+class Relation(Base):
+    __tablename__ = 'relations'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String, nullable=False)
+    fullname = Column(String, nullable=False)
+    reference = Column(String(250))
+    bank_account = Column(String(250))
+    relation_type = Column(Integer)
+    start_date = Column(Date)
+    end_date = Column(Date)
+    date_created = Column(DateTime, default=datetime.datetime.now)
+
+    def __repr__(self):
+        return "<Relation(id= '%s', name='%s', reference='%s')>" % (
+            self.id, self.name, self.reference)
 
 
 class AlchemicalTableModel(QAbstractTableModel):
