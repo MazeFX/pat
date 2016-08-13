@@ -16,6 +16,7 @@ import datetime
 
 from PyQt5.QtCore import Qt, pyqtProperty, pyqtSignal
 from PyQt5.QtWidgets import QTableView, QAbstractItemView, QComboBox, QItemDelegate
+from colorama import Fore, Back, Style
 
 
 class MyTableView(QTableView):
@@ -56,20 +57,35 @@ class MyTableView(QTableView):
 class MyComboBox(QComboBox):
 
     # Emitted when selection of combobox changes
-    indexChanged = pyqtSignal(int)
+    _currentItem = None
 
     def __init__(self, *args):
         super(MyComboBox, self).__init__(*args)
+        self.currentIndexChanged.connect(self.indexChanged)
 
-    def getItemIndex(self):
-        print('Getting the item index', self.currentIndex())
-        return self.currentIndex()
+    def getCurrentItem(self):
+        print(Fore.GREEN + '-- COMBOBOX -- Getting the item index: ')
+        print(Fore.GREEN + '---------------------------------------')
+        print(Fore.GREEN + '-- COMBOBOX - Model -- get model value row: ')
+        print(Fore.GREEN + '-- COMBOBOX - get row matches with item: ')
+        return self._currentItem
 
-    def setItemIndex(self, index):
-        print('Setting the item index', index)
-        self.setCurrentIndex(index)
+    def indexChanged(self, index):
+        self._currentItem = self.model().results[index]
 
-    itemIndex = pyqtProperty(int, fget=getItemIndex, fset=setItemIndex)
+    def setCurrentItem(self, item):
+        print(Fore.GREEN + '-- COMBOBOX -- Setting the item: ', item, str(item))
+        model = self.model()
+        for row in model.results:
+            print(Fore.GREEN + '-- COMBOBOX - Model -- model value row: ', row, str(row))
+            if hasattr(row, 'id'):
+                if hasattr(item, 'id'):
+                    if row.id == item.id:
+                        print(Fore.GREEN + '-- COMBOBOX - row matches with item: ', row, str(row))
+                        self.setCurrentIndex(row.id - 1)
+                        self._currentItem = item
+
+    currentItem = pyqtProperty(object, fget=getCurrentItem, fset=setCurrentItem)
 
 
 class MyItemDelegate(QItemDelegate):
@@ -78,16 +94,15 @@ class MyItemDelegate(QItemDelegate):
         super(MyItemDelegate, self).__init__(*args)
 
     def setEditorData(self, widget, modelIndex):
-        print('Itemdelegate - setEditorData; modelindex: ', modelIndex)
+        print(Fore.RED + 'Itemdelegate - setEditorData; modelindex: ', modelIndex)
         if hasattr(widget, 'currentIndex'):
-            print('Trying to set current index for: ', widget)
-            print('at index: ', modelIndex.row(), ', ', modelIndex.column())
-            print('with value: ', modelIndex.data())
-            if modelIndex.data() != '':
-                widget.setCurrentIndex(int(modelIndex.data()))
+            print(Fore.RED + 'Trying to set current index for: ', widget)
+            print(Fore.RED + 'at index: ', modelIndex.row(), ', ', modelIndex.column())
+            print(Fore.RED + 'with value: ', modelIndex.data())
+            if modelIndex.data() not in ('-2', ''):
+                widget.currentItem = modelIndex.data()
 
     def setModelData(self, widget, abstractItemModel, modelIndex):
-        print('Itemdelegate - setModelData; modelindex: ', modelIndex)
+        print(Back.GREEN + 'Itemdelegate - setModelData; modelindex: ', modelIndex)
         if hasattr(widget, 'currentIndex'):
-            index = widget.currentIndex() - 1
-            abstractItemModel.setData(modelIndex, index)
+            abstractItemModel.setData(modelIndex, widget.currentItem)

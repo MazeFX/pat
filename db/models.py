@@ -20,6 +20,7 @@ from PyQt5.QtCore import QAbstractTableModel, QVariant, Qt
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
+from colorama import Fore, Back, Style
 
 from db.qvariantalchemy import String, Integer, DateTime, Date
 
@@ -168,11 +169,11 @@ class AlchemicalTableModel(QAbstractTableModel):
             foreign_column = name.split('.')
             foreign_item = getattr(row, foreign_column[0])
             return str(getattr(foreign_item, foreign_column[1]))
-        return str(getattr(row, name))
+        return getattr(row, name)
 
     def setData(self, index, value, role=None):
-        print('setting data for: ', index, 'with value: ', value)
-        print('index column', index.column(), 'with row: ', index.row())
+        print(Fore.BLUE + '-- setting data for: ', index, 'with value: ', value)
+        print(Fore.BLUE + '-- index column', index.column(), 'with row: ', index.row())
         row = self.results[index.row()]
         name = self.fields[index.column()][2]
 
@@ -180,11 +181,11 @@ class AlchemicalTableModel(QAbstractTableModel):
             name = name.split('.')[0]
 
         if index.column() == 4:
-            print('====== setting the user =======')
-            print('sending value : ', value)
-            print('with type : ', type(value))
-            print('While current: ', getattr(row, name))
-            print('with type : ', type(getattr(row, name)))
+            print(Fore.BLUE + '====== setting the user =======')
+            print(Fore.BLUE + '-- sending value : ', value)
+            print(Fore.BLUE + '-- with type : ', type(value))
+            print(Fore.BLUE + '-- While current: ', getattr(row, name))
+            print(Fore.BLUE + '-- with type : ', type(getattr(row, name)))
 
         try:
             setattr(row, name, value)

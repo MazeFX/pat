@@ -68,6 +68,7 @@ class LetterForm(QWidget, Ui_LetterForm):
         delegate = MyItemDelegate(self)
         self.mapper.setItemDelegate(delegate)
         self.userComboBox.setModel(user_model)
+        self.senderComboBox.setModel(user_model)
 
         self.userComboBox.currentIndexChanged.connect(self.selectionchange)
 

@@ -10,5 +10,8 @@ PyQt5==5.7
 # SQLite database ORM
 sqlAlchemy==1.0.14
 
+# Fancy Print
+colorama==0.3.7
+
 # Obey the testing Goat!
 # Packages for additional testing

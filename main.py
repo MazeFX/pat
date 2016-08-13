@@ -18,6 +18,9 @@ sub-forms and widgets.
 import sys
 from PyQt5.QtCore import QCoreApplication, QSettings
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QWidget
+from colorama import Fore, Back, Style
+from colorama import init as colorama
+
 
 import qdarkstyle
 
@@ -60,16 +63,16 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_home), self._translate("MainWindow", "Home"))
 
     def add_letter(self):
-        print('signal recieved for action add letter.')
+        print(Fore.MAGENTA + 'signal recieved for action add letter.')
         self.tab_letter = LetterTab()
-        print('Letterform initialized.')
+        print(Fore.MAGENTA + 'Letterform initialized.')
         self.tab_letter.setObjectName("tab_letter")
         self.tabWidget.addTab(self.tab_letter, "")
-        print('Letterform added to mainwindow.')
+        print(Fore.MAGENTA + 'Letterform added to mainwindow.')
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_letter), self._translate("MainWindow", "Letters"))
         self.tabWidget.setCurrentIndex(self.tabWidget.indexOf(self.tab_letter))
         int_value = self.settings.value('db_name', type=int)
-        print("choosen database setting: %s" % repr(int_value))
+        print(Fore.MAGENTA + "choosen database setting: %s" % repr(int_value))
 
     def close_tab(self, index):
         self.tabWidget.removeTab(index)
@@ -77,16 +80,17 @@ class MainApp(QMainWindow, Ui_MainWindow):
     def load_settings(self):
         self.settings = QSettings()
         int_value = self.settings.value('db_name', type=int)
-        print("load choosen database setting: %s" % repr(int_value))
+        print(Fore.MAGENTA + "load choosen database setting: %s" % repr(int_value))
 
     def show_settings(self):
-        print('Showing the Settings Dialog..')
+        print(Fore.MAGENTA + 'Showing the Settings Dialog..')
 
         settings_dialog = SettingsDialog()
         settings_dialog.exec_()
 
 
 if __name__ == "__main__":
+    colorama(autoreset=True)
     app = QApplication(sys.argv)
     app.setApplicationName('PAT')
     app.setOrganizationName("MazeFX Solutions")
