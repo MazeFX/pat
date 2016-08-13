@@ -19,8 +19,9 @@ from MyQtness.ui_letter_form import Ui_LetterForm
 from MyQtness.myWidgets import MyItemDelegate
 
 
-
 class LetterForm(QWidget, Ui_LetterForm):
+
+    dbhelper = None
 
     def __init__(self, *kwargs):
         super(LetterForm, self).__init__(*kwargs)
@@ -60,7 +61,7 @@ class LetterForm(QWidget, Ui_LetterForm):
         self.set_controls()
 
     def set_controls(self):
-        session = DbHelper().get_app_db_session()
+        session = self.dbhelper.get_app_db_session()
         user_model = AlchemicalTableModel(
             session,
             User,

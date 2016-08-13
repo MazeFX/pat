@@ -27,6 +27,7 @@ import qdarkstyle
 from dialogs import LoginDialog, SettingsDialog
 from MyQtness.ui_main_window import Ui_MainWindow
 from tabs import LetterTab, HomeTab
+from db.helper import DbHelper
 
 
 
@@ -37,6 +38,7 @@ class MainApp(QMainWindow, Ui_MainWindow):
     def __init__(self, *args):
         super(MainApp, self).__init__(*args)
         self.load_settings()
+        self.dbhelper = DbHelper()
 
         self.setupUi(self)
         self.tabWidget = QTabWidget(self.centralwidget)
@@ -45,6 +47,7 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.tabWidget.setTabBarAutoHide(True)
         self.tabWidget.setObjectName("tabWidget")
         self.tab_home = HomeTab()
+        self.tab_home.dbhelper = self.dbhelper
         self.tab_home.setObjectName("tab_home")
         self.tabWidget.addTab(self.tab_home, "")
 
@@ -64,7 +67,7 @@ class MainApp(QMainWindow, Ui_MainWindow):
 
     def add_letter(self):
         print(Fore.MAGENTA + 'signal recieved for action add letter.')
-        self.tab_letter = LetterTab()
+        self.tab_letter = LetterTab(self.dbhelper)
         print(Fore.MAGENTA + 'Letterform initialized.')
         self.tab_letter.setObjectName("tab_letter")
         self.tabWidget.addTab(self.tab_letter, "")

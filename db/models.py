@@ -41,6 +41,10 @@ class User(Base):
         return "<User(id= '%s', name='%s', fullname='%s')>" % (
             self.id, self.name, self.fullname)
 
+    def __str__(self):
+        return "<User(id= '%s', name='%s', fullname='%s')>" % (
+            self.id, self.name, self.fullname)
+
 
 class Letter(Base):
     __tablename__ = 'letters'
@@ -188,7 +192,11 @@ class AlchemicalTableModel(QAbstractTableModel):
         if '.' in name:
             foreign_column = name.split('.')
             foreign_item = getattr(row, foreign_column[0])
-            return str(getattr(foreign_item, foreign_column[1]))
+            if role == Qt.EditRole:
+                print('TableModel - data -- EditRole for index: ', index)
+                return getattr(row, foreign_column[0])
+            else:
+                return getattr(foreign_item, foreign_column[1])
         return getattr(row, name)
 
     def setData(self, index, value, role=None):

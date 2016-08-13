@@ -100,7 +100,7 @@ class MyItemDelegate(QItemDelegate):
             print(Fore.RED + 'at index: ', modelIndex.row(), ', ', modelIndex.column())
             print(Fore.RED + 'with value: ', modelIndex.data())
             if modelIndex.data() not in ('-2', ''):
-                widget.currentItem = modelIndex.data()
+                widget.currentItem = modelIndex.data(role=Qt.EditRole)
 
     def setModelData(self, widget, abstractItemModel, modelIndex):
         print(Back.GREEN + 'Itemdelegate - setModelData; modelindex: ', modelIndex)

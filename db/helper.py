@@ -18,6 +18,7 @@ from PyQt5.QtCore import QSettings
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 from db.models import Base, User, Letter, Relation
+from colorama import Fore, Back, Style
 
 
 class DbHelper(object):
@@ -47,7 +48,7 @@ class DbHelper(object):
 
         # Insert Letters in the letter table
         new_letter1 = Letter(date=datetime.date.today(),
-                             sender_id=0,
+                             sender_id=1,
                              subject='About 1',
                              reference='Reference for 1',
                              user_id=1,
@@ -58,12 +59,12 @@ class DbHelper(object):
                              sender_id=0,
                              subject='About 2',
                              reference='Reference for 2',
-                             user_id=2,
+                             user_id=0,
                              scan_file='Scan file path',
                              letter_type=0)
         session.add(new_letter2)
         new_letter3 = Letter(date=datetime.date.today(),
-                             sender_id=1,
+                             sender_id=0,
                              subject='About 3',
                              reference='Reference for 3',
                              user_id=1,
@@ -92,6 +93,7 @@ class DbHelper(object):
 
     def get_app_db_session(self):
         if self.session:
+            print(Fore.YELLOW + '====== RETURNING THE EXISTING SESSION =======')
             return self.session
         chosen_database = self.settings.value('db_name', type='int')
         if chosen_database == 0:
@@ -102,8 +104,9 @@ class DbHelper(object):
         engine = create_engine(self.db_string)
 
         DBSession = sessionmaker(bind=engine)
-        session = DBSession()
-        return session
+        self.session = DBSession()
+        print(Fore.YELLOW + '====== CREATED A NEW SESSION =======')
+        return self.session
 
     def get_table(self, model):
         tablemaker = TableMaker()
