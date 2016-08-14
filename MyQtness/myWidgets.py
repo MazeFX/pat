@@ -14,7 +14,7 @@ Python Test docstring.
 import operator
 import datetime
 
-from PyQt5.QtCore import Qt, pyqtProperty, pyqtSignal
+from PyQt5.QtCore import Qt, pyqtProperty, pyqtSignal, QDate
 from PyQt5.QtWidgets import QTableView, QAbstractItemView, QWidget, QComboBox, QItemDelegate
 from colorama import Fore, Back, Style
 
@@ -138,22 +138,26 @@ class MyItemDelegate(QItemDelegate):
     def setEditorData(self, widget, modelIndex):
         print(Fore.RED + 'Itemdelegate - setEditorData; modelindex: ', modelIndex)
         if hasattr(widget, 'currentIndex'):
-            print(Fore.RED + 'Trying to set current index for: ', widget)
-            print(Fore.RED + 'at index: ', modelIndex.row(), ', ', modelIndex.column())
-            print(Fore.RED + 'with value: ', modelIndex.data())
-            if modelIndex.data() not in ('-2', ''):
-                widget.currentItem = modelIndex.data(role=Qt.EditRole)
+            widget.currentItem = modelIndex.data(role=Qt.EditRole)
 
         if hasattr(widget, 'currentFile'):
-            print(Fore.RED + '--Trying to set current file for: ', widget)
-            print(Fore.RED + '--at index: ', modelIndex.row(), ', ', modelIndex.column())
-            print(Fore.RED + '--with file path??: ', modelIndex.data())
-
             widget.currentFile = [modelIndex.data(role=Qt.EditRole)]
 
+        if hasattr(widget, 'date'):
+            print(Fore.RED + '--Trying to set current date for: ', widget)
+            print(Fore.RED + '--at index: ', modelIndex.row(), ', ', modelIndex.column())
+            print(Fore.RED + '--with date??: ', modelIndex.data())
+
+            print(Fore.RED + '--setting widget.date: ', type(modelIndex.data(role=Qt.EditRole)))
+            date = str(modelIndex.data(role=Qt.EditRole))
+            qtDate = QDate.fromString(date, 'yyyy-MM-dd')
+            widget.setDate(qtDate)
+
     def setModelData(self, widget, abstractItemModel, modelIndex):
-        print(Back.GREEN + 'Itemdelegate - setModelData; modelindex: ', modelIndex)
+        print(Back.GREEN + Fore.RED + 'Itemdelegate - setModelData; modelindex: ', modelIndex)
         if hasattr(widget, 'currentIndex'):
             abstractItemModel.setData(modelIndex, widget.currentItem)
         if hasattr(widget, 'currentFile'):
             abstractItemModel.setData(modelIndex, widget.currentFile)
+        if hasattr(widget, 'date'):
+            abstractItemModel.setData(modelIndex, widget.date())

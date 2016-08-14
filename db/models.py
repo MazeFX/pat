@@ -199,6 +199,9 @@ class AlchemicalTableModel(QAbstractTableModel):
                 return getattr(foreign_item, foreign_column[1])
         if role == Qt.EditRole:
             print('TableModel - data -- EditRole for index: ', index)
+            print('TableModel - data -- EditRole with value: ', getattr(row, name))
+            print('TableModel - data -- EditRole with value: ', type(getattr(row, name)))
+            getattr(row, name)
         return getattr(row, name)
 
     def setData(self, index, value, role=None):
@@ -210,8 +213,8 @@ class AlchemicalTableModel(QAbstractTableModel):
         if '.' in name:
             name = name.split('.')[0]
 
-        if index.column() == 4:
-            print(Fore.BLUE + '====== setting the user =======')
+        if index.column() == 0:
+            print(Fore.BLUE + '====== setting the date =======')
             print(Fore.BLUE + '-- sending value : ', value)
             print(Fore.BLUE + '-- with type : ', type(value))
             print(Fore.BLUE + '-- While current: ', getattr(row, name))
