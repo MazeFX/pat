@@ -13,6 +13,11 @@ class Ui_LetterForm(object):
         LetterForm.setObjectName("LetterForm")
         LetterForm.resize(320, 559)
         LetterForm.setMaximumSize(QtCore.QSize(350, 16777215))
+        LetterForm.setStyleSheet("#scanFileDrop {\n"
+"    border: 1px solid #76797C;\n"
+"    background-color: #232629;\n"
+"    border-radius: 0px;\n"
+"}")
         self.verticalLayout = QtWidgets.QVBoxLayout(LetterForm)
         self.verticalLayout.setObjectName("verticalLayout")
         self.label = QtWidgets.QLabel(LetterForm)
@@ -81,13 +86,13 @@ class Ui_LetterForm(object):
         self.scanLabel = QtWidgets.QLabel(LetterForm)
         self.scanLabel.setObjectName("scanLabel")
         self.formLayout.setWidget(5, QtWidgets.QFormLayout.LabelRole, self.scanLabel)
-        self.scanFileDrop = QtWidgets.QWidget(LetterForm)
+        self.scanFileDrop = MyDragDropBox(LetterForm)
         self.scanFileDrop.setMinimumSize(QtCore.QSize(0, 100))
         self.scanFileDrop.setAcceptDrops(True)
-        self.scanFileDrop.setAutoFillBackground(True)
+        self.scanFileDrop.setAutoFillBackground(False)
+        self.scanFileDrop.setStyleSheet("")
         self.scanFileDrop.setObjectName("scanFileDrop")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.scanFileDrop)
-        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.label_3 = QtWidgets.QLabel(self.scanFileDrop)
         font = QtGui.QFont()
@@ -140,4 +145,4 @@ class Ui_LetterForm(object):
         self.pushButtonSave.setText(_translate("LetterForm", "Save"))
         self.pushButtonReset.setText(_translate("LetterForm", "Reset"))
 
-from MyQtness.myWidgets import MyComboBox
+from MyQtness.myWidgets import MyComboBox, MyDragDropBox

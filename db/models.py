@@ -193,10 +193,12 @@ class AlchemicalTableModel(QAbstractTableModel):
             foreign_column = name.split('.')
             foreign_item = getattr(row, foreign_column[0])
             if role == Qt.EditRole:
-                print('TableModel - data -- EditRole for index: ', index)
+                print('TableModel - data -- EditRole for foreignkey with index: ', index)
                 return getattr(row, foreign_column[0])
             else:
                 return getattr(foreign_item, foreign_column[1])
+        if role == Qt.EditRole:
+            print('TableModel - data -- EditRole for index: ', index)
         return getattr(row, name)
 
     def setData(self, index, value, role=None):

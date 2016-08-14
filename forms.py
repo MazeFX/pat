@@ -44,6 +44,7 @@ class LetterForm(QWidget, Ui_LetterForm):
         self.pushButtonReset.setFocusPolicy(Qt.NoFocus)
         self.pushButtonReset.clicked.connect(self.on_reset)
 
+
         self.toggle_edit_mode(False, None)
 
     def setModel(self, model):
@@ -57,6 +58,7 @@ class LetterForm(QWidget, Ui_LetterForm):
         self.mapper.addMapping(self.senderComboBox, 2)
         self.mapper.addMapping(self.referenceLineEdit, 3)
         self.mapper.addMapping(self.userComboBox, 4)
+        self.mapper.addMapping(self.scanFileDrop, 5)
 
         self.set_controls()
 

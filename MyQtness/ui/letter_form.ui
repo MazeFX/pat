@@ -19,6 +19,13 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true">#scanFileDrop {
+    border: 1px solid #76797C;
+    background-color: #232629;
+    border-radius: 0px;
+}</string>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QLabel" name="label">
@@ -179,7 +186,7 @@
       </widget>
      </item>
      <item row="5" column="1">
-      <widget class="QWidget" name="scanFileDrop" native="true">
+      <widget class="MyDragDropBox" name="scanFileDrop" native="true">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -190,7 +197,10 @@
         <bool>true</bool>
        </property>
        <property name="autoFillBackground">
-        <bool>true</bool>
+        <bool>false</bool>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout_2">
         <item>
@@ -266,6 +276,12 @@
    <class>MyComboBox</class>
    <extends>QComboBox</extends>
    <header>MyQtness.myWidgets.h</header>
+  </customwidget>
+  <customwidget>
+   <class>MyDragDropBox</class>
+   <extends>QWidget</extends>
+   <header>MyQtness.myWidgets.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>
