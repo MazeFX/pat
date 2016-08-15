@@ -83,7 +83,13 @@ class SettingsDialog(QDialog, Ui_SettingsDialog):
 
     def on_accept(self):
         chosen_database = self.currentDatabaseComboBox.currentIndex()
-        self.settings.setValue('db_name', chosen_database)
+        self.settings.setValue('db_type', chosen_database)
+        if chosen_database == 0:
+            self.settings.setValue('db_name', 'db_development.db')
+            self.settings.setValue('db_base_path', 'db/db_files/')
+        if chosen_database == 1:
+            self.settings.setValue('db_name', 'PAT_db.db')
+            self.settings.setValue('db_base_path', 'c:/PAT_db_files/')
 
         self.setResult(self.Success)
 
@@ -93,6 +99,6 @@ class SettingsDialog(QDialog, Ui_SettingsDialog):
     def load_settings(self):
         self.settings = QSettings()
 
-        chosen_database = self.settings.value('db_name', type='int')
+        chosen_database = self.settings.value('db_type', type='int')
         self.currentDatabaseComboBox.setCurrentIndex(chosen_database)
 

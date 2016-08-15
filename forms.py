@@ -14,7 +14,7 @@ from PyQt5.QtCore import Qt, QDate
 from PyQt5.QtWidgets import QWidget, QDataWidgetMapper
 
 from db.models import AlchemicalTableModel, User, Relation
-from db.helper import DbHelper
+from db.helper import DbHelper, DbFileHandler
 from MyQtness.ui_letter_form import Ui_LetterForm
 from MyQtness.myWidgets import MyItemDelegate
 
@@ -118,11 +118,24 @@ class LetterForm(QWidget, Ui_LetterForm):
 
     def on_save(self):
         print('Save signal sent and recieved.')
+        self.check_scanned_file()
         if self.edit_mode == 'add':
             self.mapper.submit()
         if self.edit_mode == 'edit':
             self.mapper.submit()
         self.toggle_edit_mode(False, None)
+
+    def check_scanned_file(self):
+        print('Scanning for file in db protocol.')
+        mapper_file_name = self.scanFileDrop.getCurrentFile()
+        print('Mapper file name = ', mapper_file_name)
+        db_file_projection = '{date}_{sender}_{reference}.pdf'.format(
+            date=self.dateDateEdit.date().toPyDate(),
+            sender=self.senderComboBox.currentItem.name,
+            reference=self.referenceLineEdit.text())
+        print('File Projection = ', db_file_projection)
+        stored_file = DbFileHandler().store_file(mapper_file_name, db_file_projection)
+        #self.scanFileDrop.setCurrentFile(stored_file)
 
     def on_reset(self):
         print('Reset signal sent and recieved.')

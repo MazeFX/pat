@@ -74,15 +74,13 @@ class MainApp(QMainWindow, Ui_MainWindow):
         print(Fore.MAGENTA + 'Letterform added to mainwindow.')
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_letter), self._translate("MainWindow", "Letters"))
         self.tabWidget.setCurrentIndex(self.tabWidget.indexOf(self.tab_letter))
-        int_value = self.settings.value('db_name', type=int)
-        print(Fore.MAGENTA + "choosen database setting: %s" % repr(int_value))
 
     def close_tab(self, index):
         self.tabWidget.removeTab(index)
 
     def load_settings(self):
         self.settings = QSettings()
-        int_value = self.settings.value('db_name', type=int)
+        int_value = self.settings.value('db_type', type=int)
         print(Fore.MAGENTA + "load choosen database setting: %s" % repr(int_value))
 
     def show_settings(self):

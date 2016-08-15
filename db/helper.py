@@ -25,8 +25,9 @@ class DbHelper(object):
 
     session = None
 
+    db_base_path = None
+
     def __init__(self, *args):
-        super(DbHelper, self).__init__(*args)
         self.settings = QSettings()
 
     def create_test_db(self):
@@ -95,11 +96,10 @@ class DbHelper(object):
         if self.session:
             print(Fore.YELLOW + '====== RETURNING THE EXISTING SESSION =======')
             return self.session
-        chosen_database = self.settings.value('db_name', type='int')
-        if chosen_database == 0:
-            self.db_string = 'sqlite:///db/db_development.db'
-        elif chosen_database == 1:
-            self.db_string = 'sqlite:///c:/PAT_db_files/PAT_db.db'
+
+        self.db_string = 'sqlite:///{base}{db}'.format(
+            base=self.settings.value('db_base_path'),
+            db=self.settings.value('db_name'))
 
         engine = create_engine(self.db_string)
 
@@ -125,6 +125,20 @@ class DbHelper(object):
         return tablemaker
 
 
+class DbFileHandler(object):
+
+    db_base_path = None
+
+    def __init__(self, *args):
+        print('DbFileHandler Initialising')
+        self.settings = QSettings()
+
+    def store_file(self, mapper_file_name, file_projection):
+        print('Storing File: ', mapper_file_name, ', for: ', file_projection)
+
+
 class TableMaker:
     table_data = []
     header_data = []
+
+
