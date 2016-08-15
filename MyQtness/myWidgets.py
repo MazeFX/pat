@@ -21,6 +21,8 @@ from colorama import Fore, Back, Style
 
 class MyTableView(QTableView):
 
+    _currentSelectedRow = None
+
     def __init__(self, *args):
         super(MyTableView, self).__init__(*args)
 
@@ -52,6 +54,19 @@ class MyTableView(QTableView):
         hh.setSectionsMovable(True)
         hh.setSortIndicatorShown(True)
         hh.setHighlightSections(False)
+
+    def setCurrentRow(self, *args):
+        print(Fore.CYAN + 'Setting current Row for Tableview ', args)
+
+    def selectionChanged(self, QItemSelection, QItemSelection_1):
+        if not QItemSelection.isEmpty():
+            print(Fore.CYAN + 'Syncing the form with sent args: ', QItemSelection)
+            print(Fore.CYAN + 'prop: ', prop, ', with value: ', getattr(QItemSelection, prop))
+
+    def getCurrentRow(self, *args):
+        print(Fore.CYAN + 'Setting current Row for Tableview ', args)
+
+    currentSelectedRow = pyqtProperty(object, fget=getCurrentRow, fset=setCurrentRow)
 
 
 class MyComboBox(QComboBox):
