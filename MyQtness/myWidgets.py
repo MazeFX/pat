@@ -140,10 +140,10 @@ class MyItemDelegate(QItemDelegate):
         if hasattr(widget, 'currentIndex'):
             widget.currentItem = modelIndex.data(role=Qt.EditRole)
 
-        if hasattr(widget, 'currentFile'):
+        elif hasattr(widget, 'currentFile'):
             widget.currentFile = [modelIndex.data(role=Qt.EditRole)]
 
-        if hasattr(widget, 'date'):
+        elif hasattr(widget, 'date'):
             print(Fore.RED + '--Trying to set current date for: ', widget)
             print(Fore.RED + '--at index: ', modelIndex.row(), ', ', modelIndex.column())
             print(Fore.RED + '--with date??: ', modelIndex.data())
@@ -153,11 +153,17 @@ class MyItemDelegate(QItemDelegate):
             qtDate = QDate.fromString(date, 'yyyy-MM-dd')
             widget.setDate(qtDate)
 
+        elif hasattr(widget, 'text'):
+            text = modelIndex.data()
+            widget.setText(text)
+
     def setModelData(self, widget, abstractItemModel, modelIndex):
         print(Back.GREEN + Fore.RED + 'Itemdelegate - setModelData; modelindex: ', modelIndex)
         if hasattr(widget, 'currentIndex'):
             abstractItemModel.setData(modelIndex, widget.currentItem)
-        if hasattr(widget, 'currentFile'):
+        elif hasattr(widget, 'currentFile'):
             abstractItemModel.setData(modelIndex, widget.currentFile)
-        if hasattr(widget, 'date'):
+        elif hasattr(widget, 'date'):
             abstractItemModel.setData(modelIndex, widget.date())
+        elif hasattr(widget, 'text'):
+            abstractItemModel.setData(modelIndex, widget.text())

@@ -202,7 +202,7 @@ class AlchemicalTableModel(QAbstractTableModel):
             print('TableModel - data -- EditRole with value: ', getattr(row, name))
             print('TableModel - data -- EditRole with value: ', type(getattr(row, name)))
             getattr(row, name)
-        return getattr(row, name)
+        return str(getattr(row, name))
 
     def setData(self, index, value, role=None):
         print(Fore.BLUE + '-- setting data for: ', index, 'with value: ', value)
