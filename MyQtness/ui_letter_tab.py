@@ -15,7 +15,7 @@ class Ui_Form(object):
         self.horizontalLayout = QtWidgets.QHBoxLayout(Form)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.tableView = QtWidgets.QTableView(Form)
-        self.tableView.setEditTriggers(QtWidgets.QAbstractItemView.DoubleClicked)
+        self.tableView.setEditTriggers(QtWidgets.QAbstractItemView.CurrentChanged|QtWidgets.QAbstractItemView.DoubleClicked)
         self.tableView.setTabKeyNavigation(False)
         self.tableView.setProperty("showDropIndicator", False)
         self.tableView.setDragEnabled(False)

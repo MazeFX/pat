@@ -51,6 +51,8 @@ class LetterTab(QWidget):
         self.letterForm = LetterForm()
         self.letterForm.dbhelper = self.dbhelper
         self.letterForm.setModel(model)
+        selectionModel = self.tableView.selectionModel()
+        selectionModel.selectionChanged.connect(self.letterForm.set_mapper_index)
 
         self.horizontalLayout.addWidget(self.letterForm)
         self.horizontalLayout.addWidget(self.tableView)

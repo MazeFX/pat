@@ -89,6 +89,13 @@ class LetterForm(QWidget, Ui_LetterForm):
         self.userComboBox.setEnabled(flag)
         self.scanFileDrop.setEnabled(flag)
 
+    def set_mapper_index(self, *args):
+        print('Setting letter Form mapper index: ', args)
+        selected_index = args[0].indexes()
+        row_index = selected_index[0].row()
+        self.mapper.setCurrentIndex(row_index)
+        print('Setting letter Form mapper index: ', row_index)
+
     def on_add(self):
         print('Add signal sent and recieved.')
         row = self.model.rowCount(None)
@@ -103,7 +110,6 @@ class LetterForm(QWidget, Ui_LetterForm):
 
     def on_edit(self):
         print('Edit signal sent and recieved.')
-        self.mapper.setCurrentIndex(1)
         print('mapper index: ', self.mapper.currentIndex())
         self.toggle_edit_mode(True, 'edit')
 

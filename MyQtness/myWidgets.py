@@ -54,19 +54,25 @@ class MyTableView(QTableView):
         hh.setSectionsMovable(True)
         hh.setSortIndicatorShown(True)
         hh.setHighlightSections(False)
+        print(Fore.CYAN + 'Setting current Row for Tableview ', self.currentIndex())
 
-    def setCurrentRow(self, *args):
-        print(Fore.CYAN + 'Setting current Row for Tableview ', args)
+    def setCurrentRow(self, index):
+        print(Fore.CYAN + 'Setting current Row for Tableview ', index)
+        self._currentSelectedRow = index
 
     def selectionChanged(self, QItemSelection, QItemSelection_1):
+        super(MyTableView, self).selectionChanged(QItemSelection, QItemSelection_1)
         if not QItemSelection.isEmpty():
             print(Fore.CYAN + 'Syncing the form with sent args: ', QItemSelection)
-            print(Fore.CYAN + 'prop: ', prop, ', with value: ', getattr(QItemSelection, prop))
+            print(Fore.CYAN + 'index with value: ', QItemSelection.indexes())
+            print(Fore.CYAN + 'index with row: ', QItemSelection.indexes()[0].row())
+            self.setCurrentRow(QItemSelection.indexes()[0].row())
 
     def getCurrentRow(self, *args):
         print(Fore.CYAN + 'Setting current Row for Tableview ', args)
+        return self._currentSelectedRow
 
-    currentSelectedRow = pyqtProperty(object, fget=getCurrentRow, fset=setCurrentRow)
+    currentSelectedRow = pyqtProperty(int, fget=getCurrentRow, fset=setCurrentRow)
 
 
 class MyComboBox(QComboBox):
