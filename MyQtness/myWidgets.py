@@ -15,8 +15,10 @@ import os
 import operator
 import datetime
 
+from PyQt5.QtGui import QFont
 from PyQt5.QtCore import Qt, pyqtProperty, pyqtSignal, QDate
-from PyQt5.QtWidgets import QTableView, QAbstractItemView, QWidget, QComboBox, QItemDelegate
+from PyQt5.QtWidgets import QVBoxLayout, QTableView, QAbstractItemView, \
+    QWidget, QComboBox, QLabel, QItemDelegate
 from colorama import Fore, Back, Style
 
 
@@ -105,9 +107,28 @@ class MyDragDropBox(QWidget):
     # Emitted when selection of combobox changes
     _currentFile = None
 
-    def __init__(self, *args):
+    def __init__(self, *args, **kwargs):
         super(MyDragDropBox, self).__init__(*args)
-        # self.currentIndexChanged.connect(self.indexChanged)
+        print(Fore.GREEN + '--=== DRAGDROPBOX ===--')
+        print(Fore.GREEN + 'Here come the inits!')
+        print(Fore.GREEN + 'args: ', args)
+        print(Fore.GREEN + 'kwargs: ', kwargs)
+        print(Fore.GREEN + '==--- DRAGDROPBOX ---==')
+
+        self.verticalLayout = QVBoxLayout(self)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.DropLabel = QLabel(self)
+        font = QFont()
+        font.setPointSize(12)
+        font.setBold(False)
+        font.setUnderline(False)
+        font.setWeight(50)
+        self.DropLabel.setFont(font)
+        self.DropLabel.setAlignment(Qt.AlignCenter)
+        self.DropLabel.setObjectName("DropLabel")
+        self.verticalLayout.addWidget(self.DropLabel)
+        print(Fore.GREEN + '-- DRAGDROPBOX -- setting layout for: ', self.DropLabel)
+        self.edit = False
 
     def dragEnterEvent(self, event):
         print(Fore.GREEN + '-- DRAGDROPBOX -- Enter with drag')
@@ -121,6 +142,9 @@ class MyDragDropBox(QWidget):
     def dropEvent(self, event):
         print(Fore.GREEN + '-- DRAGDROPBOX -- Dropped something??')
         print(Fore.GREEN + '-- DRAGDROPBOX -- passed event: ', event)
+        if not self.edit:
+            event.accept()
+            return
         if event.mimeData().hasUrls:
             event.setDropAction(Qt.CopyAction)
             event.accept()
@@ -133,6 +157,15 @@ class MyDragDropBox(QWidget):
         else:
             event.ignore()
 
+    def mouseDoubleClickEvent(self, QMouseEvent):
+        print(Fore.GREEN + '-- DRAGDROPBOX -- Registered a double click')
+        filename = self.getCurrentFile()
+        print(Fore.GREEN + 'Current file name for opening = ', filename)
+        if filename:
+            if os.path.exists(filename):
+                print(Fore.GREEN + 'Current file exists and now opening')
+                os.startfile(filename)
+
     def getCurrentFile(self):
         print(Fore.GREEN + '-- DRAGDROPBOX -- Getting the file: ')
         print(Fore.GREEN + '---------------------------------------')
@@ -143,14 +176,21 @@ class MyDragDropBox(QWidget):
     def setCurrentFile(self, file):
         print(Fore.GREEN + '-- DRAGDROPBOX -- Setting the file: ', file)
         self._currentFile = file
-
-    def mouseDoubleClickEvent(self, QMouseEvent):
-        print(Fore.GREEN + '-- DRAGDROPBOX -- Registered a double click')
-        filename = self.getCurrentFile()
-        print(Fore.GREEN + 'Current file name for opening = ', filename)
-        os.startfile(filename)
+        self.check_widget_layout()
 
     currentFile = pyqtProperty(str, fget=getCurrentFile, fset=setCurrentFile)
+
+    def check_widget_layout(self):
+        print(Fore.GREEN + '-- DRAGDROPBOX -- setting layout for: ', self.DropLabel)
+        if self._currentFile:
+            self.DropLabel.setText('Open File')
+        else:
+            self.DropLabel.setText('Drop File')
+
+
+
+
+
 
 
 class MyItemDelegate(QItemDelegate):

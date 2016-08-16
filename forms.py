@@ -59,6 +59,7 @@ class LetterForm(QWidget, Ui_LetterForm):
         self.mapper.addMapping(self.referenceLineEdit, 3)
         self.mapper.addMapping(self.userComboBox, 4)
         self.mapper.addMapping(self.scanFileDrop, 5)
+        self.mapper.setCurrentIndex(0)
 
         self.set_controls()
 
@@ -87,7 +88,7 @@ class LetterForm(QWidget, Ui_LetterForm):
         self.senderComboBox.setEnabled(flag)
         self.referenceLineEdit.setEnabled(flag)
         self.userComboBox.setEnabled(flag)
-        self.scanFileDrop.setEnabled(flag)
+        self.scanFileDrop.edit = flag
 
     def set_mapper_index(self, *args):
         print('Setting letter Form mapper index: ', args)

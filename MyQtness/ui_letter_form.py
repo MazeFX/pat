@@ -13,11 +13,7 @@ class Ui_LetterForm(object):
         LetterForm.setObjectName("LetterForm")
         LetterForm.resize(320, 559)
         LetterForm.setMaximumSize(QtCore.QSize(350, 16777215))
-        LetterForm.setStyleSheet("#scanFileDrop {\n"
-"    border: 1px solid #76797C;\n"
-"    background-color: #232629;\n"
-"    border-radius: 0px;\n"
-"}")
+        LetterForm.setStyleSheet("")
         self.verticalLayout = QtWidgets.QVBoxLayout(LetterForm)
         self.verticalLayout.setObjectName("verticalLayout")
         self.label = QtWidgets.QLabel(LetterForm)
@@ -92,18 +88,6 @@ class Ui_LetterForm(object):
         self.scanFileDrop.setAutoFillBackground(False)
         self.scanFileDrop.setStyleSheet("")
         self.scanFileDrop.setObjectName("scanFileDrop")
-        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.scanFileDrop)
-        self.verticalLayout_2.setObjectName("verticalLayout_2")
-        self.label_3 = QtWidgets.QLabel(self.scanFileDrop)
-        font = QtGui.QFont()
-        font.setPointSize(12)
-        font.setBold(False)
-        font.setUnderline(False)
-        font.setWeight(50)
-        self.label_3.setFont(font)
-        self.label_3.setAlignment(QtCore.Qt.AlignCenter)
-        self.label_3.setObjectName("label_3")
-        self.verticalLayout_2.addWidget(self.label_3)
         self.formLayout.setWidget(5, QtWidgets.QFormLayout.FieldRole, self.scanFileDrop)
         self.userComboBox = MyComboBox(LetterForm)
         self.userComboBox.setObjectName("userComboBox")
@@ -141,7 +125,6 @@ class Ui_LetterForm(object):
         self.senderLabel.setText(_translate("LetterForm", "Sender"))
         self.referenceLabel.setText(_translate("LetterForm", "Reference"))
         self.scanLabel.setText(_translate("LetterForm", "Scan"))
-        self.label_3.setText(_translate("LetterForm", "Drop file"))
         self.pushButtonSave.setText(_translate("LetterForm", "Save"))
         self.pushButtonReset.setText(_translate("LetterForm", "Reset"))
 

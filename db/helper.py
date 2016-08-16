@@ -137,6 +137,8 @@ class DbFileHandler(object):
     def store_file(self, mapper_file_name, file_projection):
         print('Storing File: ', mapper_file_name, ', for: ', file_projection)
         print('ROOT_DIR = ', ROOT_DIR)
+        if not mapper_file_name:
+            return None
         db_path_type = self.settings.value('db_type')
         db_path = self.settings.value('db_base_path')
         if db_path_type == 0:
