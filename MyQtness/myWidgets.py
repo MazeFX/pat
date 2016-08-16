@@ -11,6 +11,7 @@ Date: 5-8-2016
 Python Test docstring.
 """
 
+import os
 import operator
 import datetime
 
@@ -145,6 +146,9 @@ class MyDragDropBox(QWidget):
 
     def mouseDoubleClickEvent(self, QMouseEvent):
         print(Fore.GREEN + '-- DRAGDROPBOX -- Registered a double click')
+        filename = self.getCurrentFile()
+        print(Fore.GREEN + 'Current file name for opening = ', filename)
+        os.startfile(filename)
 
     currentFile = pyqtProperty(str, fget=getCurrentFile, fset=setCurrentFile)
 
