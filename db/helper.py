@@ -11,7 +11,9 @@ Date: 4-8-2016
 Python Test docstring.
 """
 
+import os
 import datetime
+from shutil import copyfile
 
 from PyQt5.QtCore import QSettings
 
@@ -127,14 +129,28 @@ class DbHelper(object):
 
 class DbFileHandler(object):
 
-    db_base_path = None
-
     def __init__(self, *args):
         print('DbFileHandler Initialising')
         self.settings = QSettings()
 
     def store_file(self, mapper_file_name, file_projection):
         print('Storing File: ', mapper_file_name, ', for: ', file_projection)
+
+        db_path_type = self.settings.value('db_type')
+        db_path = self.settings.value('db_base_path')
+        if db_path_type == 0:
+            dir_path = os.path.join(db_path, file_projection[0])
+        print('DB_path = ', dir_path)
+        if not os.path.isdir(dir_path):
+            os.makedirs(dir_path)
+
+        file_name = ''.join(Letter.date, Letter.sender, Letter.reference)
+        full_file_name = os.path.join(dir_path, file_name)
+        if not os.path.exists(full_file_name):
+            copyfile(orig_name, full_file_name)
+
+        store
+        full_file_name in DB
 
 
 class TableMaker:

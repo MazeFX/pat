@@ -3,6 +3,10 @@ P.A.T.
 
 Personal Admin Tool built with Python and Qt.
 
+**Personal Note**
+First attempt with PyQt and Qt project. Getting to know the framework fast and dirty.
+
+
 Settings
 --------
 

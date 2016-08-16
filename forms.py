@@ -129,12 +129,13 @@ class LetterForm(QWidget, Ui_LetterForm):
         print('Scanning for file in db protocol.')
         mapper_file_name = self.scanFileDrop.getCurrentFile()
         print('Mapper file name = ', mapper_file_name)
-        db_file_projection = '{date}_{sender}_{reference}.pdf'.format(
+        projection_dir = str(self.senderComboBox.currentItem.name)
+        projection_name = '{date}_{sender}_{reference}.pdf'.format(
             date=self.dateDateEdit.date().toPyDate(),
             sender=self.senderComboBox.currentItem.name,
             reference=self.referenceLineEdit.text())
-        print('File Projection = ', db_file_projection)
-        stored_file = DbFileHandler().store_file(mapper_file_name, db_file_projection)
+        print('File Projection = ', (projection_dir, projection_name))
+        stored_file = DbFileHandler().store_file(mapper_file_name, (projection_dir, projection_name))
         #self.scanFileDrop.setCurrentFile(stored_file)
 
     def on_reset(self):

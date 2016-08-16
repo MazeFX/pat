@@ -30,7 +30,6 @@ from tabs import LetterTab, HomeTab
 from db.helper import DbHelper
 
 
-
 class MainApp(QMainWindow, Ui_MainWindow):
     _translate = QCoreApplication.translate
     # TODO - add dutch translation files
