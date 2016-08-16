@@ -238,20 +238,37 @@ class AlchemicalTableModel(QAbstractTableModel):
     def createNewRow(self, index):
         print('createNewRow from model is called.')
         new_row = []
-        for x in self.fields:
+        for x in self.results:
             new_row.append('')
         self.results.append(new_row)
 
-    def insertNewRow(self, index):
-        new_object = self.model()
-        new_object.user = 0
+    def projectNewRow(self, index):
+        print(Fore.BLUE + '-- Projecting New Row --')
+        print(Fore.BLUE + '-- Current results: ', self.results)
+        new_object = self.model(date=datetime.date.today(),
+                             sender_id=1,
+                             subject='',
+                             reference='',
+                             user_id=1,
+                             scan_file='',
+                             letter_type=0)
+        self.results.append(new_object)
+        print(Fore.BLUE + '-- After append results: ', self.results)
+        index = self.createIndex(3, 0)
+        #self.session.add(new_object)
+        #self.session.commit()
+
+
+
+
         '''
         for x in range(len(self.fields)):
             setattr(new_object, self.fields[x][2], self.result[index][x])
         print('newobject = ', new_object)
-        '''
+
         self.session.add(new_object)
         self.session.commit()
         self.refresh()
+        '''
 
 

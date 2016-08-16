@@ -10,7 +10,7 @@ Date: 1-8-2016
 
 Python Test docstring.
 """
-from PyQt5.QtCore import Qt, QDate
+from PyQt5.QtCore import Qt, QDate, QModelIndex
 from PyQt5.QtWidgets import QWidget, QDataWidgetMapper
 
 from db.models import AlchemicalTableModel, User, Relation
@@ -100,8 +100,11 @@ class LetterForm(QWidget, Ui_LetterForm):
     def on_add(self):
         print('Add signal sent and recieved.')
         row = self.model.rowCount(None)
-        self.model.insertNewRow(row)
-        self.mapper.setCurrentIndex(row)
+
+
+        self.model.projectNewRow(row)
+
+        self.mapper.setCurrentIndex(row - 1)
         now = QDate.currentDate()
         self.dateDateEdit.setDate(now)
         self.subjectLineEdit.setFocus()

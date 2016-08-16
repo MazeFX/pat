@@ -28,8 +28,6 @@ class DbHelper(object):
 
     session = None
 
-    db_base_path = None
-
     def __init__(self, *args):
         self.settings = QSettings()
 
