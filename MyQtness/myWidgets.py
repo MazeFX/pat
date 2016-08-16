@@ -54,22 +54,16 @@ class MyTableView(QTableView):
         hh.setSectionsMovable(True)
         hh.setSortIndicatorShown(True)
         hh.setHighlightSections(False)
-        print(Fore.CYAN + 'Setting current Row for Tableview ', self.currentIndex())
 
     def setCurrentRow(self, index):
-        print(Fore.CYAN + 'Setting current Row for Tableview ', index)
         self._currentSelectedRow = index
 
     def selectionChanged(self, QItemSelection, QItemSelection_1):
         super(MyTableView, self).selectionChanged(QItemSelection, QItemSelection_1)
         if not QItemSelection.isEmpty():
-            print(Fore.CYAN + 'Syncing the form with sent args: ', QItemSelection)
-            print(Fore.CYAN + 'index with value: ', QItemSelection.indexes())
-            print(Fore.CYAN + 'index with row: ', QItemSelection.indexes()[0].row())
             self.setCurrentRow(QItemSelection.indexes()[0].row())
 
     def getCurrentRow(self, *args):
-        print(Fore.CYAN + 'Setting current Row for Tableview ', args)
         return self._currentSelectedRow
 
     currentSelectedRow = pyqtProperty(int, fget=getCurrentRow, fset=setCurrentRow)
@@ -99,7 +93,6 @@ class MyComboBox(QComboBox):
             if hasattr(row, 'id'):
                 if hasattr(item, 'id'):
                     if row.id == item.id:
-
                         self.setCurrentIndex(row.id - 1)
                         self._currentItem = item
 
@@ -142,13 +135,18 @@ class MyDragDropBox(QWidget):
     def getCurrentFile(self):
         print(Fore.GREEN + '-- DRAGDROPBOX -- Getting the file: ')
         print(Fore.GREEN + '---------------------------------------')
+        print(Fore.GREEN + 'Current File = ', self._currentFile)
+        print(Fore.GREEN + 'With Type = ', type(self._currentFile))
         return self._currentFile
 
     def setCurrentFile(self, file):
-        print(Fore.GREEN + '-- DRAGDROPBOX -- Setting the file: ', file[0])
-        self._currentFile = file[0]
+        print(Fore.GREEN + '-- DRAGDROPBOX -- Setting the file: ', file)
+        self._currentFile = file
 
-    currentFile = pyqtProperty(object, fget=getCurrentFile, fset=setCurrentFile)
+    def mouseDoubleClickEvent(self, QMouseEvent):
+        print(Fore.GREEN + '-- DRAGDROPBOX -- Registered a double click')
+
+    currentFile = pyqtProperty(str, fget=getCurrentFile, fset=setCurrentFile)
 
 
 class MyItemDelegate(QItemDelegate):
@@ -157,19 +155,13 @@ class MyItemDelegate(QItemDelegate):
         super(MyItemDelegate, self).__init__(*args)
 
     def setEditorData(self, widget, modelIndex):
-        print(Fore.RED + 'Itemdelegate - setEditorData; modelindex: ', modelIndex)
         if hasattr(widget, 'currentIndex'):
             widget.currentItem = modelIndex.data(role=Qt.EditRole)
 
         elif hasattr(widget, 'currentFile'):
-            widget.currentFile = [modelIndex.data(role=Qt.EditRole)]
+            widget.currentFile = modelIndex.data(role=Qt.EditRole)
 
         elif hasattr(widget, 'date'):
-            print(Fore.RED + '--Trying to set current date for: ', widget)
-            print(Fore.RED + '--at index: ', modelIndex.row(), ', ', modelIndex.column())
-            print(Fore.RED + '--with date??: ', modelIndex.data())
-
-            print(Fore.RED + '--setting widget.date: ', type(modelIndex.data(role=Qt.EditRole)))
             date = str(modelIndex.data(role=Qt.EditRole))
             qtDate = QDate.fromString(date, 'yyyy-MM-dd')
             widget.setDate(qtDate)
@@ -179,7 +171,6 @@ class MyItemDelegate(QItemDelegate):
             widget.setText(text)
 
     def setModelData(self, widget, abstractItemModel, modelIndex):
-        print(Back.GREEN + Fore.RED + 'Itemdelegate - setModelData; modelindex: ', modelIndex)
         if hasattr(widget, 'currentIndex'):
             abstractItemModel.setData(modelIndex, widget.currentItem)
         elif hasattr(widget, 'currentFile'):

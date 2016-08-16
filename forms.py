@@ -136,7 +136,9 @@ class LetterForm(QWidget, Ui_LetterForm):
             reference=self.referenceLineEdit.text())
         print('File Projection = ', (projection_dir, projection_name))
         stored_file = DbFileHandler().store_file(mapper_file_name, (projection_dir, projection_name))
-        #self.scanFileDrop.setCurrentFile(stored_file)
+        print('stored file = ', stored_file)
+        print('with type = ', type(stored_file))
+        self.scanFileDrop.setCurrentFile(stored_file)
 
     def on_reset(self):
         print('Reset signal sent and recieved.')

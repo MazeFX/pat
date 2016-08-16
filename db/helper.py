@@ -17,6 +17,7 @@ from shutil import copyfile
 
 from PyQt5.QtCore import QSettings
 
+from constants import ROOT_DIR
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
 from db.models import Base, User, Letter, Relation
@@ -135,22 +136,24 @@ class DbFileHandler(object):
 
     def store_file(self, mapper_file_name, file_projection):
         print('Storing File: ', mapper_file_name, ', for: ', file_projection)
-
+        print('ROOT_DIR = ', ROOT_DIR)
         db_path_type = self.settings.value('db_type')
         db_path = self.settings.value('db_base_path')
         if db_path_type == 0:
-            dir_path = os.path.join(db_path, file_projection[0])
-        print('DB_path = ', dir_path)
-        if not os.path.isdir(dir_path):
-            os.makedirs(dir_path)
+            db_dir_path = os.path.join(ROOT_DIR, db_path, file_projection[0])
+        print('DB_dir_path = ', db_dir_path)
+        if not os.path.isdir(db_dir_path):
+            os.makedirs(db_dir_path)
 
-        file_name = ''.join(Letter.date, Letter.sender, Letter.reference)
-        full_file_name = os.path.join(dir_path, file_name)
+        full_file_name = os.path.join(db_dir_path, file_projection[1])
+        print('full file name = ', full_file_name)
+        print('with type = ', type(full_file_name))
+        print('mapper_file_name = ', mapper_file_name)
+        print('with type = ', type(mapper_file_name))
         if not os.path.exists(full_file_name):
-            copyfile(orig_name, full_file_name)
+            copyfile(mapper_file_name, full_file_name)
 
-        store
-        full_file_name in DB
+        return full_file_name
 
 
 class TableMaker:

@@ -81,6 +81,12 @@ class SettingsDialog(QDialog, Ui_SettingsDialog):
         self.buttonBox.accepted.connect(self.on_accept)
         self.buttonBox.rejected.connect(self.on_reject)
 
+    def load_settings(self):
+        self.settings = QSettings()
+
+        chosen_database = self.settings.value('db_type', type='int')
+        self.currentDatabaseComboBox.setCurrentIndex(chosen_database)
+
     def on_accept(self):
         chosen_database = self.currentDatabaseComboBox.currentIndex()
         self.settings.setValue('db_type', chosen_database)
@@ -96,9 +102,5 @@ class SettingsDialog(QDialog, Ui_SettingsDialog):
     def on_reject(self):
         self.setResult(self.Rejected)
 
-    def load_settings(self):
-        self.settings = QSettings()
 
-        chosen_database = self.settings.value('db_type', type='int')
-        self.currentDatabaseComboBox.setCurrentIndex(chosen_database)
 
