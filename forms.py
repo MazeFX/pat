@@ -17,6 +17,7 @@ from db.models import AlchemicalTableModel, User, Relation
 from db.helper import DbHelper, DbFileHandler
 from MyQtness.ui_letter_form import Ui_LetterForm
 from MyQtness.myWidgets import MyItemDelegate
+from colorama import Fore, Back, Style
 
 
 class LetterForm(QWidget, Ui_LetterForm):
@@ -98,30 +99,30 @@ class LetterForm(QWidget, Ui_LetterForm):
         print('Setting letter Form mapper index: ', row_index)
 
     def on_add(self):
-        print('Add signal sent and recieved.')
+        print(Fore.CYAN + 'Add signal sent and recieved.')
         row = self.model.rowCount(None)
-
-
-        self.model.projectNewRow(row)
-
-        self.mapper.setCurrentIndex(row - 1)
+        self.model.insertRow(row)
+        print(Fore.CYAN + 'Row count after add: ', self.model.rowCount(None))
+        self.mapper.setCurrentIndex(row)
+        print(Fore.CYAN + 'New row at index: ', row)
+        print(Fore.CYAN + 'mapper index: ', self.mapper.currentIndex())
         now = QDate.currentDate()
         self.dateDateEdit.setDate(now)
         self.subjectLineEdit.setFocus()
         self.toggle_edit_mode(True, 'add')
-        print('New row at index: ', row)
-        print('mapper index: ', self.mapper.currentIndex())
+        print(Fore.CYAN + 'New row at index: ', row)
+        print(Fore.CYAN + 'mapper index: ', self.mapper.currentIndex())
 
     def on_edit(self):
-        print('Edit signal sent and recieved.')
-        print('mapper index: ', self.mapper.currentIndex())
+        print(Fore.CYAN + 'Edit signal sent and recieved.')
+        print(Fore.CYAN + 'mapper index: ', self.mapper.currentIndex())
         self.toggle_edit_mode(True, 'edit')
 
     def on_delete(self):
-        print('Delete signal sent and recieved.')
+        print(Fore.CYAN + 'Delete signal sent and recieved.')
 
     def on_save(self):
-        print('Save signal sent and recieved.')
+        print(Fore.CYAN + 'Save signal sent and recieved.')
         self.check_scanned_file()
         if self.edit_mode == 'add':
             self.mapper.submit()
@@ -145,4 +146,4 @@ class LetterForm(QWidget, Ui_LetterForm):
         self.scanFileDrop.setCurrentFile(stored_file)
 
     def on_reset(self):
-        print('Reset signal sent and recieved.')
+        print(Fore.CYAN + 'Reset signal sent and recieved.')

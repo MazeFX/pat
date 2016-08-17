@@ -15,7 +15,7 @@ Python Test docstring.
 import datetime
 
 from PyQt5.QtWidgets import QMessageBox
-from PyQt5.QtCore import QAbstractTableModel, QVariant, Qt
+from PyQt5.QtCore import QAbstractTableModel, QModelIndex, QVariant, Qt
 
 from sqlalchemy import Column, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
@@ -167,7 +167,7 @@ class AlchemicalTableModel(QAbstractTableModel):
         return False
 
     def rowCount(self, parent):
-        return self.count or 0
+        return len(self.results) or 0
 
     def columnCount(self, parent):
         return len(self.fields)
@@ -194,8 +194,11 @@ class AlchemicalTableModel(QAbstractTableModel):
             foreign_item = getattr(row, foreign_column[0])
             if role == Qt.EditRole:
                 print('TableModel - data -- EditRole for foreignkey with index: ', index)
-                return getattr(row, foreign_column[0])
+                return foreign_item
             else:
+                print('TableModel - get attr: ', foreign_item, ', ', foreign_column[1])
+                if foreign_item is None:
+                    return None
                 return getattr(foreign_item, foreign_column[1])
         if role == Qt.EditRole:
             print('TableModel - data -- EditRole for index: ', index)
@@ -252,14 +255,41 @@ class AlchemicalTableModel(QAbstractTableModel):
                              user_id=1,
                              scan_file='',
                              letter_type=0)
+
+
+
+    '''
+    def removeRow(self, row, parent=None, *args, **kwargs):
+        print("\n\t\t ...removeRows() Starting position: '%s'" % row)
+        self.beginRemoveRows()
+        self.beginRemoveRows(QModelIndex(), position, position + rows - 1)
+        self.items = self.items[:position] + self.items[position + rows:]
+        self.endRemoveRows()
+
+        return True
+    '''
+
+    def insertRow(self, row, parent=None, *args, **kwargs):
+        print(Fore.BLUE + '-- Projecting New Row --')
+        print(Fore.BLUE + '-- Current results: ', self.results)
+        print("\n\t\t ...insertRows() Starting position: '%s'" % row)
+        new_object = self.model(date=datetime.date.today(),
+                                sender_id=1,
+                                subject='',
+                                reference='',
+                                user_id=1,
+                                scan_file='',
+                                letter_type=0)
+        self.beginInsertRows(QModelIndex(), row, row)
         self.results.append(new_object)
-        print(Fore.BLUE + '-- After append results: ', self.results)
-        index = self.createIndex(3, 0)
-        #self.session.add(new_object)
-        #self.session.commit()
+        self.endInsertRows()
+        print(Fore.BLUE + '-- Current results: ', self.results)
+        return True
 
-
-
+    def storeRow(self, row):
+        new_object = self.results[row]
+        self.session.add(new_object)
+        self.session.commit()
 
         '''
         for x in range(len(self.fields)):
