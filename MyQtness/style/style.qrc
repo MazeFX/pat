@@ -43,5 +43,6 @@
 
   <qresource>
       <file>style.qss</file>
+      <file>dark_style.qss</file>
   </qresource>
 </RCC>

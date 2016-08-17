@@ -21,7 +21,6 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-
 QToolTip
 {
     border: 1px solid #76797C;
@@ -637,7 +636,7 @@ QPushButton:checked{
     border-color: #6A6969;
 }
 
-QComboBox:hover,QPushButton:hover,QAbstractSpinBox:hover,QLineEdit:hover,QTextEdit:hover,QPlainTextEdit:hover,QAbstractView:hover,QTreeView:hover
+QComboBox:hover,QPushButton:hover,QAbstractSpinBox:hover,QLineEdit:hover,QTextEdit:hover,QPlainTextEdit:hover,QAbstractView:hover,QTreeView:hover,MyDragDropBox:hover
 {
     border: 1px solid #3daee9;
     color: #eff0f1;
@@ -1207,16 +1206,27 @@ QProgressBar::chunk {
     background-color: #05B8CC;
 }
 
-MyDragDropBox
+MyDragDropBox#scanFileDrop
 {
     background-color: #232629;
     padding: 5px;
-    border-style: solid;
-    border: 1px solid #76797C;
     border-radius: 2px;
     color: #eff0f1;
+    border: 1px solid #76797C;
+}
+
+#DropLabel {
+    background-color: #232629;
 }
 
 QLabel#Header1 {
-    color: #000000;
+    font-family: 'Ethnocentric Rg';
+    font-size: 120px;
+}
+
+QLabel#Header2_1,
+QLabel#Header2_2,
+QLabel#Header2_3 {
+    font-family: 'Ubuntu';
+    font-size: 22px;
 }

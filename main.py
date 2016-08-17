@@ -16,6 +16,7 @@ sub-forms and widgets.
 """
 
 import sys
+from PyQt5.QtGui import QFontDatabase
 from PyQt5.QtCore import QCoreApplication, QSettings
 from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QWidget
 from colorama import Fore, Back, Style
@@ -97,6 +98,12 @@ if __name__ == "__main__":
     app.setOrganizationName("MazeFX Solutions")
     app.setOrganizationDomain("MazeFX.pythonanywhere.com")
 
+    QFontDatabase().addApplicationFont("C:\PDE\projects\qt\pat\MyQtness\style\ethnocentric.ttf")
+    Id = QFontDatabase().addApplicationFont("C:\PDE\projects\qt\pat\MyQtness\style/ubuntu_bold.ttf")
+    print(Fore.MAGENTA + 'Font ID = ', Id)
+    lst = QFontDatabase().applicationFontFamilies(Id)
+    print(Fore.MAGENTA + 'Font List = ', lst)
+    fam = QFontDatabase().families()
     loginDialog = LoginDialog()
 
     '''

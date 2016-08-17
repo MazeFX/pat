@@ -15,10 +15,10 @@ import os
 import operator
 import datetime
 
-from PyQt5.QtGui import QFont
+from PyQt5.QtGui import QFont, QPainter
 from PyQt5.QtCore import Qt, pyqtProperty, pyqtSignal, QDate
 from PyQt5.QtWidgets import QVBoxLayout, QTableView, QAbstractItemView, \
-    QWidget, QComboBox, QLabel, QItemDelegate
+    QFrame, QComboBox, QLabel, QItemDelegate, QStyleOption, QStyle
 from colorama import Fore, Back, Style
 
 
@@ -102,7 +102,7 @@ class MyComboBox(QComboBox):
     currentItem = pyqtProperty(object, fget=getCurrentItem, fset=setCurrentItem)
 
 
-class MyDragDropBox(QWidget):
+class MyDragDropBox(QFrame):
 
     # Emitted when selection of combobox changes
     _currentFile = None
@@ -129,6 +129,8 @@ class MyDragDropBox(QWidget):
         self.verticalLayout.addWidget(self.DropLabel)
         print(Fore.GREEN + '-- DRAGDROPBOX -- setting layout for: ', self.DropLabel)
         self.edit = False
+
+
 
     def dragEnterEvent(self, event):
         print(Fore.GREEN + '-- DRAGDROPBOX -- Enter with drag')
