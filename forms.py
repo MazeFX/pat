@@ -29,6 +29,7 @@ class LetterForm(QWidget, Ui_LetterForm):
 
         self.setupUi(self)
         # TODO  - Create own functions for loading the rc file, own style
+        self.edit_mode = None
 
         self.pushButtonAdd.setFocusPolicy(Qt.NoFocus)
         self.pushButtonAdd.clicked.connect(self.on_add)
@@ -45,8 +46,7 @@ class LetterForm(QWidget, Ui_LetterForm):
         self.pushButtonReset.setFocusPolicy(Qt.NoFocus)
         self.pushButtonReset.clicked.connect(self.on_reset)
 
-
-        self.toggle_edit_mode(False, None)
+        self.toggle_edit_mode(False, None, None)
 
     def setModel(self, model):
         self.model = model
@@ -81,9 +81,10 @@ class LetterForm(QWidget, Ui_LetterForm):
         self.userComboBox.setModel(user_model)
         self.senderComboBox.setModel(relation_model)
 
-    def toggle_edit_mode(self, flag, mode):
+    def toggle_edit_mode(self, flag, mode, row):
         print('Setting edit mode for letter form: ', flag, mode)
         self.edit_mode = mode
+        self.openRow = row
         self.dateDateEdit.setEnabled(flag)
         self.subjectLineEdit.setEnabled(flag)
         self.senderComboBox.setEnabled(flag)
@@ -109,14 +110,14 @@ class LetterForm(QWidget, Ui_LetterForm):
         now = QDate.currentDate()
         self.dateDateEdit.setDate(now)
         self.subjectLineEdit.setFocus()
-        self.toggle_edit_mode(True, 'add')
+        self.toggle_edit_mode(True, 'add', row)
         print(Fore.CYAN + 'New row at index: ', row)
         print(Fore.CYAN + 'mapper index: ', self.mapper.currentIndex())
 
     def on_edit(self):
         print(Fore.CYAN + 'Edit signal sent and recieved.')
         print(Fore.CYAN + 'mapper index: ', self.mapper.currentIndex())
-        self.toggle_edit_mode(True, 'edit')
+        self.toggle_edit_mode(True, 'edit', self.mapper.currentIndex())
 
     def on_delete(self):
         print(Fore.CYAN + 'Delete signal sent and recieved.')
@@ -125,10 +126,12 @@ class LetterForm(QWidget, Ui_LetterForm):
         print(Fore.CYAN + 'Save signal sent and recieved.')
         self.check_scanned_file()
         if self.edit_mode == 'add':
+            self.model.storeRow(self.openRow)
             self.mapper.submit()
+            self.edit_mode = None
         if self.edit_mode == 'edit':
             self.mapper.submit()
-        self.toggle_edit_mode(False, None)
+        self.toggle_edit_mode(False, None, None)
 
     def check_scanned_file(self):
         print('Scanning for file in db protocol.')

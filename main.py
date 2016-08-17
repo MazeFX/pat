@@ -26,6 +26,7 @@ import qdarkstyle
 
 from dialogs import LoginDialog, SettingsDialog
 from MyQtness.ui_main_window import Ui_MainWindow
+from MyQtness import style
 from tabs import LetterTab, HomeTab
 from db.helper import DbHelper
 
@@ -53,7 +54,7 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.verticalLayout.addWidget(self.tabWidget)
 
         # TODO  - Create own functions for loading the rc file, own style
-        stylesheet = qdarkstyle.load_stylesheet_pyqt5()
+        stylesheet = style.load_stylesheet_pyqt5()
         self.setStyleSheet(stylesheet)
 
         self._retranslateUi(self)

@@ -21,6 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
+
 QToolTip
 {
     border: 1px solid #76797C;
@@ -1204,4 +1205,14 @@ QProgressBar {
 
 QProgressBar::chunk {
     background-color: #05B8CC;
+}
+
+MyDragDropBox
+{
+    border: 1px solid #76797C;
+    background-color: #232629;
+}
+
+#Header1 {
+    color: #000000;
 }

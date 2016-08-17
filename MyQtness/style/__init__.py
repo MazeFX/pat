@@ -90,13 +90,15 @@ def load_stylesheet_pyqt5():
     :return the stylesheet string
     """
     # Smart import of the rc file
-    import qdarkstyle.pyqt5_style_rc
+    import MyQtness.style.style_rc
 
     # Load the stylesheet content from resources
     from PyQt5.QtCore import QFile, QTextStream
 
-    f = QFile(":qdarkstyle/style.qss")
+    f = QFile(":style.qss")
+    print('Loaded my own custom style sheet')
     if not f.exists():
+        print('Custom stylesheet not present')
         _logger().error("Unable to load stylesheet, file not found in "
                         "resources")
         return ""
