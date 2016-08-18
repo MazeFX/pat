@@ -35,6 +35,12 @@
         <layout class="QVBoxLayout" name="verticalLayout_3">
          <item>
           <widget class="QLabel" name="Header1">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="text">
             <string>P.A.T.</string>
            </property>
@@ -45,10 +51,13 @@
          </item>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
            <item>
-            <widget class="QLabel" name="Header2_2">
+            <widget class="QLabel" name="Header2_1">
              <property name="text">
-              <string>Admin</string>
+              <string>Personal</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
@@ -56,9 +65,9 @@
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="Header2_1">
+            <widget class="QLabel" name="Header2_2">
              <property name="text">
-              <string>Personal</string>
+              <string>Admin</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
@@ -105,7 +114,7 @@
        <property name="sizeHint" stdset="0">
         <size>
          <width>40</width>
-         <height>550</height>
+         <height>600</height>
         </size>
        </property>
       </spacer>

@@ -20,6 +20,8 @@ import qdarkstyle
 from auth import Auth
 from MyQtness.ui_login_dialog import Ui_LoginDialog
 from MyQtness.ui_settings_dialog import Ui_SettingsDialog
+from MyQtness.ui_save_dialog import Ui_SaveDialog
+from colorama import Fore, Back, Style
 
 
 try:
@@ -97,6 +99,27 @@ class SettingsDialog(QDialog, Ui_SettingsDialog):
             self.settings.setValue('db_name', 'PAT_db.db')
             self.settings.setValue('db_base_path', 'c:/PAT_db_files/')
 
+        self.setResult(self.Success)
+
+    def on_reject(self):
+        self.setResult(self.Rejected)
+
+
+class SaveDialog(QDialog, Ui_SaveDialog):
+    Rejected, Success, Failed = range(0, 3)
+
+    def __init__(self):
+        QDialog.__init__(self)
+        self.setupUi(self)
+
+        stylesheet = qdarkstyle.load_stylesheet_pyqt5()
+        self.setStyleSheet(stylesheet)
+
+        self.buttonBox.accepted.connect(self.on_accept)
+        self.buttonBox.rejected.connect(self.on_reject)
+
+    def on_accept(self):
+        print(Fore.GREEN + 'SaveDialog -- accept event for saving?')
         self.setResult(self.Success)
 
     def on_reject(self):

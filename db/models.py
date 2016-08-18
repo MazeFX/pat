@@ -66,6 +66,15 @@ class Letter(Base):
         return "<Letter(id= '%s', sender='%s', subject='%s')>" % (
             self.id, self.sender, self.subject)
 
+    def load_dummy(self):
+        self.date = datetime.date.today()
+        self.sender_id = 1
+        self.subject = ''
+        self.reference = ''
+        self.user_id = 1
+        self.scan_file = ''
+        self.letter_type = 0
+
 
 class Relation(Base):
     __tablename__ = 'relations'
@@ -248,13 +257,7 @@ class AlchemicalTableModel(QAbstractTableModel):
     def projectNewRow(self, index):
         print(Fore.BLUE + '-- Projecting New Row --')
         print(Fore.BLUE + '-- Current results: ', self.results)
-        new_object = self.model(date=datetime.date.today(),
-                             sender_id=1,
-                             subject='',
-                             reference='',
-                             user_id=1,
-                             scan_file='',
-                             letter_type=0)
+        new_object = self.model().load_dummy()
 
 
 
@@ -273,13 +276,10 @@ class AlchemicalTableModel(QAbstractTableModel):
         print(Fore.BLUE + '-- Projecting New Row --')
         print(Fore.BLUE + '-- Current results: ', self.results)
         print("\n\t\t ...insertRows() Starting position: '%s'" % row)
-        new_object = self.model(date=datetime.date.today(),
-                                sender_id=1,
-                                subject='',
-                                reference='',
-                                user_id=1,
-                                scan_file='',
-                                letter_type=0)
+        new_object = self.model()
+        print("\n\t\t ...dummy made: '%s'" % new_object)
+        new_object.load_dummy()
+        print("\n\t\t ...dummy loaded: '%s'" % new_object)
         self.beginInsertRows(QModelIndex(), row, row)
         self.results.append(new_object)
         self.endInsertRows()

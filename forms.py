@@ -17,6 +17,8 @@ from db.models import AlchemicalTableModel, User, Relation
 from db.helper import DbHelper, DbFileHandler
 from MyQtness.ui_letter_form import Ui_LetterForm
 from MyQtness.myWidgets import MyItemDelegate
+from dialogs import SaveDialog
+
 from colorama import Fore, Back, Style
 
 
@@ -94,6 +96,15 @@ class LetterForm(QWidget, Ui_LetterForm):
 
     def set_mapper_index(self, *args):
         print('Setting letter Form mapper index: ', args)
+        if self.edit_mode:
+            # TODO - create check changes function.
+            print('Not allowed to change the datamapper index: ', args)
+            save_dialog = SaveDialog()
+            result = save_dialog.exec_()
+            if result == SaveDialog.Success:
+                self.mapper.submit()
+                self.toggle_edit_mode(False, None, None)
+
         selected_index = args[0].indexes()
         row_index = selected_index[0].row()
         self.mapper.setCurrentIndex(row_index)
@@ -117,7 +128,10 @@ class LetterForm(QWidget, Ui_LetterForm):
     def on_edit(self):
         print(Fore.CYAN + 'Edit signal sent and recieved.')
         print(Fore.CYAN + 'mapper index: ', self.mapper.currentIndex())
-        self.toggle_edit_mode(True, 'edit', self.mapper.currentIndex())
+        if self.edit_mode == 'edit':
+            self.toggle_edit_mode(False, None, None)
+        if self.mapper.currentIndex() >= 0:
+            self.toggle_edit_mode(True, 'edit', self.mapper.currentIndex())
 
     def on_delete(self):
         print(Fore.CYAN + 'Delete signal sent and recieved.')
