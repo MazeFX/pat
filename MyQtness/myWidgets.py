@@ -176,7 +176,10 @@ class MyDragDropBox(QFrame):
         return self._currentFile
 
     def setCurrentFile(self, file):
-        print(Fore.GREEN + '-- DRAGDROPBOX -- Setting the file: ', file)
+        print(Fore.GREEN + '-- DRAGDROPBOX -- Setting the file: ')
+        print(Fore.GREEN + '---------------------------------------')
+        print(Fore.GREEN + 'file value = ', file)
+        print(Fore.GREEN + 'With Type = ', type(file))
         self._currentFile = file
         self.check_widget_layout()
 

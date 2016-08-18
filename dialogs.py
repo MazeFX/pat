@@ -13,6 +13,7 @@ Python Test docstring.
 
 from PyQt5.QtCore import QSettings
 
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QDialog, QMessageBox
 
 import qdarkstyle
@@ -43,6 +44,7 @@ class LoginDialog(QDialog, Ui_LoginDialog):
         QDialog.__init__(self)
         self.setupUi(self)
 
+        # TODO - Change the stylesheet to local version
         stylesheet = qdarkstyle.load_stylesheet_pyqt5()
         self.setStyleSheet(stylesheet)
 
@@ -77,6 +79,7 @@ class SettingsDialog(QDialog, Ui_SettingsDialog):
 
         self.load_settings()
 
+        # TODO - Change the stylesheet to local version
         stylesheet = qdarkstyle.load_stylesheet_pyqt5()
         self.setStyleSheet(stylesheet)
 
@@ -114,6 +117,9 @@ class SaveDialog(QDialog, Ui_SaveDialog):
 
         stylesheet = qdarkstyle.load_stylesheet_pyqt5()
         self.setStyleSheet(stylesheet)
+        button_list = self.buttonBox.buttons()
+        for button in button_list:
+            button.setFocusPolicy(Qt.NoFocus)
 
         self.buttonBox.accepted.connect(self.on_accept)
         self.buttonBox.rejected.connect(self.on_reject)

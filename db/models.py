@@ -93,6 +93,8 @@ class Relation(Base):
         return "<Relation(id= '%s', name='%s', reference='%s')>" % (
             self.id, self.name, self.reference)
 
+    # TODO - Create Dummy function
+
 
 class AlchemicalTableModel(QAbstractTableModel):
     """
@@ -225,7 +227,7 @@ class AlchemicalTableModel(QAbstractTableModel):
         if '.' in name:
             name = name.split('.')[0]
 
-        if index.column() == 0:
+        if index.column() == 5:
             print(Fore.BLUE + '====== setting the date =======')
             print(Fore.BLUE + '-- sending value : ', value)
             print(Fore.BLUE + '-- with type : ', type(value))

@@ -18,7 +18,7 @@ sub-forms and widgets.
 import sys
 from PyQt5.QtGui import QFontDatabase, QIcon
 from PyQt5.QtCore import QCoreApplication, QSettings
-from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QSystemTrayIcon
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QTabWidget, QSystemTrayIcon
 from colorama import Fore, Back, Style
 from colorama import init as colorama
 
@@ -64,6 +64,8 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.tabWidget.tabCloseRequested.connect(self.close_tab)
 
         self.setWindowIcon(QIcon(':/app_icons/rc/tray_icon.png'))
+        builderLabel = QLabel('made by: MazeFX Solutions')
+        self.statusbar.addPermanentWidget(builderLabel)
 
     def _retranslateUi(self, MainWindow):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_home), self._translate("MainWindow", "Home"))
