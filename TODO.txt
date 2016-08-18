@@ -30,3 +30,8 @@ Goal list.
 
 * TODO - Set up first functional test for Qt project
 
+* TODO - Create app logo's and icon around chosen theme
+
+* TODO - Choose theme for app:
+    Current idea's - PAT The Squirrel, Go nuts with your papers!
+

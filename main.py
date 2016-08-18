@@ -16,9 +16,9 @@ sub-forms and widgets.
 """
 
 import sys
-from PyQt5.QtGui import QFontDatabase
+from PyQt5.QtGui import QFontDatabase, QIcon
 from PyQt5.QtCore import QCoreApplication, QSettings
-from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QWidget
+from PyQt5.QtWidgets import QApplication, QMainWindow, QTabWidget, QSystemTrayIcon
 from colorama import Fore, Back, Style
 from colorama import init as colorama
 
@@ -63,6 +63,8 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.actionSettings.triggered.connect(self.show_settings)
         self.tabWidget.tabCloseRequested.connect(self.close_tab)
 
+        self.setWindowIcon(QIcon(':/app_icons/rc/tray_icon.png'))
+
     def _retranslateUi(self, MainWindow):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_home), self._translate("MainWindow", "Home"))
 
@@ -98,14 +100,11 @@ if __name__ == "__main__":
     app.setOrganizationName("MazeFX Solutions")
     app.setOrganizationDomain("MazeFX.pythonanywhere.com")
 
+
     QFontDatabase().addApplicationFont("C:\PDE\projects\qt\pat\MyQtness\style\ethnocentric.ttf")
     Id = QFontDatabase().addApplicationFont("C:\PDE\projects\qt\pat\MyQtness\style/ubuntu_bold.ttf")
-    print(Fore.MAGENTA + 'Font ID = ', Id)
-    lst = QFontDatabase().applicationFontFamilies(Id)
-    print(Fore.MAGENTA + 'Font List = ', lst)
-    fam = QFontDatabase().families()
-    loginDialog = LoginDialog()
 
+    loginDialog = LoginDialog()
     '''
     isAuth = False
     result = -1
@@ -121,7 +120,10 @@ if __name__ == "__main__":
     if result == loginDialog.Success:
         '''
     w = MainApp()
+    trayIcon = QSystemTrayIcon(QIcon(':/app_icons/rc/tray_icon.png'), w)
+    trayIcon.show()
     w.show()
+    trayIcon.showMessage('It works!', 'If everything checks out you should see this message.')
     app.exec_()
 
     sys.exit(-1)

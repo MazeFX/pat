@@ -41,6 +41,10 @@
     <file>rc/radio_unchecked.png</file>
   </qresource>
 
+  <qresource prefix="app_icons">
+    <file>rc/tray_icon.png</file>
+  </qresource>
+
   <qresource>
       <file>style.qss</file>
       <file>dark_style.qss</file>
