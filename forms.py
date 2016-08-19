@@ -92,10 +92,17 @@ class LetterForm(QWidget, Ui_LetterForm):
         elif not flag and self.edit_mode:
             item_changed_saved = self.check_item_change()
             print(Fore.CYAN + 'Item Change saved: ', item_changed_saved)
-            self.openItem = None
+            if item_changed_saved:
+                self.openItem = None
+            elif item_changed_saved is None:
+                return
+            else:
+                self.on_reset()
+                if self.edit_mode == 'add':
+                    self.model.rollback_row(self.newRow)
+                    self.newRow = None
 
         self.edit_mode = mode
-
         self.dateDateEdit.setEnabled(flag)
         self.subjectLineEdit.setEnabled(flag)
         self.senderComboBox.setEnabled(flag)
@@ -217,11 +224,9 @@ class LetterForm(QWidget, Ui_LetterForm):
 
             elif result == SaveDialog.Failed:
                 print(Fore.YELLOW + '---- SaveDialog returned Failed: not Saving the item changes')
-                self.on_reset()
                 return False
             elif result == SaveDialog.Rejected:
                 print(Fore.YELLOW + '---- SaveDialog returned Rejected: dont do anything')
-
                 return None
         else:
             return True

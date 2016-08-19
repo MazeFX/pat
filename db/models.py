@@ -288,6 +288,10 @@ class AlchemicalTableModel(QAbstractTableModel):
         print(Fore.BLUE + '-- Current results: ', self.results)
         return True
 
+    def rollback_row(self, row):
+        self.results.pop()
+        self.refresh()
+
     def storeRow(self, row):
         new_object = self.results[row]
         self.session.add(new_object)

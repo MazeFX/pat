@@ -37,6 +37,8 @@ except AttributeError:
         return QApplication.translate(context, text, disambig)
 
 
+# TODO - change for all dialogs: window icon and title
+
 class LoginDialog(QDialog, Ui_LoginDialog):
     Rejected, Success, Failed = range(0, 3)
 
@@ -121,13 +123,21 @@ class SaveDialog(QDialog, Ui_SaveDialog):
         button_list = self.buttonBox.buttons()
         for button in button_list:
             button.setFocusPolicy(Qt.NoFocus)
+            print(Fore.YELLOW + 'Found button with Role: ', self.buttonBox.buttonRole(button))
 
         self.buttonBox.accepted.connect(self.on_accept)
         self.buttonBox.rejected.connect(self.on_reject)
+        self.buttonBox.clicked.connect(self.on_click)
 
     def on_accept(self):
         print(Fore.YELLOW + 'SaveDialog -- accept event for saving?')
         self.setResult(self.Success)
+
+    def on_click(self, *args):
+        print(Fore.YELLOW + 'SaveDialog -- Button clicked: ', args)
+        button_role = self.buttonBox.buttonRole(args[0])
+        if button_role == 2:
+            self.done(self.Failed)
 
     def on_reject(self):
         print(Fore.YELLOW + 'SaveDialog -- reject event for discarding')
