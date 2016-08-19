@@ -193,11 +193,6 @@ class MyDragDropBox(QFrame):
             self.DropLabel.setText('Drop File')
 
 
-
-
-
-
-
 class MyItemDelegate(QItemDelegate):
 
     def __init__(self, *args):

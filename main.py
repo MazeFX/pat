@@ -22,9 +22,6 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QTabWidget, QSyst
 from colorama import Fore, Back, Style
 from colorama import init as colorama
 
-
-import qdarkstyle
-
 from dialogs import LoginDialog, SettingsDialog
 from MyQtness.ui_main_window import Ui_MainWindow
 from MyQtness import style
@@ -63,9 +60,15 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.actionSettings.triggered.connect(self.show_settings)
         self.tabWidget.tabCloseRequested.connect(self.close_tab)
 
+        trayIcon = QSystemTrayIcon(QIcon(':/app_icons/rc/tray_icon.png'), self)
+        trayIcon.show()
+        trayIcon.showMessage('It works!', 'If everything checks out you should see this message.')
+
         self.setWindowIcon(QIcon(':/app_icons/rc/tray_icon.png'))
         builderLabel = QLabel('made by: MazeFX Solutions')
         self.statusbar.addPermanentWidget(builderLabel)
+
+
 
     def _retranslateUi(self, MainWindow):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_home), self._translate("MainWindow", "Home"))
@@ -122,10 +125,6 @@ if __name__ == "__main__":
     if result == loginDialog.Success:
         '''
     w = MainApp()
-    trayIcon = QSystemTrayIcon(QIcon(':/app_icons/rc/tray_icon.png'), w)
-    trayIcon.show()
     w.show()
-    trayIcon.showMessage('It works!', 'If everything checks out you should see this message.')
     app.exec_()
-
     sys.exit(-1)

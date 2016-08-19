@@ -115,6 +115,7 @@ class SaveDialog(QDialog, Ui_SaveDialog):
         QDialog.__init__(self)
         self.setupUi(self)
 
+        # TODO - Change the stylesheet to local version
         stylesheet = qdarkstyle.load_stylesheet_pyqt5()
         self.setStyleSheet(stylesheet)
         button_list = self.buttonBox.buttons()
@@ -125,10 +126,11 @@ class SaveDialog(QDialog, Ui_SaveDialog):
         self.buttonBox.rejected.connect(self.on_reject)
 
     def on_accept(self):
-        print(Fore.GREEN + 'SaveDialog -- accept event for saving?')
+        print(Fore.YELLOW + 'SaveDialog -- accept event for saving?')
         self.setResult(self.Success)
 
     def on_reject(self):
+        print(Fore.YELLOW + 'SaveDialog -- reject event for discarding')
         self.setResult(self.Rejected)
 
 

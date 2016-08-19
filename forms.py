@@ -90,8 +90,9 @@ class LetterForm(QWidget, Ui_LetterForm):
             self.edit_mode = mode
 
         elif not flag and self.edit_mode:
-            item_changed = self.check_item_change()
-            print(Fore.CYAN + 'Item Changed!!!: ', item_changed)
+            item_changed_saved = self.check_item_change()
+            print(Fore.CYAN + 'Item Change saved: ', item_changed_saved)
+            self.openItem = None
 
         self.edit_mode = mode
 
@@ -113,6 +114,7 @@ class LetterForm(QWidget, Ui_LetterForm):
         print('Setting letter Form mapper index: ', row_index)
 
     def on_add(self):
+        # TODO - when adding new item remove current list selection
         print(Fore.CYAN + 'Add signal sent and recieved.')
         row = self.model.rowCount(None)
         self.newRow = row
@@ -131,7 +133,7 @@ class LetterForm(QWidget, Ui_LetterForm):
     def on_edit(self):
         print(Fore.CYAN + 'Edit signal sent and recieved.')
         print(Fore.CYAN + 'mapper index: ', self.mapper.currentIndex())
-        if self.edit_mode in ('add','edit'):
+        if self.edit_mode in ('add', 'edit'):
             self.toggle_edit_mode(False, None, None)
         elif self.mapper.currentIndex() >= 0:
             self.toggle_edit_mode(True, 'edit', self.mapper.currentIndex())
@@ -169,6 +171,7 @@ class LetterForm(QWidget, Ui_LetterForm):
     def check_item_change(self):
         # TODO - create check changes function.
         print(Fore.CYAN + '----- Starting Check of item change -----')
+        changed = False
         old_item = self.openItem
         headers = [self.model.fields[x][2] for x in range(len(self.model.fields))]
         print(Fore.CYAN + '-Headers are: ', headers)
@@ -195,27 +198,34 @@ class LetterForm(QWidget, Ui_LetterForm):
                     new_value = widget.text()
                     print(Fore.CYAN + '-New Widget value for: ', widget, 'with value: ', new_value)
 
-                if new_value is None:
-                    if old_value is new_value:
-                        print(Fore.CYAN + '1++++ old value type: ', type(old_value))
-                        print(Fore.CYAN + '1++++ Matching value for: ', widget, 'with values: ', old_value, new_value)
-                    else:
-                        print(Fore.CYAN + '1++++ old value type: ', type(old_value))
-                        print(Fore.CYAN + '1---- Not Matching value for: ', widget, 'with values: ', old_value,
-                              new_value)
                 if old_value == new_value:
-                    print(Fore.CYAN + '2++++ Matching value for: ', widget, 'with values: ', old_value, new_value)
+                    print(Fore.CYAN + '++++ Matching value for: ', widget, 'with values: ', old_value, new_value)
+                    changed = False
                 else:
-                    print(Fore.CYAN + '2---- Not Matching value for: ', widget, 'with values: ', old_value, new_value)
+                    print(Fore.CYAN + '---- Not Matching value for: ', widget, 'with values: ', old_value, new_value)
+                    changed = True
+                    break
 
+        print(Fore.CYAN + '++-----++ Did item change??: ', changed)
 
-        '''
-        save_dialog = SaveDialog()
-        result = save_dialog.exec_()
-        if result == SaveDialog.Success:
-            self.mapper.submit()
-            self.toggle_edit_mode(False, None, None)
-        '''
+        if changed:
+            save_dialog = SaveDialog()
+            result = save_dialog.exec_()
+            if result == SaveDialog.Success:
+                self.mapper.submit()
+                return True
+
+            elif result == SaveDialog.Failed:
+                print(Fore.YELLOW + '---- SaveDialog returned Failed: not Saving the item changes')
+                self.on_reset()
+                return False
+            elif result == SaveDialog.Rejected:
+                print(Fore.YELLOW + '---- SaveDialog returned Rejected: dont do anything')
+
+                return None
+        else:
+            return True
 
     def on_reset(self):
         print(Fore.CYAN + 'Reset signal sent and recieved.')
+        self.mapper.revert()
