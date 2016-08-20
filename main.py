@@ -28,7 +28,7 @@ from colorama import init as colorama
 from dialogs import LoginDialog, SettingsDialog
 from MyQtness.ui_main_window import Ui_MainWindow
 from MyQtness import style
-from tabs import LetterListTab, HomeTab
+from tabs import LetterListTab, UserListTab, RelationListTab, HomeTab
 from db.helper import DbHelper
 
 
@@ -96,14 +96,28 @@ class MainApp(QMainWindow, Ui_MainWindow):
     def show_list(self, *args):
         print(Fore.MAGENTA + '$! Showing the list called with args: ', args)
         action_text = args[0].text()
+        icon = args[0].icon()
         print(Fore.MAGENTA + '$! Action text received: ', action_text)
         if action_text == 'Letters':
             print(Fore.MAGENTA + '$! Opening Letter List tab..')
-            self.add_letter()
+            self.add_tab(LetterListTab, 'Letters', icon)
         if action_text == 'Users':
             print(Fore.MAGENTA + '$! Opening User List tab..')
+            self.add_tab(UserListTab, 'Users', icon)
         if action_text == 'Relations':
             print(Fore.MAGENTA + '$! Opening Relation List tab..')
+            self.add_tab(RelationListTab, 'Relations', icon)
+
+    def add_tab(self, tab_cls, tab_name, icon):
+        new_tab = tab_cls(self.dbhelper)
+        print(Fore.MAGENTA + 'Adding a tab with class: ', str(tab_cls))
+        new_tab.setObjectName(str(tab_cls))
+        self.tabWidget.addTab(new_tab, icon, self._translate("MainWindow", tab_name))
+
+        print(Fore.MAGENTA + 'Letterform added to mainwindow.')
+        self.tabWidget.setCurrentIndex(self.tabWidget.indexOf(new_tab))
+        self.tab_list.append(new_tab)
+
 
     def handle_tray_event(self, *args):
         print(Fore.MAGENTA + '$! Received a tray action with args: ', args)

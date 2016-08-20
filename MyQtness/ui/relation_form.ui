@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>LetterForm</class>
- <widget class="QWidget" name="LetterForm">
+ <class>RelationForm</class>
+ <widget class="QWidget" name="RelationForm">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -24,7 +24,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="TitleLabel">
+    <widget class="QLabel" name="titleLabel">
      <property name="maximumSize">
       <size>
        <width>16777215</width>
@@ -88,14 +88,44 @@
       <number>0</number>
      </property>
      <item row="0" column="0">
-      <widget class="QLabel" name="dateLabel">
+      <widget class="QLabel" name="nameLabel">
        <property name="text">
-        <string>Date</string>
+        <string>Name</string>
        </property>
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QDateEdit" name="dateDateEdit">
+      <widget class="QLineEdit" name="nameLineEdit">
+       <property name="toolTip">
+        <string/>
+       </property>
+       <property name="statusTip">
+        <string/>
+       </property>
+       <property name="accessibleDescription">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="fullNameLabel">
+       <property name="text">
+        <string>Full Name</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="fullNameLineEdit"/>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="startDateLabel">
+       <property name="text">
+        <string>Start date</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QDateEdit" name="startDateEdit">
        <property name="enabled">
         <bool>true</bool>
        </property>
@@ -130,27 +160,46 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="subjectLabel">
-       <property name="text">
-        <string>Subject</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QLineEdit" name="subjectLineEdit"/>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="UserLabel">
-       <property name="text">
-        <string>Adressed User</string>
-       </property>
-      </widget>
-     </item>
      <item row="3" column="0">
-      <widget class="QLabel" name="senderLabel">
+      <widget class="QLabel" name="endDateLabel">
        <property name="text">
-        <string>Sender</string>
+        <string>End date</string>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="1">
+      <widget class="QDateEdit" name="endDateEdit">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="wrapping">
+        <bool>false</bool>
+       </property>
+       <property name="frame">
+        <bool>true</bool>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+       <property name="dateTime">
+        <datetime>
+         <hour>0</hour>
+         <minute>0</minute>
+         <second>0</second>
+         <year>2016</year>
+         <month>7</month>
+         <day>6</day>
+        </datetime>
+       </property>
+       <property name="calendarPopup">
+        <bool>true</bool>
+       </property>
+       <property name="date">
+        <date>
+         <year>2016</year>
+         <month>7</month>
+         <day>6</day>
+        </date>
        </property>
       </widget>
      </item>
@@ -162,49 +211,27 @@
       </widget>
      </item>
      <item row="4" column="1">
-      <widget class="QLineEdit" name="referenceLineEdit">
-       <property name="toolTip">
-        <string/>
-       </property>
-       <property name="statusTip">
-        <string/>
-       </property>
-       <property name="accessibleDescription">
-        <string/>
-       </property>
-      </widget>
+      <widget class="QLineEdit" name="referenceLineEdit"/>
      </item>
      <item row="5" column="0">
-      <widget class="QLabel" name="scanLabel">
+      <widget class="QLabel" name="bankAccountLabel">
        <property name="text">
-        <string>Scan</string>
+        <string>Bank account</string>
        </property>
       </widget>
      </item>
      <item row="5" column="1">
-      <widget class="MyDragDropBox" name="scanFileDrop" native="true">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>100</height>
-        </size>
-       </property>
-       <property name="acceptDrops">
-        <bool>true</bool>
-       </property>
-       <property name="autoFillBackground">
-        <bool>false</bool>
-       </property>
-       <property name="styleSheet">
-        <string notr="true"/>
+      <widget class="QLineEdit" name="bankAccountLineEdit"/>
+     </item>
+     <item row="6" column="0">
+      <widget class="QLabel" name="typeLabel">
+       <property name="text">
+        <string>Relation type</string>
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
-      <widget class="MyComboBox" name="userComboBox"/>
-     </item>
-     <item row="3" column="1">
-      <widget class="MyComboBox" name="senderComboBox"/>
+     <item row="6" column="1">
+      <widget class="QComboBox" name="typeComboBox"/>
      </item>
     </layout>
    </item>
@@ -247,19 +274,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>MyComboBox</class>
-   <extends>QComboBox</extends>
-   <header>MyQtness.myWidgets.h</header>
-  </customwidget>
-  <customwidget>
-   <class>MyDragDropBox</class>
-   <extends>QWidget</extends>
-   <header>MyQtness.myWidgets.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>
