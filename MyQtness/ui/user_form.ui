@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>LetterForm</class>
- <widget class="QWidget" name="LetterForm">
+ <class>UserForm</class>
+ <widget class="QWidget" name="UserForm">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -24,7 +24,7 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QLabel" name="titleLabel">
+    <widget class="QLabel" name="TitleLabel">
      <property name="maximumSize">
       <size>
        <width>16777215</width>
@@ -37,7 +37,7 @@
       </font>
      </property>
      <property name="text">
-      <string>Letters</string>
+      <string>Users</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -88,81 +88,24 @@
       <number>0</number>
      </property>
      <item row="0" column="0">
-      <widget class="QLabel" name="dateLabel">
+      <widget class="QLabel" name="nameLabel">
        <property name="text">
-        <string>Date</string>
+        <string>Name</string>
        </property>
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QDateEdit" name="dateDateEdit">
-       <property name="enabled">
-        <bool>true</bool>
-       </property>
-       <property name="wrapping">
-        <bool>false</bool>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-       <property name="dateTime">
-        <datetime>
-         <hour>0</hour>
-         <minute>0</minute>
-         <second>0</second>
-         <year>2016</year>
-         <month>7</month>
-         <day>6</day>
-        </datetime>
-       </property>
-       <property name="calendarPopup">
-        <bool>true</bool>
-       </property>
-       <property name="date">
-        <date>
-         <year>2016</year>
-         <month>7</month>
-         <day>6</day>
-        </date>
-       </property>
-      </widget>
+      <widget class="QLineEdit" name="nameLineEdit"/>
      </item>
      <item row="1" column="0">
-      <widget class="QLabel" name="subjectLabel">
+      <widget class="QLabel" name="fullnameLabel">
        <property name="text">
-        <string>Subject</string>
+        <string>Full Name</string>
        </property>
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QLineEdit" name="subjectLineEdit"/>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="UserLabel">
-       <property name="text">
-        <string>Adressed User</string>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="senderLabel">
-       <property name="text">
-        <string>Sender</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0">
-      <widget class="QLabel" name="referenceLabel">
-       <property name="text">
-        <string>Reference</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="1">
-      <widget class="QLineEdit" name="referenceLineEdit">
+      <widget class="QLineEdit" name="fullnameLineEdit">
        <property name="toolTip">
         <string/>
        </property>
@@ -174,37 +117,15 @@
        </property>
       </widget>
      </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="scanLabel">
+     <item row="2" column="0">
+      <widget class="QLabel" name="passwordLabel">
        <property name="text">
-        <string>Scan</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="1">
-      <widget class="MyDragDropBox" name="scanFileDrop" native="true">
-       <property name="minimumSize">
-        <size>
-         <width>0</width>
-         <height>100</height>
-        </size>
-       </property>
-       <property name="acceptDrops">
-        <bool>true</bool>
-       </property>
-       <property name="autoFillBackground">
-        <bool>false</bool>
-       </property>
-       <property name="styleSheet">
-        <string notr="true"/>
+        <string>Password</string>
        </property>
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="MyComboBox" name="userComboBox"/>
-     </item>
-     <item row="3" column="1">
-      <widget class="MyComboBox" name="senderComboBox"/>
+      <widget class="QLineEdit" name="passwordLineEdit"/>
      </item>
     </layout>
    </item>
@@ -247,19 +168,6 @@
    </item>
   </layout>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>MyComboBox</class>
-   <extends>QComboBox</extends>
-   <header>MyQtness.myWidgets.h</header>
-  </customwidget>
-  <customwidget>
-   <class>MyDragDropBox</class>
-   <extends>QWidget</extends>
-   <header>MyQtness.myWidgets.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

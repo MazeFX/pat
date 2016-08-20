@@ -13,24 +13,22 @@ Python Test docstring.
 
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QTableView
 
-from forms import LetterForm
-from db.models import AlchemicalTableModel, Letter
+from forms import LetterForm, UserForm
+from db.models import AlchemicalTableModel, Letter, User, Relation
 from MyQtness.myWidgets import MyTableView
 from MyQtness.ui_home_tab import Ui_HomeTab
 from colorama import Fore, Back, Style
 
 
-class LetterTab(QWidget):
+class LetterListTab(QWidget):
 
     dbhelper = None
 
     def __init__(self, dbhelper, **kwargs):
-        super(LetterTab, self).__init__(**kwargs)
+        super(LetterListTab, self).__init__(**kwargs)
         self.dbhelper = dbhelper
 
         self.horizontalLayout = QHBoxLayout(self)
-        self.horizontalLayout.setObjectName("horizontalLayout")
-        print('Lettertab horizontal view created.')
 
         model = AlchemicalTableModel(
             self.dbhelper.get_app_db_session(),
@@ -48,13 +46,48 @@ class LetterTab(QWidget):
         self.tableView = MyTableView()
         self.tableView.setModel(model)
 
-        self.letterForm = LetterForm()
-        self.letterForm.dbhelper = self.dbhelper
-        self.letterForm.setModel(model)
+        self.Form = LetterForm()
+        self.Form.dbhelper = self.dbhelper
+        self.Form.setModel(model)
         selectionModel = self.tableView.selectionModel()
         selectionModel.selectionChanged.connect(self.letterForm.set_mapper_index_from_selection)
 
-        self.horizontalLayout.addWidget(self.letterForm)
+        self.horizontalLayout.addWidget(self.Form)
+        self.horizontalLayout.addWidget(self.tableView)
+
+        self.setLayout(self.horizontalLayout)
+
+
+class UserListTab(QWidget):
+
+    dbhelper = None
+
+    def __init__(self, dbhelper, **kwargs):
+        super(UserListTab, self).__init__(**kwargs)
+        self.dbhelper = dbhelper
+
+        self.horizontalLayout = QHBoxLayout(self)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+
+        model = AlchemicalTableModel(
+            self.dbhelper.get_app_db_session(),
+            User,
+            [('Name', User.name, 'name', {}),
+             ('Full Name', User.fullname, 'fullname', {}),
+             ('Password', User.password, 'password', {})])
+
+        print('Letter Tab model role names: ', model.roleNames())
+
+        self.tableView = MyTableView()
+        self.tableView.setModel(model)
+
+        self.Form = UserForm()
+        self.Form.dbhelper = self.dbhelper
+        self.Form.setModel(model)
+        selectionModel = self.tableView.selectionModel()
+        selectionModel.selectionChanged.connect(self.letterForm.set_mapper_index_from_selection)
+
+        self.horizontalLayout.addWidget(self.Form)
         self.horizontalLayout.addWidget(self.tableView)
 
         self.setLayout(self.horizontalLayout)

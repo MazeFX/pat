@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\PDE\projects\qt\pat\MyQtness\ui\letter_form.ui'
+# Form implementation generated from reading ui file 'C:\PDE\projects\qt\pat\MyQtness\ui\relation_form.ui'
 #
 # Created by: PyQt5 UI code generator 5.7
 #
@@ -16,14 +16,14 @@ class Ui_LetterForm(object):
         LetterForm.setStyleSheet("")
         self.verticalLayout = QtWidgets.QVBoxLayout(LetterForm)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.titleLabel = QtWidgets.QLabel(LetterForm)
-        self.titleLabel.setMaximumSize(QtCore.QSize(16777215, 50))
+        self.TitleLabel = QtWidgets.QLabel(LetterForm)
+        self.TitleLabel.setMaximumSize(QtCore.QSize(16777215, 50))
         font = QtGui.QFont()
         font.setPointSize(16)
-        self.titleLabel.setFont(font)
-        self.titleLabel.setAlignment(QtCore.Qt.AlignCenter)
-        self.titleLabel.setObjectName("titleLabel")
-        self.verticalLayout.addWidget(self.titleLabel)
+        self.TitleLabel.setFont(font)
+        self.TitleLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.TitleLabel.setObjectName("TitleLabel")
+        self.verticalLayout.addWidget(self.TitleLabel)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.pushButtonAdd = QtWidgets.QPushButton(LetterForm)
@@ -115,7 +115,7 @@ class Ui_LetterForm(object):
     def retranslateUi(self, LetterForm):
         _translate = QtCore.QCoreApplication.translate
         LetterForm.setWindowTitle(_translate("LetterForm", "Form"))
-        self.titleLabel.setText(_translate("LetterForm", "Letters"))
+        self.TitleLabel.setText(_translate("LetterForm", "Relations"))
         self.pushButtonAdd.setText(_translate("LetterForm", "Add new"))
         self.pushButtonEdit.setText(_translate("LetterForm", "Edit"))
         self.pushButtonDelete.setText(_translate("LetterForm", "Delete"))

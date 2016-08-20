@@ -15,17 +15,20 @@ login events. Populating the main window with the necessary
 sub-forms and widgets.
 """
 
+
 import sys
+
 from PyQt5.QtGui import QFontDatabase, QIcon
-from PyQt5.QtCore import QCoreApplication, QSettings
+from PyQt5.QtCore import QCoreApplication, QSettings, Qt
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMenu, QLabel, QTabWidget, QSystemTrayIcon
+import qtawesome as qta
 from colorama import Fore, Back, Style
 from colorama import init as colorama
 
 from dialogs import LoginDialog, SettingsDialog
 from MyQtness.ui_main_window import Ui_MainWindow
 from MyQtness import style
-from tabs import LetterTab, HomeTab
+from tabs import LetterListTab, HomeTab
 from db.helper import DbHelper
 
 
@@ -42,6 +45,17 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.dbhelper = DbHelper()
 
         self.setupUi(self)
+
+        self.menubar.setFocusPolicy(Qt.NoFocus)
+        envelopeIcon = qta.icon('fa.envelope', color='white')
+        self.actionListLetters.setIcon(envelopeIcon)
+        relationIcon = qta.icon('fa.group', color='white')
+        self.actionListRelations.setIcon(relationIcon)
+        userIcon = qta.icon('fa.user', color='white')
+        self.actionListUsers.setIcon(userIcon)
+        wrenchIcon = qta.icon('fa.wrench', color='white')
+        self.actionSettings.setIcon(wrenchIcon)
+
         self.tabWidget = QTabWidget(self.centralwidget)
         self.tabWidget.setTabsClosable(True)
         self.tabWidget.setMovable(True)
@@ -52,10 +66,10 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.tab_home.dbhelper = self.dbhelper
         self.tab_home.setObjectName("tab_home")
         self.tabWidget.addTab(self.tab_home, "")
-
         self.verticalLayout.addWidget(self.tabWidget)
 
         self._retranslateUi(self)
+
         self.actionSettings.triggered.connect(self.show_settings)
         self.menuLists.triggered.connect(self.show_list)
         self.tabWidget.tabCloseRequested.connect(self.close_tab)
@@ -74,22 +88,32 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.trayMenu.triggered.connect(self.handle_tray_event)
         self.trayIcon.activated.connect(self.handle_tray_event)
         self.trayIcon.show()
-        self.trayIcon.showMessage('PAT Service', 'PAT service is no running..')
+        self.trayIcon.showMessage('PAT Service', 'PAT service is now running..')
 
     def _retranslateUi(self, MainWindow):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_home), self._translate("MainWindow", "Home"))
 
     def show_list(self, *args):
         print(Fore.MAGENTA + '$! Showing the list called with args: ', args)
+        action_text = args[0].text()
+        print(Fore.MAGENTA + '$! Action text received: ', action_text)
+        if action_text == 'Letters':
+            print(Fore.MAGENTA + '$! Opening Letter List tab..')
+            self.add_letter()
+        if action_text == 'Users':
+            print(Fore.MAGENTA + '$! Opening User List tab..')
+        if action_text == 'Relations':
+            print(Fore.MAGENTA + '$! Opening Relation List tab..')
 
     def handle_tray_event(self, *args):
         print(Fore.MAGENTA + '$! Received a tray action with args: ', args)
         if args[0] == 3:
             self.show()
+        # TODO - create condition for other menu actions
 
     def add_letter(self):
         print(Fore.MAGENTA + 'signal recieved for action add letter.')
-        self.tab_letter = LetterTab(self.dbhelper)
+        self.tab_letter = LetterListTab(self.dbhelper)
         print(Fore.MAGENTA + 'Letterform initialized.')
         self.tab_letter.setObjectName("tab_letter")
         self.tabWidget.addTab(self.tab_letter, "")
@@ -116,7 +140,8 @@ class MainApp(QMainWindow, Ui_MainWindow):
         settings_dialog.exec_()
 
     def closeEvent(self, event):
-        print("User has clicked the red x on the main window")
+        print(Fore.MAGENTA + "User has clicked the red x on the main window")
+        # TODO - create function for quit-dialog
         event.accept()
 
 
@@ -129,9 +154,8 @@ if __name__ == "__main__":
     app.setOrganizationName("MazeFX Solutions")
     app.setOrganizationDomain("MazeFX.pythonanywhere.com")
 
-
     QFontDatabase().addApplicationFont("C:\PDE\projects\qt\pat\MyQtness\style\ethnocentric.ttf")
-    Id = QFontDatabase().addApplicationFont("C:\PDE\projects\qt\pat\MyQtness\style/ubuntu_bold.ttf")
+    QFontDatabase().addApplicationFont("C:\PDE\projects\qt\pat\MyQtness\style/ubuntu_bold.ttf")
 
     loginDialog = LoginDialog()
     '''
