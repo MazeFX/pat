@@ -45,6 +45,8 @@ class User(Base):
         return "<User(id= '%s', name='%s', fullname='%s')>" % (
             self.id, self.name, self.fullname)
 
+    # TODO - Create Dummy function
+
 
 class Letter(Base):
     __tablename__ = 'letters'
