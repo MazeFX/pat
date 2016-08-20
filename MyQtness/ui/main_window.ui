@@ -37,11 +37,21 @@
     </property>
     <addaction name="actionSettings"/>
    </widget>
-   <widget class="QMenu" name="menuLetter">
-    <property name="title">
-     <string>Letter</string>
+   <widget class="QMenu" name="menuLists">
+    <property name="geometry">
+     <rect>
+      <x>381</x>
+      <y>116</y>
+      <width>159</width>
+      <height>126</height>
+     </rect>
     </property>
-    <addaction name="actionAddLetter"/>
+    <property name="title">
+     <string>Lists</string>
+    </property>
+    <addaction name="actionListLetter"/>
+    <addaction name="actionListUsers"/>
+    <addaction name="actionListRelations"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -50,16 +60,16 @@
     <addaction name="actionAbout"/>
    </widget>
    <addaction name="menuPAT"/>
-   <addaction name="menuLetter"/>
+   <addaction name="menuLists"/>
    <addaction name="menuHelp"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionAddLetter">
+  <action name="actionListLetter">
    <property name="text">
-    <string>Add</string>
+    <string>Letters</string>
    </property>
    <property name="toolTip">
-    <string>Add new letter</string>
+    <string>List of letters</string>
    </property>
   </action>
   <action name="actionAbout">
@@ -70,6 +80,22 @@
   <action name="actionSettings">
    <property name="text">
     <string>Settings</string>
+   </property>
+  </action>
+  <action name="actionListUsers">
+   <property name="text">
+    <string>Users</string>
+   </property>
+   <property name="toolTip">
+    <string>List of Users</string>
+   </property>
+  </action>
+  <action name="actionListRelations">
+   <property name="text">
+    <string>Relations</string>
+   </property>
+   <property name="toolTip">
+    <string>List of Relations</string>
    </property>
   </action>
  </widget>

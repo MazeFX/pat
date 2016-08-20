@@ -1224,6 +1224,10 @@ QLabel#Header1 {
     font-size: 120px;
 }
 
+QLabel#titleLabel {
+    font-family: 'Ethnocentric Rg';
+}
+
 QLabel#Header2_1,
 QLabel#Header2_2,
 QLabel#Header2_3 {

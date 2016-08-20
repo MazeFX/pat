@@ -18,7 +18,7 @@ sub-forms and widgets.
 import sys
 from PyQt5.QtGui import QFontDatabase, QIcon
 from PyQt5.QtCore import QCoreApplication, QSettings
-from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QTabWidget, QSystemTrayIcon
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMenu, QLabel, QTabWidget, QSystemTrayIcon
 from colorama import Fore, Back, Style
 from colorama import init as colorama
 
@@ -30,12 +30,15 @@ from db.helper import DbHelper
 
 
 class MainApp(QMainWindow, Ui_MainWindow):
+
     _translate = QCoreApplication.translate
+    tab_list = []
     # TODO - add dutch translation files
 
     def __init__(self, *args):
         super(MainApp, self).__init__(*args)
         self.load_settings()
+        self.setup_tray()
         self.dbhelper = DbHelper()
 
         self.setupUi(self)
@@ -45,33 +48,44 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.tabWidget.setTabBarAutoHide(True)
         self.tabWidget.setObjectName("tabWidget")
         self.tab_home = HomeTab()
+        self.tab_list.append(self.tab_home)
         self.tab_home.dbhelper = self.dbhelper
         self.tab_home.setObjectName("tab_home")
         self.tabWidget.addTab(self.tab_home, "")
 
         self.verticalLayout.addWidget(self.tabWidget)
 
-        # TODO  - Create own functions for loading the rc file, own style
-        stylesheet = style.load_stylesheet_pyqt5()
-        self.setStyleSheet(stylesheet)
-
         self._retranslateUi(self)
-        self.actionAddLetter.triggered.connect(self.add_letter)
         self.actionSettings.triggered.connect(self.show_settings)
+        self.menuLists.triggered.connect(self.show_list)
         self.tabWidget.tabCloseRequested.connect(self.close_tab)
-
-        trayIcon = QSystemTrayIcon(QIcon(':/app_icons/rc/tray_icon.png'), self)
-        trayIcon.show()
-        trayIcon.showMessage('It works!', 'If everything checks out you should see this message.')
 
         self.setWindowIcon(QIcon(':/app_icons/rc/tray_icon.png'))
         builderLabel = QLabel('made by: MazeFX Solutions')
         self.statusbar.addPermanentWidget(builderLabel)
 
-
+    def setup_tray(self):
+        self.trayIcon = QSystemTrayIcon(QIcon(':/app_icons/rc/tray_icon.png'), self)
+        self.trayMenu = QMenu(self)
+        showAction = self.trayMenu.addAction("Open PAT")
+        self.trayMenu.addSeparator()
+        exitAction = self.trayMenu.addAction("Exit")
+        self.trayIcon.setContextMenu(self.trayMenu)
+        self.trayMenu.triggered.connect(self.handle_tray_event)
+        self.trayIcon.activated.connect(self.handle_tray_event)
+        self.trayIcon.show()
+        self.trayIcon.showMessage('PAT Service', 'PAT service is no running..')
 
     def _retranslateUi(self, MainWindow):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_home), self._translate("MainWindow", "Home"))
+
+    def show_list(self, *args):
+        print(Fore.MAGENTA + '$! Showing the list called with args: ', args)
+
+    def handle_tray_event(self, *args):
+        print(Fore.MAGENTA + '$! Received a tray action with args: ', args)
+        if args[0] == 3:
+            self.show()
 
     def add_letter(self):
         print(Fore.MAGENTA + 'signal recieved for action add letter.')
@@ -89,6 +103,10 @@ class MainApp(QMainWindow, Ui_MainWindow):
     def load_settings(self):
         self.settings = QSettings()
         int_value = self.settings.value('db_type', type=int)
+
+        # TODO - possible setting for style setting
+        stylesheet = style.load_stylesheet_pyqt5()
+        self.setStyleSheet(stylesheet)
         print(Fore.MAGENTA + "load choosen database setting: %s" % repr(int_value))
 
     def show_settings(self):
@@ -97,8 +115,14 @@ class MainApp(QMainWindow, Ui_MainWindow):
         settings_dialog = SettingsDialog()
         settings_dialog.exec_()
 
+    def closeEvent(self, event):
+        print("User has clicked the red x on the main window")
+        event.accept()
+
+
 
 if __name__ == "__main__":
+    visible = True
     colorama(autoreset=True)
     app = QApplication(sys.argv)
     app.setApplicationName('PAT')
@@ -125,6 +149,11 @@ if __name__ == "__main__":
     if result == loginDialog.Success:
         '''
     w = MainApp()
-    w.show()
+    for arg in sys.argv:
+        if 'only-tray' in arg:
+            visible = False
+
+    if visible:
+        w.show()
     app.exec_()
     sys.exit(-1)

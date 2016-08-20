@@ -30,7 +30,6 @@ class LetterForm(QWidget, Ui_LetterForm):
         super(LetterForm, self).__init__(*kwargs)
 
         self.setupUi(self)
-        # TODO  - Create own functions for loading the rc file, own style
         self.edit_mode = None
 
         self.pushButtonAdd.setFocusPolicy(Qt.NoFocus)
