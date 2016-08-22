@@ -126,6 +126,7 @@ class MainApp(QMainWindow, Ui_MainWindow):
         # TODO - create condition for other menu actions
 
     def close_tab(self, index):
+        # FIXME - Cancel in dialog still closes tab
         requesting_tab = self.tab_list[index]
         print(Fore.MAGENTA + 'requesting tab is: ', requesting_tab)
         if requesting_tab.form.edit_mode:

@@ -151,7 +151,7 @@ class DbFileHandler(object):
         print('mapper_file_name = ', mapper_file_name)
         print('with type = ', type(mapper_file_name))
         if not os.path.exists(full_file_name):
-            copyfile(mapper_file_name, full_file_name)
+            copyfile(mapper_file_name[0], full_file_name)
 
         return full_file_name
 

@@ -21,6 +21,7 @@ FORMS    += letter_form.ui \
     ui/letter_form.ui \
     ui/relation_form.ui \
     ui/user_form.ui \
+    ui/basic_form.ui \
     ui/login_dialog.ui \
     ui/mainwindow.ui \
     ui/main_window.ui \
@@ -28,7 +29,8 @@ FORMS    += letter_form.ui \
     ui/settings_dialog.ui \
     ui/home_tab.ui \
     ui/save_dialog.ui \
-    ui/close_dialog.ui
+    ui/close_dialog.ui \
+    ui/form.ui
 
 DISTFILES += \
     __pycache__/ui_letter_form.cpython-35.pyc \

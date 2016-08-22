@@ -29,6 +29,8 @@ class MyTableView(QTableView):
     def __init__(self, *args):
         super(MyTableView, self).__init__(*args)
 
+        # FIXME - Sort does not work on foreign column
+
         # TableView settings
         self.setShowGrid(True)
         self.setTabKeyNavigation(False)

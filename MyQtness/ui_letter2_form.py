@@ -1,0 +1,90 @@
+# -*- coding: utf-8 -*-
+
+# Form implementation generated from reading ui file 'C:\PDE\projects\qt\pat\MyQtness\ui\letter2_form.ui'
+#
+# Created by: PyQt5 UI code generator 5.7
+#
+# WARNING! All changes made in this file will be lost!
+
+from PyQt5 import QtCore, QtGui, QtWidgets
+
+class Ui_Form(object):
+    def setupUi(self, Form):
+        Form.setObjectName("Form")
+        Form.resize(286, 273)
+        self.formLayout = QtWidgets.QFormLayout(Form)
+        self.formLayout.setObjectName("formLayout")
+        self.nameLabel = QtWidgets.QLabel(Form)
+        self.nameLabel.setObjectName("nameLabel")
+        self.formLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.nameLabel)
+        self.nameLineEdit = QtWidgets.QLineEdit(Form)
+        self.nameLineEdit.setToolTip("")
+        self.nameLineEdit.setStatusTip("")
+        self.nameLineEdit.setAccessibleDescription("")
+        self.nameLineEdit.setObjectName("nameLineEdit")
+        self.formLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.nameLineEdit)
+        self.fullNameLabel = QtWidgets.QLabel(Form)
+        self.fullNameLabel.setObjectName("fullNameLabel")
+        self.formLayout.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.fullNameLabel)
+        self.fullNameLineEdit = QtWidgets.QLineEdit(Form)
+        self.fullNameLineEdit.setObjectName("fullNameLineEdit")
+        self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.fullNameLineEdit)
+        self.startDateLabel = QtWidgets.QLabel(Form)
+        self.startDateLabel.setObjectName("startDateLabel")
+        self.formLayout.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.startDateLabel)
+        self.startDateEdit = QtWidgets.QDateEdit(Form)
+        self.startDateEdit.setEnabled(True)
+        self.startDateEdit.setWrapping(False)
+        self.startDateEdit.setFrame(True)
+        self.startDateEdit.setAlignment(QtCore.Qt.AlignCenter)
+        self.startDateEdit.setDateTime(QtCore.QDateTime(QtCore.QDate(2016, 7, 6), QtCore.QTime(0, 0, 0)))
+        self.startDateEdit.setCalendarPopup(True)
+        self.startDateEdit.setDate(QtCore.QDate(2016, 7, 6))
+        self.startDateEdit.setObjectName("startDateEdit")
+        self.formLayout.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.startDateEdit)
+        self.endDateLabel = QtWidgets.QLabel(Form)
+        self.endDateLabel.setObjectName("endDateLabel")
+        self.formLayout.setWidget(3, QtWidgets.QFormLayout.LabelRole, self.endDateLabel)
+        self.endDateEdit = QtWidgets.QDateEdit(Form)
+        self.endDateEdit.setEnabled(True)
+        self.endDateEdit.setWrapping(False)
+        self.endDateEdit.setFrame(True)
+        self.endDateEdit.setAlignment(QtCore.Qt.AlignCenter)
+        self.endDateEdit.setDateTime(QtCore.QDateTime(QtCore.QDate(2016, 7, 6), QtCore.QTime(0, 0, 0)))
+        self.endDateEdit.setCalendarPopup(True)
+        self.endDateEdit.setDate(QtCore.QDate(2016, 7, 6))
+        self.endDateEdit.setObjectName("endDateEdit")
+        self.formLayout.setWidget(3, QtWidgets.QFormLayout.FieldRole, self.endDateEdit)
+        self.referenceLabel = QtWidgets.QLabel(Form)
+        self.referenceLabel.setObjectName("referenceLabel")
+        self.formLayout.setWidget(4, QtWidgets.QFormLayout.LabelRole, self.referenceLabel)
+        self.referenceLineEdit = QtWidgets.QLineEdit(Form)
+        self.referenceLineEdit.setObjectName("referenceLineEdit")
+        self.formLayout.setWidget(4, QtWidgets.QFormLayout.FieldRole, self.referenceLineEdit)
+        self.bankAccountLabel = QtWidgets.QLabel(Form)
+        self.bankAccountLabel.setObjectName("bankAccountLabel")
+        self.formLayout.setWidget(5, QtWidgets.QFormLayout.LabelRole, self.bankAccountLabel)
+        self.bankAccountLineEdit = QtWidgets.QLineEdit(Form)
+        self.bankAccountLineEdit.setObjectName("bankAccountLineEdit")
+        self.formLayout.setWidget(5, QtWidgets.QFormLayout.FieldRole, self.bankAccountLineEdit)
+        self.typeLabel = QtWidgets.QLabel(Form)
+        self.typeLabel.setObjectName("typeLabel")
+        self.formLayout.setWidget(6, QtWidgets.QFormLayout.LabelRole, self.typeLabel)
+        self.typeComboBox = QtWidgets.QComboBox(Form)
+        self.typeComboBox.setObjectName("typeComboBox")
+        self.formLayout.setWidget(6, QtWidgets.QFormLayout.FieldRole, self.typeComboBox)
+
+        self.retranslateUi(Form)
+        QtCore.QMetaObject.connectSlotsByName(Form)
+
+    def retranslateUi(self, Form):
+        _translate = QtCore.QCoreApplication.translate
+        Form.setWindowTitle(_translate("Form", "Form"))
+        self.nameLabel.setText(_translate("Form", "Name"))
+        self.fullNameLabel.setText(_translate("Form", "Full Name"))
+        self.startDateLabel.setText(_translate("Form", "Start date"))
+        self.endDateLabel.setText(_translate("Form", "End date"))
+        self.referenceLabel.setText(_translate("Form", "Reference"))
+        self.bankAccountLabel.setText(_translate("Form", "Bank account"))
+        self.typeLabel.setText(_translate("Form", "Relation type"))
+

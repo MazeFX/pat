@@ -165,6 +165,7 @@ class LetterForm(QWidget, Ui_LetterForm):
         print('Scanning for file in db protocol.')
         mapper_file_name = self.scanFileDrop.getCurrentFile()
         print('Mapper file name = ', mapper_file_name)
+        print('with type = ', type(mapper_file_name))
         projection_dir = str(self.senderComboBox.currentItem.name)
         projection_name = '{date}_{sender}_{reference}.pdf'.format(
             date=self.dateDateEdit.date().toPyDate(),
@@ -413,7 +414,6 @@ class UserForm(QWidget, Ui_UserForm):
         self.mapper.revert()
 
 
-
 class RelationForm(QWidget, Ui_RelationForm):
 
     dbhelper = None
@@ -476,7 +476,6 @@ class RelationForm(QWidget, Ui_RelationForm):
 
         self.userComboBox.setModel(user_model)
         self.senderComboBox.setModel(relation_model)
-
 
     def toggle_edit_mode(self, flag, mode, row):
         print(Fore.CYAN + 'Setting edit mode for letter form: ', flag, mode)
