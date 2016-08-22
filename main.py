@@ -125,16 +125,6 @@ class MainApp(QMainWindow, Ui_MainWindow):
             self.show()
         # TODO - create condition for other menu actions
 
-    def add_letter(self):
-        print(Fore.MAGENTA + 'signal recieved for action add letter.')
-        self.tab_letter = LetterListTab(self.dbhelper)
-        print(Fore.MAGENTA + 'Letterform initialized.')
-        self.tab_letter.setObjectName("tab_letter")
-        self.tabWidget.addTab(self.tab_letter, "")
-        print(Fore.MAGENTA + 'Letterform added to mainwindow.')
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_letter), self._translate("MainWindow", "Letters"))
-        self.tabWidget.setCurrentIndex(self.tabWidget.indexOf(self.tab_letter))
-
     def close_tab(self, index):
         requesting_tab = self.tab_list[index]
         print(Fore.MAGENTA + 'requesting tab is: ', requesting_tab)
@@ -157,13 +147,16 @@ class MainApp(QMainWindow, Ui_MainWindow):
 
     def show_settings(self):
         print(Fore.MAGENTA + 'Showing the Settings Dialog..')
-
         settings_dialog = SettingsDialog()
         settings_dialog.exec_()
 
     def closeEvent(self, event):
         print(Fore.MAGENTA + "User has clicked the red x on the main window")
-        # TODO - On close check for unsaved changes
+        for tab in self.tab_list:
+            if hasattr(tab, 'form'):
+                if tab.form.edit_mode:
+                    print(Fore.MAGENTA + 'Tab is in edit mode.')
+                    tab.form.toggle_edit_mode(False, None, None)
 
         close_dialog = CloseDialog()
         result = close_dialog.exec_()
