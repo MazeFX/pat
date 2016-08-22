@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\PDE\projects\qt\pat\MyQtness\ui\save_dialog.ui'
+# form implementation generated from reading ui file 'C:\PDE\projects\qt\pat\MyQtness\ui\save_dialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.7
 #

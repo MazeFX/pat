@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\PDE\projects\qt\pat\MyQtness\ui\letter_tab.ui'
+# form implementation generated from reading ui file 'C:\PDE\projects\qt\pat\MyQtness\ui\letter_tab.ui'
 #
 # Created by: PyQt5 UI code generator 5.7
 #
@@ -10,7 +10,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_Form(object):
     def setupUi(self, Form):
-        Form.setObjectName("Form")
+        Form.setObjectName("form")
         Form.resize(820, 597)
         self.horizontalLayout = QtWidgets.QHBoxLayout(Form)
         self.horizontalLayout.setObjectName("horizontalLayout")
@@ -37,5 +37,5 @@ class Ui_Form(object):
 
     def retranslateUi(self, Form):
         _translate = QtCore.QCoreApplication.translate
-        Form.setWindowTitle(_translate("Form", "Form"))
+        Form.setWindowTitle(_translate("form", "form"))
 

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\PDE\projects\qt\pat\MyQtness\ui\letter_form.ui'
+# form implementation generated from reading ui file 'C:\PDE\projects\qt\pat\MyQtness\ui\letter_form.ui'
 #
 # Created by: PyQt5 UI code generator 5.7
 #
@@ -114,7 +114,7 @@ class Ui_LetterForm(object):
 
     def retranslateUi(self, LetterForm):
         _translate = QtCore.QCoreApplication.translate
-        LetterForm.setWindowTitle(_translate("LetterForm", "Form"))
+        LetterForm.setWindowTitle(_translate("LetterForm", "form"))
         self.titleLabel.setText(_translate("LetterForm", "Letters"))
         self.pushButtonAdd.setText(_translate("LetterForm", "Add new"))
         self.pushButtonEdit.setText(_translate("LetterForm", "Edit"))

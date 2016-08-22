@@ -112,14 +112,14 @@ class LetterForm(QWidget, Ui_LetterForm):
         self.scanFileDrop.edit = flag
 
     def set_mapper_index_from_selection(self, *args):
-        print('Setting letter Form mapper index: ', args)
+        print('Setting letter form mapper index: ', args)
         if self.edit_mode:
             self.toggle_edit_mode(False, None, None)
 
         selected_index = args[0].indexes()
         row_index = selected_index[0].row()
         self.mapper.setCurrentIndex(row_index)
-        print('Setting letter Form mapper index: ', row_index)
+        print('Setting letter form mapper index: ', row_index)
 
     def on_add(self):
         # TODO - when adding new item remove current list selection
@@ -304,14 +304,14 @@ class UserForm(QWidget, Ui_UserForm):
         self.passwordLineEdit.setEnabled(flag)
 
     def set_mapper_index_from_selection(self, *args):
-        print('Setting letter Form mapper index: ', args)
+        print('Setting letter form mapper index: ', args)
         if self.edit_mode:
             self.toggle_edit_mode(False, None, None)
 
         selected_index = args[0].indexes()
         row_index = selected_index[0].row()
         self.mapper.setCurrentIndex(row_index)
-        print('Setting letter Form mapper index: ', row_index)
+        print('Setting letter form mapper index: ', row_index)
 
     def on_add(self):
         # TODO - when adding new item remove current list selection
@@ -509,14 +509,14 @@ class RelationForm(QWidget, Ui_RelationForm):
         self.endDateEdit.setEnabled(flag)
 
     def set_mapper_index_from_selection(self, *args):
-        print('Setting letter Form mapper index: ', args)
+        print('Setting letter form mapper index: ', args)
         if self.edit_mode:
             self.toggle_edit_mode(False, None, None)
 
         selected_index = args[0].indexes()
         row_index = selected_index[0].row()
         self.mapper.setCurrentIndex(row_index)
-        print('Setting letter Form mapper index: ', row_index)
+        print('Setting letter form mapper index: ', row_index)
 
     def on_add(self):
         # TODO - when adding new item remove current list selection

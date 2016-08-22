@@ -46,13 +46,13 @@ class LetterListTab(QWidget):
         self.tableView = MyTableView()
         self.tableView.setModel(model)
 
-        self.Form = LetterForm()
-        self.Form.dbhelper = self.dbhelper
-        self.Form.setModel(model)
+        self.form = LetterForm()
+        self.form.dbhelper = self.dbhelper
+        self.form.setModel(model)
         selectionModel = self.tableView.selectionModel()
-        selectionModel.selectionChanged.connect(self.Form.set_mapper_index_from_selection)
+        selectionModel.selectionChanged.connect(self.form.set_mapper_index_from_selection)
 
-        self.horizontalLayout.addWidget(self.Form)
+        self.horizontalLayout.addWidget(self.form)
         self.horizontalLayout.addWidget(self.tableView)
 
         self.setLayout(self.horizontalLayout)
@@ -81,13 +81,13 @@ class UserListTab(QWidget):
         self.tableView = MyTableView()
         self.tableView.setModel(model)
 
-        self.Form = UserForm()
-        self.Form.dbhelper = self.dbhelper
-        self.Form.setModel(model)
+        self.form = UserForm()
+        self.form.dbhelper = self.dbhelper
+        self.form.setModel(model)
         selectionModel = self.tableView.selectionModel()
-        selectionModel.selectionChanged.connect(self.Form.set_mapper_index_from_selection)
+        selectionModel.selectionChanged.connect(self.form.set_mapper_index_from_selection)
 
-        self.horizontalLayout.addWidget(self.Form)
+        self.horizontalLayout.addWidget(self.form)
         self.horizontalLayout.addWidget(self.tableView)
 
         self.setLayout(self.horizontalLayout)
@@ -121,13 +121,13 @@ class RelationListTab(QWidget):
         self.tableView = MyTableView()
         self.tableView.setModel(model)
 
-        self.Form = RelationForm()
-        self.Form.dbhelper = self.dbhelper
-        self.Form.setModel(model)
+        self.form = RelationForm()
+        self.form.dbhelper = self.dbhelper
+        self.form.setModel(model)
         selectionModel = self.tableView.selectionModel()
-        selectionModel.selectionChanged.connect(self.Form.set_mapper_index_from_selection)
+        selectionModel.selectionChanged.connect(self.form.set_mapper_index_from_selection)
 
-        self.horizontalLayout.addWidget(self.Form)
+        self.horizontalLayout.addWidget(self.form)
         self.horizontalLayout.addWidget(self.tableView)
 
         self.setLayout(self.horizontalLayout)

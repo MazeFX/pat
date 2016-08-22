@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\PDE\projects\qt\pat\MyQtness\ui\user_form.ui'
+# form implementation generated from reading ui file 'C:\PDE\projects\qt\pat\MyQtness\ui\user_form.ui'
 #
 # Created by: PyQt5 UI code generator 5.7
 #
@@ -85,7 +85,7 @@ class Ui_UserForm(object):
 
     def retranslateUi(self, UserForm):
         _translate = QtCore.QCoreApplication.translate
-        UserForm.setWindowTitle(_translate("UserForm", "Form"))
+        UserForm.setWindowTitle(_translate("UserForm", "form"))
         self.titleLabel.setText(_translate("UserForm", "Users"))
         self.pushButtonAdd.setText(_translate("UserForm", "Add new"))
         self.pushButtonEdit.setText(_translate("UserForm", "Edit"))

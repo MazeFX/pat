@@ -65,7 +65,8 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.tab_list.append(self.tab_home)
         self.tab_home.dbhelper = self.dbhelper
         self.tab_home.setObjectName("tab_home")
-        self.tabWidget.addTab(self.tab_home, "")
+        icon = qta.icon('fa.home', color='white')
+        self.tabWidget.addTab(self.tab_home, icon, self._translate("MainWindow", "Home"))
         self.verticalLayout.addWidget(self.tabWidget)
 
         self._retranslateUi(self)
@@ -114,10 +115,9 @@ class MainApp(QMainWindow, Ui_MainWindow):
         new_tab.setObjectName(str(tab_cls))
         self.tabWidget.addTab(new_tab, icon, self._translate("MainWindow", tab_name))
 
-        print(Fore.MAGENTA + 'Letterform added to mainwindow.')
+        print(Fore.MAGENTA + 'New tab added to tab list.')
         self.tabWidget.setCurrentIndex(self.tabWidget.indexOf(new_tab))
         self.tab_list.append(new_tab)
-
 
     def handle_tray_event(self, *args):
         print(Fore.MAGENTA + '$! Received a tray action with args: ', args)
@@ -136,6 +136,13 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.tabWidget.setCurrentIndex(self.tabWidget.indexOf(self.tab_letter))
 
     def close_tab(self, index):
+        requesting_tab = self.tab_list[index]
+        print(Fore.MAGENTA + 'requesting tab is: ', requesting_tab)
+        if requesting_tab.form.edit_mode:
+            print(Fore.MAGENTA + 'Tab is in edit mode.')
+            requesting_tab.form.toggle_edit_mode(False, None, None)
+        if requesting_tab.form.edit_mode is None:
+            print(Fore.MAGENTA + 'Tab is now in equil.')
         self.tabWidget.removeTab(index)
 
     def load_settings(self):
@@ -157,7 +164,6 @@ class MainApp(QMainWindow, Ui_MainWindow):
         print(Fore.MAGENTA + "User has clicked the red x on the main window")
         # TODO - create function for quit-dialog
         event.accept()
-
 
 
 if __name__ == "__main__":

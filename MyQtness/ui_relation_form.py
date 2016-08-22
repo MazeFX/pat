@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\PDE\projects\qt\pat\MyQtness\ui\relation_form.ui'
+# form implementation generated from reading ui file 'C:\PDE\projects\qt\pat\MyQtness\ui\relation_form.ui'
 #
 # Created by: PyQt5 UI code generator 5.7
 #
@@ -123,7 +123,7 @@ class Ui_RelationForm(object):
 
     def retranslateUi(self, RelationForm):
         _translate = QtCore.QCoreApplication.translate
-        RelationForm.setWindowTitle(_translate("RelationForm", "Form"))
+        RelationForm.setWindowTitle(_translate("RelationForm", "form"))
         self.titleLabel.setText(_translate("RelationForm", "Relations"))
         self.pushButtonAdd.setText(_translate("RelationForm", "Add new"))
         self.pushButtonEdit.setText(_translate("RelationForm", "Edit"))

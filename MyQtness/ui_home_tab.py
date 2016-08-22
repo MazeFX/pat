@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\PDE\projects\qt\pat\MyQtness\ui\home_tab.ui'
+# form implementation generated from reading ui file 'C:\PDE\projects\qt\pat\MyQtness\ui\home_tab.ui'
 #
 # Created by: PyQt5 UI code generator 5.7
 #
@@ -78,7 +78,7 @@ class Ui_HomeTab(object):
 
     def retranslateUi(self, HomeTab):
         _translate = QtCore.QCoreApplication.translate
-        HomeTab.setWindowTitle(_translate("HomeTab", "Form"))
+        HomeTab.setWindowTitle(_translate("HomeTab", "form"))
         self.Header1.setText(_translate("HomeTab", "P.A.T."))
         self.Header2_1.setText(_translate("HomeTab", "Personal"))
         self.Header2_2.setText(_translate("HomeTab", "Admin"))
