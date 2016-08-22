@@ -14,7 +14,7 @@ Python Test docstring.
 from PyQt5.QtCore import QSettings
 
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication, QDialog, QMessageBox
+from PyQt5.QtWidgets import QApplication, QDialog, QMessageBox, QDialogButtonBox
 
 import qdarkstyle
 
@@ -22,6 +22,7 @@ from auth import Auth
 from MyQtness.ui_login_dialog import Ui_LoginDialog
 from MyQtness.ui_settings_dialog import Ui_SettingsDialog
 from MyQtness.ui_save_dialog import Ui_SaveDialog
+from MyQtness.ui_close_dialog import Ui_CloseDialog
 from colorama import Fore, Back, Style
 
 
@@ -144,4 +145,32 @@ class SaveDialog(QDialog, Ui_SaveDialog):
         self.setResult(self.Rejected)
 
 
+class CloseDialog(QDialog, Ui_CloseDialog):
+    Rejected, Minimize, Exit = range(0, 3)
 
+    def __init__(self):
+        QDialog.__init__(self)
+        self.setupUi(self)
+
+        # TODO - Change the stylesheet to local version
+        stylesheet = qdarkstyle.load_stylesheet_pyqt5()
+        self.setStyleSheet(stylesheet)
+
+        self.buttonBox.addButton('Minimize', QDialogButtonBox.YesRole)
+        self.buttonBox.addButton('Exit', QDialogButtonBox.AcceptRole)
+        button_list = self.buttonBox.buttons()
+        for button in button_list:
+            button.setFocusPolicy(Qt.NoFocus)
+
+        self.buttonBox.rejected.connect(self.on_reject)
+        self.buttonBox.clicked.connect(self.on_click)
+
+    def on_click(self, *args):
+        button_role = self.buttonBox.buttonRole(args[0])
+        if button_role == 5:
+            self.done(self.Minimize)
+        elif button_role == 0:
+            self.done(self.Exit)
+
+    def on_reject(self):
+        self.done(self.Rejected)

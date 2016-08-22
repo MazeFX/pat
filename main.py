@@ -25,7 +25,7 @@ import qtawesome as qta
 from colorama import Fore, Back, Style
 from colorama import init as colorama
 
-from dialogs import LoginDialog, SettingsDialog
+from dialogs import LoginDialog, SettingsDialog, CloseDialog
 from MyQtness.ui_main_window import Ui_MainWindow
 from MyQtness import style
 from tabs import LetterListTab, UserListTab, RelationListTab, HomeTab
@@ -144,6 +144,7 @@ class MainApp(QMainWindow, Ui_MainWindow):
         if requesting_tab.form.edit_mode is None:
             print(Fore.MAGENTA + 'Tab is now in equil.')
         self.tabWidget.removeTab(index)
+        del self.tab_list[index]
 
     def load_settings(self):
         self.settings = QSettings()
@@ -162,8 +163,19 @@ class MainApp(QMainWindow, Ui_MainWindow):
 
     def closeEvent(self, event):
         print(Fore.MAGENTA + "User has clicked the red x on the main window")
-        # TODO - create function for quit-dialog
-        event.accept()
+        # TODO - On close check for unsaved changes
+
+        close_dialog = CloseDialog()
+        result = close_dialog.exec_()
+        if result == close_dialog.Minimize:
+            self.hide()
+            event.ignore()
+        elif result == close_dialog.Rejected:
+            event.ignore()
+        elif result == close_dialog.Exit:
+            print(Fore.MAGENTA + "Exiting via save dialog, result = ", result)
+            self.trayIcon.hide()
+            event.accept()
 
 
 if __name__ == "__main__":
