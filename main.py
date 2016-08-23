@@ -38,10 +38,10 @@ class MainApp(QMainWindow, Ui_MainWindow):
     tab_list = []
     # TODO - add dutch translation files
 
-    def __init__(self, *args):
+    def __init__(self, isolated, *args):
         super(MainApp, self).__init__(*args)
         self.load_settings()
-        self.setup_tray()
+        self.setup_tray(isolated)
         self.dbhelper = DbHelper()
 
         self.setupUi(self)
@@ -79,7 +79,7 @@ class MainApp(QMainWindow, Ui_MainWindow):
         builderLabel = QLabel('made by: MazeFX Solutions')
         self.statusbar.addPermanentWidget(builderLabel)
 
-    def setup_tray(self):
+    def setup_tray(self, isolated):
         self.trayIcon = QSystemTrayIcon(QIcon(':/app_icons/rc/tray_icon.png'), self)
         self.trayMenu = QMenu(self)
         showAction = self.trayMenu.addAction("Open PAT")
@@ -89,7 +89,20 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.trayMenu.triggered.connect(self.handle_tray_event)
         self.trayIcon.activated.connect(self.handle_tray_event)
         self.trayIcon.show()
-        self.trayIcon.showMessage('PAT Service', 'PAT service is now running..')
+        if isolated:
+            self.trayIcon.showMessage('PAT Service', 'PAT service is now running..')
+
+    def handle_tray_event(self, *args):
+        print(Fore.MAGENTA + '$! Received a tray action with args: ', args)
+        if args[0] == 3:
+            self.show()
+            return
+        elif hasattr(args[0], 'text'):
+            print(Fore.MAGENTA + '$! Tray event has text!!')
+            if args[0].text() == 'Open PAT':
+                self.show()
+            elif args[0].text() == 'Exit':
+                self.close()
 
     def _retranslateUi(self, MainWindow):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_home), self._translate("MainWindow", "Home"))
@@ -119,14 +132,7 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.tabWidget.setCurrentIndex(self.tabWidget.indexOf(new_tab))
         self.tab_list.append(new_tab)
 
-    def handle_tray_event(self, *args):
-        print(Fore.MAGENTA + '$! Received a tray action with args: ', args)
-        if args[0] == 3:
-            self.show()
-        # TODO - create condition for other menu actions
-
     def close_tab(self, index):
-        # FIXME - Cancel in dialog still closes tab
         requesting_tab = self.tab_list[index]
         print(Fore.MAGENTA + 'requesting tab is: ', requesting_tab)
         if requesting_tab.form.edit_mode:
@@ -134,8 +140,8 @@ class MainApp(QMainWindow, Ui_MainWindow):
             requesting_tab.form.toggle_edit_mode(False, None, None)
         if requesting_tab.form.edit_mode is None:
             print(Fore.MAGENTA + 'Tab is now in equil.')
-        self.tabWidget.removeTab(index)
-        del self.tab_list[index]
+            self.tabWidget.removeTab(index)
+            del self.tab_list[index]
 
     def load_settings(self):
         self.settings = QSettings()
@@ -198,12 +204,15 @@ if __name__ == "__main__":
 
     if result == loginDialog.Success:
         '''
-    w = MainApp()
     for arg in sys.argv:
         if 'only-tray' in arg:
-            visible = False
+            isolated = True
+        else:
+            isolated = False
 
-    if visible:
+    w = MainApp(isolated)
+
+    if not isolated:
         w.show()
     app.exec_()
     sys.exit(-1)

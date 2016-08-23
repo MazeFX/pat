@@ -154,6 +154,7 @@ class LetterForm(BasicForm, Ui_LetterForm):
 
     def __init__(self, *kwargs):
         super(BasicForm, self).__init__(*kwargs)
+        super(Ui_LetterForm, self).setupUi(self)
 
         self.setupUi(self)
         self.verticalLayout.insertWidget(3, self.formLayout)
