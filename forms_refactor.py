@@ -14,20 +14,22 @@ Python Test docstring.
 import sys
 
 from PyQt5.QtCore import QCoreApplication, Qt, QDate, QModelIndex
-from PyQt5.QtWidgets import QApplication, QWidget, QDataWidgetMapper
+from PyQt5.QtWidgets import QApplication, QWidget, QDataWidgetMapper, QPushButton, QFormLayout
 
 
 
 from db.models import AlchemicalTableModel, User, Relation
 from db.helper import DbHelper, DbFileHandler
 from MyQtness.ui_basic_form import Ui_BasicForm
-from MyQtness.ui_letter2_form import Ui_LetterForm
+from MyQtness.ui_letter2_form import Ui_LetterFormInsert
 from MyQtness.ui_relation_form import Ui_RelationForm
 from MyQtness.ui_user_form import Ui_UserForm
 from MyQtness.myWidgets import MyItemDelegate
 from dialogs import SaveDialog
 
 from colorama import Fore, Back, Style
+from colorama import init as colorama
+colorama(autoreset=True)
 
 
 class BasicForm(QWidget, Ui_BasicForm):
@@ -40,8 +42,8 @@ class BasicForm(QWidget, Ui_BasicForm):
     dbhelper = None
     field_list = []
 
-    def __init__(self, *kwargs):
-        super(BasicForm, self).__init__(*kwargs)
+    def __init__(self, *args):
+        super(BasicForm, self).__init__(*args)
 
         self.setupUi(self)
         self.edit_mode = None
@@ -61,21 +63,32 @@ class BasicForm(QWidget, Ui_BasicForm):
         self.pushButtonReset.setFocusPolicy(Qt.NoFocus)
         self.pushButtonReset.clicked.connect(self.on_reset)
 
+        self.mapper = QDataWidgetMapper(self)
+        self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
+        print(Fore.CYAN + 'mapper created: ', self.mapper)
+        delegate = MyItemDelegate(self)
+        self.mapper.setItemDelegate(delegate)
+
     def setModel(self, model):
         self.model = model
 
-        self.mapper = QDataWidgetMapper(self)
-        self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
         self.mapper.setModel(self.model)
-
-        #
-
-        delegate = MyItemDelegate(self)
-        self.mapper.setItemDelegate(delegate)
         self.mapper.setCurrentIndex(0)
 
         self.toggle_edit_mode(False, None, None)
-        self.set_controls()
+
+    def set_mapper(self):
+        pass
+
+    def set_mapper_index_from_selection(self, *args):
+        print('Setting letter form mapper index: ', args)
+        if self.edit_mode:
+            self.toggle_edit_mode(False, None, None)
+
+        selected_index = args[0].indexes()
+        row_index = selected_index[0].row()
+        self.mapper.setCurrentIndex(row_index)
+        print('Setting letter form mapper index: ', row_index)
 
     def set_controls(self):
         pass
@@ -101,12 +114,13 @@ class BasicForm(QWidget, Ui_BasicForm):
                     self.newRow = None
 
         self.edit_mode = mode
-        self.dateDateEdit.setEnabled(flag)
-        self.subjectLineEdit.setEnabled(flag)
-        self.senderComboBox.setEnabled(flag)
-        self.referenceLineEdit.setEnabled(flag)
-        self.userComboBox.setEnabled(flag)
-        self.scanFileDrop.edit = flag
+        for field in self.field_list:
+            if hasattr(field, 'edit'):
+                field.edit = flag
+            else:
+                field.setEnabled(flag)
+
+
 
     def on_add(self):
         # TODO - when adding new item remove current list selection
@@ -150,16 +164,34 @@ class BasicForm(QWidget, Ui_BasicForm):
         self.mapper.revert()
 
 
-class LetterForm(BasicForm, Ui_LetterForm):
+class LetterForm(BasicForm, Ui_LetterFormInsert):
 
-    def __init__(self, *kwargs):
-        super(BasicForm, self).__init__(*kwargs)
-        super(Ui_LetterForm, self).setupUi(self)
+    def __init__(self, *args):
+        super(LetterForm, self).__init__(*args)
+        if self.mapper:
+            print(Fore.CYAN + 'Mapper exists: ', self.mapper)
+        Ui_LetterFormInsert.setupUi(self, self.FormContainer)
+        Ui_LetterFormInsert.retranslateUi(self, self.FormContainer)
 
-        self.setupUi(self)
-        self.verticalLayout.insertWidget(3, self.formLayout)
+        for x in range(self.formLayout.rowCount()):
+            widget = self.formLayout.itemAt(x, QFormLayout.FieldRole)
+            self.field_list.append(widget.widget())
 
+        #self._post_init()
+        self.titleLabel.setText('Letters')
 
+    def _post_init(self):
+        self.set_mapper()
+
+    def set_mapper(self):
+        if self.mapper:
+            print(Fore.CYAN + 'Mapper exists: ', self.mapper)
+        self.mapper.addMapping(self.dateDateEdit, 0)
+        self.mapper.addMapping(self.subjectLineEdit, 1)
+        self.mapper.addMapping(self.senderComboBox, 2)
+        self.mapper.addMapping(self.referenceLineEdit, 3)
+        self.mapper.addMapping(self.userComboBox, 4)
+        self.mapper.addMapping(self.scanFileDrop, 5)
 
     def set_controls(self):
         session = self.dbhelper.get_app_db_session()

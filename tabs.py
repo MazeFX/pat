@@ -13,7 +13,8 @@ Python Test docstring.
 
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QTableView
 
-from forms import LetterForm, UserForm, RelationForm
+from forms import UserForm, RelationForm
+from forms_refactor import LetterForm
 from db.models import AlchemicalTableModel, Letter, User, Relation
 from MyQtness.myWidgets import MyTableView
 from MyQtness.ui_home_tab import Ui_HomeTab

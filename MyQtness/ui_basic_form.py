@@ -41,7 +41,11 @@ class Ui_BasicForm(object):
         self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line.setObjectName("line")
         self.verticalLayout.addWidget(self.line)
-
+        self.FormContainer = QtWidgets.QFrame(BasicForm)
+        self.FormContainer.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.FormContainer.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.FormContainer.setObjectName("FormContainer")
+        self.verticalLayout.addWidget(self.FormContainer)
         spacerItem = QtWidgets.QSpacerItem(40, 50, QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Minimum)
         self.verticalLayout.addItem(spacerItem)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
