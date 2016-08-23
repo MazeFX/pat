@@ -19,6 +19,7 @@ HEADERS  += letter_form.h
 
 FORMS    += letter_form.ui \
     ui/letter_form.ui \
+    ui/letter2_form.ui \
     ui/relation_form.ui \
     ui/user_form.ui \
     ui/basic_form.ui \
