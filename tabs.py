@@ -11,7 +11,8 @@ Date: 5-8-2016
 Python Test docstring.
 """
 
-from PyQt5.QtWidgets import QWidget, QHBoxLayout, QTableView
+from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QWidget, QHBoxLayout, QTableView, QLabel
 
 from forms import LetterForm, UserForm, RelationForm
 from db.models import AlchemicalTableModel, Letter, User, Relation
@@ -26,6 +27,10 @@ class HomeTab(QWidget, Ui_HomeTab):
         super(HomeTab, self).__init__(*args)
 
         self.setupUi(self)
+        pixmap = QPixmap(':/app_icons/rc/PAT_Logo.png')
+        lbl = QLabel(self)
+        lbl.setPixmap(pixmap)
+        self.verticalLayout_3.addWidget(lbl)
         # TODO - Create some statitics widgets for showing data
 
 

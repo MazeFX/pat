@@ -43,6 +43,8 @@
 
   <qresource prefix="app_icons">
     <file>rc/tray_icon.png</file>
+    <file>rc/PAT_icon.png</file>
+    <file>rc/PAT_Logo.png</file>
   </qresource>
 
 

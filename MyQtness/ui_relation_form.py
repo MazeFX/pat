@@ -70,7 +70,7 @@ class Ui_RelationFormInsert(object):
         self.typeLabel = QtWidgets.QLabel(RelationFormInsert)
         self.typeLabel.setObjectName("typeLabel")
         self.formLayout.setWidget(6, QtWidgets.QFormLayout.LabelRole, self.typeLabel)
-        self.typeComboBox = QtWidgets.QComboBox(RelationFormInsert)
+        self.typeComboBox = MyComboBox(RelationFormInsert)
         self.typeComboBox.setObjectName("typeComboBox")
         self.formLayout.setWidget(6, QtWidgets.QFormLayout.FieldRole, self.typeComboBox)
 
@@ -88,3 +88,4 @@ class Ui_RelationFormInsert(object):
         self.bankAccountLabel.setText(_translate("RelationFormInsert", "Bank account"))
         self.typeLabel.setText(_translate("RelationFormInsert", "Relation type"))
 
+from MyQtness.myWidgets import MyComboBox

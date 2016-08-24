@@ -28,6 +28,46 @@ from db.qvariantalchemy import String, Integer, DateTime, Date
 Base = declarative_base()
 
 
+class BankAccount(Base):
+    __tablename__ = 'bank_accounts'
+
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+    bank_name = Column(String)
+    account = Column(String)
+    date_created = Column(DateTime, default=datetime.datetime.now)
+
+    user = relationship('User', foreign_keys=[user_id])
+
+    def __repr__(self):
+        return "<BankAccount(id= '%s', name='%s', account='%s')>" % (
+            self.id, self.bank_name, self.account)
+
+    def load_dummy(self):
+        self.user_id = 1
+        self.bank_name = ''
+        self.account = ''
+
+
+class EmailAddress(Base):
+    __tablename__ = 'e_addresses'
+
+    id = Column(Integer, primary_key=True)
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+    address = Column(String)
+    date_created = Column(DateTime, default=datetime.datetime.now)
+
+    user = relationship('User', foreign_keys=[user_id])
+
+    def __repr__(self):
+        return "<BankAccount(id= '%s', user='%s', address='%s')>" % (
+            self.id, self.user, self.address)
+
+    def load_dummy(self):
+        self.user_id = 1
+        self.address = ''
+
+
 class Letter(Base):
     __tablename__ = 'letters'
 
@@ -56,7 +96,7 @@ class Letter(Base):
         self.reference = ''
         self.user_id = 1
         self.scan_file = ''
-        self.letter_type = 0
+        self.letter_type = 1
 
 
 class Relation(Base):
@@ -80,6 +120,15 @@ class Relation(Base):
 
     # TODO - Create Dummy function
 
+    def load_dummy(self):
+        self.name = ''
+        self.fullname = ''
+        self.reference = ''
+        self.bank_account = ''
+        self.relation_type_id = 1
+        self.start_date = datetime.date.today()
+        self.end_date = datetime.date.today()
+
 
 class Type(Base):
     __tablename__ = 'types'
@@ -93,7 +142,9 @@ class Type(Base):
         return "<Type(id= '%s', letter='%s', relation='%s')>" % (
             self.id, self.letter, self.relation)
 
-    # TODO - Create Dummy function
+    def load_dummy(self):
+        self.letter = ''
+        self.relation = ''
 
 
 class User(Base):
@@ -109,11 +160,10 @@ class User(Base):
         return "<User(id= '%s', name='%s', fullname='%s')>" % (
             self.id, self.name, self.fullname)
 
-    def __str__(self):
-        return "<User(id= '%s', name='%s', fullname='%s')>" % (
-            self.id, self.name, self.fullname)
-
-    # TODO - Create Dummy function
+    def load_dummy(self):
+        self.name = ''
+        self.fullname = ''
+        self.password = ''
 
 
 class AlchemicalTableModel(QAbstractTableModel):

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# form implementation generated from reading ui file 'C:\PDE\projects\qt\pat\MyQtness\ui\home_tab.ui'
+# Form implementation generated from reading ui file 'C:\PDE\projects\qt\pat\MyQtness\ui\home_tab.ui'
 #
 # Created by: PyQt5 UI code generator 5.7
 #
@@ -51,7 +51,7 @@ class Ui_HomeTab(object):
         spacerItem1 = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.horizontalLayout_2.addItem(spacerItem1)
         self.verticalLayout.addLayout(self.horizontalLayout_2)
-        spacerItem2 = QtWidgets.QSpacerItem(40, 600, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem2 = QtWidgets.QSpacerItem(40, 300, QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
         self.verticalLayout.addItem(spacerItem2)
         self.horizontalLayout.addLayout(self.verticalLayout)
         self.verticalLayout_2 = QtWidgets.QVBoxLayout()
@@ -78,7 +78,7 @@ class Ui_HomeTab(object):
 
     def retranslateUi(self, HomeTab):
         _translate = QtCore.QCoreApplication.translate
-        HomeTab.setWindowTitle(_translate("HomeTab", "form"))
+        HomeTab.setWindowTitle(_translate("HomeTab", "Form"))
         self.Header1.setText(_translate("HomeTab", "P.A.T."))
         self.Header2_1.setText(_translate("HomeTab", "Personal"))
         self.Header2_2.setText(_translate("HomeTab", "Admin"))

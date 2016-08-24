@@ -75,12 +75,12 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.menuLists.triggered.connect(self.show_list)
         self.tabWidget.tabCloseRequested.connect(self.close_tab)
 
-        self.setWindowIcon(QIcon(':/app_icons/rc/tray_icon.png'))
+        self.setWindowIcon(QIcon(':/app_icons/rc/PAT_icon.png'))
         builderLabel = QLabel('made by: MazeFX Solutions')
         self.statusbar.addPermanentWidget(builderLabel)
 
     def setup_tray(self, isolated):
-        self.trayIcon = QSystemTrayIcon(QIcon(':/app_icons/rc/tray_icon.png'), self)
+        self.trayIcon = QSystemTrayIcon(QIcon(':/app_icons/rc/PAT_icon.png'), self)
         self.trayMenu = QMenu(self)
         showAction = self.trayMenu.addAction("Open PAT")
         self.trayMenu.addSeparator()
