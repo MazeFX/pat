@@ -18,7 +18,7 @@ from PyQt5.QtWidgets import QApplication, QWidget, QDataWidgetMapper, QPushButto
 
 
 
-from db.models import AlchemicalTableModel, User, Relation
+from db.models import AlchemicalTableModel, User, Relation, Type
 from db.helper import DbHelper, DbFileHandler
 
 from MyQtness.ui_basic_form import Ui_BasicForm
@@ -147,7 +147,9 @@ class BasicForm(QWidget, Ui_BasicForm):
 
     def on_save(self):
         print(Fore.CYAN + 'Save signal sent and recieved.')
-        self.check_scanned_file()
+        if hasattr(self, 'save_check'):
+            print(Fore.CYAN + 'Checking for onsave checks.')
+            self.save_check()
         if self.edit_mode == 'add':
             self.model.storeRow(self.newRow)
             # TODO - Check sql insert unnecessary
@@ -260,7 +262,7 @@ class LetterForm(BasicForm, Ui_LetterFormInsert):
         self.senderComboBox.setModel(relation_model)
         self.toggle_edit_mode(False, None, None)
 
-    def check_scanned_file(self):
+    def save_check(self):
         print('Scanning for file in db protocol.')
         mapper_file_name = self.scanFileDrop.getCurrentFile()
         print('Mapper file name = ', mapper_file_name)
@@ -302,24 +304,17 @@ class RelationForm(BasicForm, Ui_RelationFormInsert):
         self.mapper.addMapping(self.typeComboBox, 4)
         self.mapper.addMapping(self.startDateEdit, 5)
         self.mapper.addMapping(self.endDateEdit, 6)
-        self.mapper.setCurrentIndex(0)
 
     def set_controls(self):
-        '''
         session = self.dbhelper.get_app_db_session()
-        user_model = AlchemicalTableModel(
+        type_model = AlchemicalTableModel(
             session,
-            User,
-            [('Full Name', User.fullname, 'fullname', {})])
+            Type,
+            [('Relation', Type.relation, 'relation', {})])
 
-        relation_model = AlchemicalTableModel(
-            session,
-            Relation,
-            [('Name', Relation.name, 'name', {})])
+        self.typeComboBox.setModel(type_model)
 
-        self.userComboBox.setModel(user_model)
-        self.senderComboBox.setModel(relation_model)
-        '''
+        self.mapper.setCurrentIndex(0)
         self.toggle_edit_mode(False, None, None)
 
 

@@ -47,7 +47,8 @@ class LetterListTab(QWidget):
              ('Sender', Letter.sender, 'sender.name', {}),
              ('Reference', Letter.reference, 'reference', {}),
              ('User', Letter.user, 'user.fullname', {}),
-             ('Letter Scan', Letter.scan_file, 'scan_file', {}),
+             ('Letter scan', Letter.scan_file, 'scan_file', {}),
+             ('Letter type', Letter.letter_type, 'letter_type.letter', {}),
              ('Date created', Letter.date_created, 'date_created', {})])
 
         print('Letter Tab model role names: ', model.roleNames())
@@ -83,7 +84,7 @@ class RelationListTab(QWidget):
              ('Full Name', Relation.fullname, 'fullname', {}),
              ('Reference', Relation.reference, 'reference', {}),
              ('Bank account', Relation.bank_account, 'bank_account', {}),
-             ('Relation type', Relation.relation_type, 'relation_type', {}),
+             ('Relation type', Relation.relation_type, 'relation_type.relation', {}),
              ('Start date', Relation.start_date, 'start_date', {}),
              ('End date', Relation.end_date, 'end_date', {}),
              ('Date created', Relation.date_created, 'date_created', {})])

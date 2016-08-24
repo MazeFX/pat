@@ -28,26 +28,6 @@ from db.qvariantalchemy import String, Integer, DateTime, Date
 Base = declarative_base()
 
 
-class User(Base):
-    __tablename__ = 'users'
-
-    id = Column(Integer, primary_key=True)
-    name = Column(String, nullable=False)
-    fullname = Column(String, nullable=False)
-    password = Column(String, nullable=False)
-    date_created = Column(DateTime, default=datetime.datetime.now)
-
-    def __repr__(self):
-        return "<User(id= '%s', name='%s', fullname='%s')>" % (
-            self.id, self.name, self.fullname)
-
-    def __str__(self):
-        return "<User(id= '%s', name='%s', fullname='%s')>" % (
-            self.id, self.name, self.fullname)
-
-    # TODO - Create Dummy function
-
-
 class Letter(Base):
     __tablename__ = 'letters'
 
@@ -58,11 +38,12 @@ class Letter(Base):
     reference = Column(String(250))
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
     scan_file = Column(String(250))
-    letter_type = Column(Integer)
+    letter_type_id = Column(Integer, ForeignKey('types.id'))
     date_created = Column(DateTime, default=datetime.datetime.now)
 
     user = relationship('User', foreign_keys=[user_id])
     sender = relationship('Relation', foreign_keys=[sender_id])
+    letter_type = relationship('Type', foreign_keys=[letter_type_id])
 
     def __repr__(self):
         return "<Letter(id= '%s', sender='%s', subject='%s')>" % (
@@ -86,14 +67,51 @@ class Relation(Base):
     fullname = Column(String, nullable=False)
     reference = Column(String(250))
     bank_account = Column(String(250))
-    relation_type = Column(Integer)
+    relation_type_id = Column(Integer, ForeignKey('types.id'))
     start_date = Column(Date)
     end_date = Column(Date)
     date_created = Column(DateTime, default=datetime.datetime.now)
 
+    relation_type = relationship('Type', foreign_keys=[relation_type_id])
+
     def __repr__(self):
         return "<Relation(id= '%s', name='%s', reference='%s')>" % (
             self.id, self.name, self.reference)
+
+    # TODO - Create Dummy function
+
+
+class Type(Base):
+    __tablename__ = 'types'
+
+    id = Column(Integer, primary_key=True)
+    letter = Column(String)
+    relation = Column(String)
+    date_created = Column(DateTime, default=datetime.datetime.now)
+
+    def __repr__(self):
+        return "<Type(id= '%s', letter='%s', relation='%s')>" % (
+            self.id, self.letter, self.relation)
+
+    # TODO - Create Dummy function
+
+
+class User(Base):
+    __tablename__ = 'users'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String, nullable=False)
+    fullname = Column(String, nullable=False)
+    password = Column(String, nullable=False)
+    date_created = Column(DateTime, default=datetime.datetime.now)
+
+    def __repr__(self):
+        return "<User(id= '%s', name='%s', fullname='%s')>" % (
+            self.id, self.name, self.fullname)
+
+    def __str__(self):
+        return "<User(id= '%s', name='%s', fullname='%s')>" % (
+            self.id, self.name, self.fullname)
 
     # TODO - Create Dummy function
 
@@ -202,6 +220,7 @@ class AlchemicalTableModel(QAbstractTableModel):
 
         row = self.results[index.row()]
         name = self.fields[index.column()][2]
+        # TODO - create function for displaying scnafile present icon.
         if '.' in name:
             foreign_column = name.split('.')
             foreign_item = getattr(row, foreign_column[0])

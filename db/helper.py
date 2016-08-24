@@ -20,7 +20,7 @@ from PyQt5.QtCore import QSettings
 from constants import ROOT_DIR
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy import create_engine
-from db.models import Base, User, Letter, Relation
+from db.models import Base, User, Letter, Relation, Type
 from colorama import Fore, Back, Style
 
 
@@ -54,24 +54,24 @@ class DbHelper(object):
                              subject='About 1',
                              reference='Reference for 1',
                              user_id=1,
-                             scan_file='Scan file path',
-                             letter_type=0)
+                             scan_file='',
+                             letter_type_id=1)
         session.add(new_letter1)
         new_letter2 = Letter(date=datetime.date.today(),
-                             sender_id=0,
+                             sender_id=1,
                              subject='About 2',
                              reference='Reference for 2',
-                             user_id=0,
-                             scan_file='Scan file path',
-                             letter_type=0)
+                             user_id=1,
+                             scan_file='',
+                             letter_type_id=1)
         session.add(new_letter2)
         new_letter3 = Letter(date=datetime.date.today(),
-                             sender_id=0,
+                             sender_id=1,
                              subject='About 3',
                              reference='Reference for 3',
                              user_id=1,
                              scan_file='Scan file path',
-                             letter_type=0)
+                             letter_type_id=1)
         session.add(new_letter3)
 
         # Insert Relations in the relation table
@@ -79,7 +79,7 @@ class DbHelper(object):
                                  fullname='ING Bank B.V.',
                                  reference='Reference for ING',
                                  bank_account='This is where the money goes',
-                                 relation_type=0,
+                                 relation_type_id=1,
                                  start_date=datetime.date.today(),
                                  end_date=datetime.date.today() + datetime.timedelta(days=360))
         session.add(new_relation1)
@@ -87,10 +87,32 @@ class DbHelper(object):
                                  fullname='Ziekenfonds United Ltd.',
                                  reference='Reference for Ziekenfonds',
                                  bank_account='This is where the money goes',
-                                 relation_type=0,
+                                 relation_type_id=1,
                                  start_date=datetime.date.today(),
                                  end_date=datetime.date.today() + datetime.timedelta(days=360))
         session.add(new_relation2)
+        session.commit()
+        self.create_types()
+
+    def create_types(self):
+        # TODO - integrate with db settings from app. Type are not only for testing
+        engine = create_engine('sqlite:///db/db_development.db')
+        DBSession = sessionmaker(bind=engine)
+        session = DBSession()
+
+        # Insert types into db
+        type_list = [['Appointment', 'Bank'],
+                     ['Bill', 'Employer'],
+                     ['Contract', 'Housing'],
+                     ['Information', 'Insurance'],
+                     [None, 'IRS'],
+                     [None, 'Medical'],
+                     [None, 'Shop'],
+                     [None, 'Subscription']]
+        for type in type_list:
+            new_type = Type(letter=type[0], relation=type[1])
+            session.add(new_type)
+
         session.commit()
 
     def get_app_db_session(self):
