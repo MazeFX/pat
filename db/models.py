@@ -22,7 +22,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from colorama import Fore, Back, Style
 
-from db.qvariantalchemy import String, Integer, DateTime, Date
+from db.qvariantalchemy import Boolean, String, Integer, Numeric, DateTime, Date
 
 
 Base = declarative_base()
@@ -35,6 +35,7 @@ class BankAccount(Base):
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
     bank_name = Column(String)
     account = Column(String)
+    balance = Column(Numeric(8, 2))
     date_created = Column(DateTime, default=datetime.datetime.now)
 
     user = relationship('User', foreign_keys=[user_id])
@@ -47,6 +48,46 @@ class BankAccount(Base):
         self.user_id = 1
         self.bank_name = ''
         self.account = ''
+        self.balance = 0
+
+
+class Contract(Base):
+    __tablename__ = 'contracts'
+
+    id = Column(Integer, primary_key=True)
+    relation_id = Column(Integer, ForeignKey('relations.id'), nullable=False)
+    user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
+    account_id = Column(Integer, ForeignKey('bank_accounts.id'), nullable=False)
+    letter_id = Column(Integer, ForeignKey('letters.id'), nullable=False)
+    reference = Column(String(250))
+    email_id = Column(Integer, ForeignKey('e_addresses.id'), nullable=False)
+    amount = Column(Numeric(8, 2))
+    occurrence = Column(DateTime)
+    start_date = Column(Date)
+    end_date = Column(Date)
+    date_created = Column(DateTime, default=datetime.datetime.now)
+
+    relation = relationship('Relation', foreign_keys=[relation_id])
+    user = relationship('User', foreign_keys=[user_id])
+    account = relationship('BankAccount', foreign_keys=[account_id])
+    letter = relationship('Letter', foreign_keys=[letter_id])
+    email = relationship('EmailAddress', foreign_keys=[email_id])
+
+    def __repr__(self):
+        return "<Contract(id= '%s', relation='%s', reference='%s')>" % (
+            self.id, self.relation, self.reference)
+
+    def load_dummy(self):
+        self.relation_id = 1
+        self.user_id = 1
+        self.account_id = 1
+        self.letter_id = 1
+        self.reference = ''
+        self.email_id = 1
+        self.amount = 0
+        self.occurrence = ''
+        self.start_date = datetime.date.today()
+        self.end_date = datetime.date.today()
 
 
 class EmailAddress(Base):
@@ -60,7 +101,7 @@ class EmailAddress(Base):
     user = relationship('User', foreign_keys=[user_id])
 
     def __repr__(self):
-        return "<BankAccount(id= '%s', user='%s', address='%s')>" % (
+        return "<EmailAddress(id= '%s', user='%s', address='%s')>" % (
             self.id, self.user, self.address)
 
     def load_dummy(self):
@@ -73,7 +114,7 @@ class Letter(Base):
 
     id = Column(Integer, primary_key=True)
     date = Column(Date)
-    sender_id = Column(Integer, ForeignKey('relations.id'), nullable=False)
+    relation_id = Column(Integer, ForeignKey('relations.id'), nullable=False)
     subject = Column(String(250))
     reference = Column(String(250))
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
@@ -82,7 +123,7 @@ class Letter(Base):
     date_created = Column(DateTime, default=datetime.datetime.now)
 
     user = relationship('User', foreign_keys=[user_id])
-    sender = relationship('Relation', foreign_keys=[sender_id])
+    relation = relationship('Relation', foreign_keys=[relation_id])
     letter_type = relationship('Type', foreign_keys=[letter_type_id])
 
     def __repr__(self):
@@ -91,12 +132,12 @@ class Letter(Base):
 
     def load_dummy(self):
         self.date = datetime.date.today()
-        self.sender_id = 1
+        self.relation_id = 1
         self.subject = ''
         self.reference = ''
         self.user_id = 1
         self.scan_file = ''
-        self.letter_type = 1
+        self.letter_type_id = 1
 
 
 class Relation(Base):
@@ -108,8 +149,6 @@ class Relation(Base):
     reference = Column(String(250))
     bank_account = Column(String(250))
     relation_type_id = Column(Integer, ForeignKey('types.id'))
-    start_date = Column(Date)
-    end_date = Column(Date)
     date_created = Column(DateTime, default=datetime.datetime.now)
 
     relation_type = relationship('Type', foreign_keys=[relation_type_id])
@@ -118,16 +157,45 @@ class Relation(Base):
         return "<Relation(id= '%s', name='%s', reference='%s')>" % (
             self.id, self.name, self.reference)
 
-    # TODO - Create Dummy function
-
     def load_dummy(self):
         self.name = ''
         self.fullname = ''
         self.reference = ''
         self.bank_account = ''
         self.relation_type_id = 1
-        self.start_date = datetime.date.today()
-        self.end_date = datetime.date.today()
+
+
+class Transaction(Base):
+    __tablename__ = 'transactions'
+
+    id = Column(Integer, primary_key=True)
+    contract_id = Column(Integer, ForeignKey('contracts.id'))
+    letter_id = Column(Integer, ForeignKey('letters.id'), nullable=False)
+    account_id = Column(Integer, ForeignKey('bank_accounts.id'), nullable=False)
+    amount = Column(Numeric(8, 2))
+    transaction_date = Column(Date)
+    payment_date = Column(Date)
+    payment_state = Column(Boolean)
+    debit = Column(Boolean)
+    date_created = Column(DateTime, default=datetime.datetime.now)
+
+    contract = relationship('Contract', foreign_keys=[contract_id])
+    letter = relationship('Letter', foreign_keys=[letter_id])
+    account = relationship('BankAccount', foreign_keys=[account_id])
+
+    def __repr__(self):
+        return "<Transaction(id= '%s', account='%s', ammount='%s')>" % (
+            self.id, self.account, self.ammount)
+
+    def load_dummy(self):
+        self.contract_id = 1
+        self.letter_id = 1
+        self.account_id = 1
+        self.amount = 0
+        self.transaction_date = datetime.date.today()
+        self.payment_date = None
+        self.payment_state = False
+        self.debit = False
 
 
 class Type(Base):

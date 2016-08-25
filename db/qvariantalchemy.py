@@ -12,6 +12,7 @@ Python Test docstring.
 """
 
 import datetime
+from decimal import Decimal
 
 from PyQt5.QtCore import QVariant, QDate
 from sqlalchemy import types
@@ -47,6 +48,17 @@ class Integer(types.TypeDecorator):
     def process_bind_param(self, value, dialect):
         return gen_process_bind_param(
             int, lambda value: value.toLongLong(),
+            self, value, dialect)
+
+
+class Numeric(types.TypeDecorator):
+    impl = types.Numeric
+
+    def process_bind_param(self, value, dialect):
+        print('--------- From Numeric type:  -------------')
+        print('-value = ', value)
+        return gen_process_bind_param(
+            int, lambda value: round(Decimal(value), 2),
             self, value, dialect)
 
 
