@@ -11,6 +11,8 @@ Date: 5-8-2016
 Python Test docstring.
 """
 
+
+from PyQt5 import Qt
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QTableView, QLabel
 
@@ -27,10 +29,11 @@ class HomeTab(QWidget, Ui_HomeTab):
         super(HomeTab, self).__init__(*args)
 
         self.setupUi(self)
-        pixmap = QPixmap(':/app_icons/rc/PAT_Logo.png')
-        lbl = QLabel(self)
-        lbl.setPixmap(pixmap)
-        self.verticalLayout_3.addWidget(lbl)
+
+        myPixmap = QPixmap(':/app_icons/rc/PAT_Logo.png')
+
+        myScaledPixmap = myPixmap.scaledToHeight(200)
+        self.LogoContainer.setPixmap(myScaledPixmap)
         # TODO - Create some statitics widgets for showing data
 
 
