@@ -25,8 +25,11 @@ from colorama import Fore, Back, Style
 
 class HomeTab(QWidget, Ui_HomeTab):
 
-    def __init__(self, *args):
+    dbhelper = None
+
+    def __init__(self, dbhelper, *args):
         super(HomeTab, self).__init__(*args)
+        self.dbhelper = dbhelper
 
         self.setupUi(self)
 
@@ -34,15 +37,26 @@ class HomeTab(QWidget, Ui_HomeTab):
 
         myScaledPixmap = myPixmap.scaledToHeight(200)
         self.LogoContainer.setPixmap(myScaledPixmap)
-        # TODO - Create some statitics widgets for showing data
+
+    def showEvent(self, *args):
+        self.refresh_stats()
+
+    def refresh_stats(self):
+        statistics = self.dbhelper.get_table_statistics()
+        for stat in statistics:
+            value = statistics[stat]
+            lcd_string = stat + 'Number'
+            if hasattr(self, lcd_string):
+                lcdWidget = getattr(self, lcd_string)
+                lcdWidget.display(value)
 
 
 class LetterListTab(QWidget):
 
     dbhelper = None
 
-    def __init__(self, dbhelper, **kwargs):
-        super(LetterListTab, self).__init__(**kwargs)
+    def __init__(self, dbhelper, *args):
+        super(LetterListTab, self).__init__(*args)
         self.dbhelper = dbhelper
 
         self.horizontalLayout = QHBoxLayout(self)
@@ -52,7 +66,7 @@ class LetterListTab(QWidget):
             Letter,
             [('Date', Letter.date, 'date', {}),
              ('Subject', Letter.subject, 'subject', {}),
-             ('Sender', Letter.sender, 'sender.name', {}),
+             ('Sender', Letter.relation, 'relation.name', {}),
              ('Reference', Letter.reference, 'reference', {}),
              ('User', Letter.user, 'user.fullname', {}),
              ('Letter scan', Letter.scan_file, 'scan_file', {}),
@@ -78,8 +92,8 @@ class RelationListTab(QWidget):
 
     dbhelper = None
 
-    def __init__(self, dbhelper, **kwargs):
-        super(RelationListTab, self).__init__(**kwargs)
+    def __init__(self, dbhelper, *args):
+        super(RelationListTab, self).__init__(*args)
         self.dbhelper = dbhelper
 
         self.horizontalLayout = QHBoxLayout(self)
@@ -116,8 +130,8 @@ class UserListTab(QWidget):
 
     dbhelper = None
 
-    def __init__(self, dbhelper, **kwargs):
-        super(UserListTab, self).__init__(**kwargs)
+    def __init__(self, dbhelper, *args):
+        super(UserListTab, self).__init__(*args)
         self.dbhelper = dbhelper
 
         self.horizontalLayout = QHBoxLayout(self)

@@ -127,8 +127,8 @@ class Letter(Base):
     letter_type = relationship('Type', foreign_keys=[letter_type_id])
 
     def __repr__(self):
-        return "<Letter(id= '%s', sender='%s', subject='%s')>" % (
-            self.id, self.sender, self.subject)
+        return "<Letter(id= '%s', relation='%s', subject='%s')>" % (
+            self.id, self.relation, self.subject)
 
     def load_dummy(self):
         self.date = datetime.date.today()

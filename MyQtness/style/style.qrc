@@ -46,8 +46,6 @@
     <file>rc/PAT_icon.png</file>
     <file>rc/PAT_Logo.png</file>
   </qresource>
-
-
   <qresource>
       <file>style.qss</file>
       <file>dark_style.qss</file>

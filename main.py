@@ -61,7 +61,7 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.tabWidget.setMovable(True)
         self.tabWidget.setTabBarAutoHide(True)
         self.tabWidget.setObjectName("tabWidget")
-        self.tab_home = HomeTab()
+        self.tab_home = HomeTab(self.dbhelper)
         self.tab_list.append(self.tab_home)
         self.tab_home.dbhelper = self.dbhelper
         self.tab_home.setObjectName("tab_home")
@@ -133,13 +133,18 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.tab_list.append(new_tab)
 
     def close_tab(self, index):
+        # TODO - Check if index stays correct when moving tabs around
         requesting_tab = self.tab_list[index]
         print(Fore.MAGENTA + 'requesting tab is: ', requesting_tab)
-        if requesting_tab.form.edit_mode:
-            print(Fore.MAGENTA + 'Tab is in edit mode.')
-            requesting_tab.form.toggle_edit_mode(False, None, None)
-        if requesting_tab.form.edit_mode is None:
-            print(Fore.MAGENTA + 'Tab is now in equil.')
+        if hasattr(requesting_tab, 'form'):
+            if requesting_tab.form.edit_mode:
+                print(Fore.MAGENTA + 'Tab is in edit mode.')
+                requesting_tab.form.toggle_edit_mode(False, None, None)
+            if requesting_tab.form.edit_mode is None:
+                print(Fore.MAGENTA + 'Tab is now in equil.')
+                self.tabWidget.removeTab(index)
+                del self.tab_list[index]
+        else:
             self.tabWidget.removeTab(index)
             del self.tab_list[index]
 

@@ -1220,3 +1220,4 @@ MyDragDropBox
 QLabel#Header1 {
     color: #000000;
 }
+

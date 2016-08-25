@@ -19,8 +19,9 @@ from PyQt5.QtCore import QSettings
 
 from constants import ROOT_DIR
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy import create_engine
-from db.models import Base, User, Letter, Relation, Type
+from sqlalchemy import create_engine, MetaData
+from db.models import Base, BankAccount, Contract, EmailAddress, Letter, \
+    Relation, Transaction, Type, User
 from colorama import Fore, Back, Style
 
 
@@ -30,6 +31,11 @@ class DbHelper(object):
 
     def __init__(self, *args):
         self.settings = QSettings()
+        self.db_string = 'sqlite:///{base}{db}'.format(
+            base=self.settings.value('db_base_path'),
+            db=self.settings.value('db_name'))
+
+        self.engine = create_engine(self.db_string)
 
     def create_test_db(self):
 
@@ -50,7 +56,7 @@ class DbHelper(object):
 
         # Insert Letters in the letter table
         new_letter1 = Letter(date=datetime.date.today(),
-                             sender_id=1,
+                             relation_id=1,
                              subject='About 1',
                              reference='Reference for 1',
                              user_id=1,
@@ -58,7 +64,7 @@ class DbHelper(object):
                              letter_type_id=1)
         session.add(new_letter1)
         new_letter2 = Letter(date=datetime.date.today(),
-                             sender_id=1,
+                             relation_id=1,
                              subject='About 2',
                              reference='Reference for 2',
                              user_id=1,
@@ -66,7 +72,7 @@ class DbHelper(object):
                              letter_type_id=1)
         session.add(new_letter2)
         new_letter3 = Letter(date=datetime.date.today(),
-                             sender_id=1,
+                             relation_id=1,
                              subject='About 3',
                              reference='Reference for 3',
                              user_id=1,
@@ -79,17 +85,13 @@ class DbHelper(object):
                                  fullname='ING Bank B.V.',
                                  reference='Reference for ING',
                                  bank_account='This is where the money goes',
-                                 relation_type_id=1,
-                                 start_date=datetime.date.today(),
-                                 end_date=datetime.date.today() + datetime.timedelta(days=360))
+                                 relation_type_id=1)
         session.add(new_relation1)
         new_relation2 = Relation(name='Ziekenfonds',
                                  fullname='Ziekenfonds United Ltd.',
                                  reference='Reference for Ziekenfonds',
                                  bank_account='This is where the money goes',
-                                 relation_type_id=1,
-                                 start_date=datetime.date.today(),
-                                 end_date=datetime.date.today() + datetime.timedelta(days=360))
+                                 relation_type_id=1)
         session.add(new_relation2)
         session.commit()
         self.create_types()
@@ -120,13 +122,7 @@ class DbHelper(object):
             print(Fore.YELLOW + '====== RETURNING THE EXISTING SESSION =======')
             return self.session
 
-        self.db_string = 'sqlite:///{base}{db}'.format(
-            base=self.settings.value('db_base_path'),
-            db=self.settings.value('db_name'))
-
-        engine = create_engine(self.db_string)
-
-        DBSession = sessionmaker(bind=engine)
+        DBSession = sessionmaker(bind=self.engine)
         self.session = DBSession()
         print(Fore.YELLOW + '====== CREATED A NEW SESSION =======')
         return self.session
@@ -146,6 +142,22 @@ class DbHelper(object):
         tablemaker.table_data = data
 
         return tablemaker
+
+    def get_table_statistics(self):
+        session = self.get_app_db_session()
+        table_list = {}
+
+        tables = [BankAccount, Contract, EmailAddress, Letter,
+                  Relation, Transaction, Type, User]
+
+        for table in tables:
+            print(Fore.YELLOW + 'Table name: ', table)
+            row_count = session.query(table).count()
+            table_list[table.__name__] = row_count
+            print(Fore.YELLOW + '---Total table rowcount: ', row_count)
+        print(Fore.YELLOW + '--Returning Table List: ', table_list)
+
+        return table_list
 
 
 class DbFileHandler(object):
