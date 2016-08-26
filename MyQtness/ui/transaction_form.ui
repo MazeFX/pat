@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>LetterFormInsert</class>
- <widget class="QWidget" name="LetterFormInsert">
+ <class>TransactionFormInsert</class>
+ <widget class="QWidget" name="TransactionFormInsert">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -15,13 +15,116 @@
   </property>
   <layout class="QFormLayout" name="formLayout">
    <item row="0" column="0">
-    <widget class="QLabel" name="dateLabel">
+    <widget class="QLabel" name="contractLabel">
      <property name="text">
-      <string>Date</string>
+      <string>Contract</string>
      </property>
     </widget>
    </item>
    <item row="0" column="1">
+    <widget class="MyComboBox" name="letterComboBox"/>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="letterLabel">
+     <property name="text">
+      <string>Letter</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="MyComboBox" name="contractComboBox"/>
+   </item>
+   <item row="8" column="0">
+    <widget class="QLabel" name="referenceLabel">
+     <property name="text">
+      <string>Reference</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="1">
+    <widget class="QLineEdit" name="referenceLineEdit">
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="statusTip">
+      <string/>
+     </property>
+     <property name="accessibleDescription">
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <widget class="MyComboBox" name="accountComboBox"/>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="accountLabel">
+     <property name="text">
+      <string>Bank account</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="1">
+    <widget class="QLineEdit" name="amountLineEdit"/>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="amountLabel">
+     <property name="text">
+      <string>Amount</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QLabel" name="transactionDateLabel">
+     <property name="text">
+      <string>Transaction date</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="QDateEdit" name="dateDateEdit_2">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="wrapping">
+      <bool>false</bool>
+     </property>
+     <property name="frame">
+      <bool>true</bool>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+     <property name="dateTime">
+      <datetime>
+       <hour>0</hour>
+       <minute>0</minute>
+       <second>0</second>
+       <year>2016</year>
+       <month>7</month>
+       <day>6</day>
+      </datetime>
+     </property>
+     <property name="calendarPopup">
+      <bool>true</bool>
+     </property>
+     <property name="date">
+      <date>
+       <year>2016</year>
+       <month>7</month>
+       <day>6</day>
+      </date>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="QLabel" name="dateLabel">
+     <property name="text">
+      <string>Payment date</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1">
     <widget class="QDateEdit" name="dateDateEdit">
      <property name="enabled">
       <bool>true</bool>
@@ -57,81 +160,29 @@
      </property>
     </widget>
    </item>
-   <item row="1" column="0">
-    <widget class="QLabel" name="subjectLabel">
+   <item row="11" column="0">
+    <widget class="QLabel" name="paymentStateLabel">
      <property name="text">
-      <string>Subject</string>
+      <string>Status</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="1">
-    <widget class="QLineEdit" name="subjectLineEdit"/>
-   </item>
-   <item row="2" column="0">
-    <widget class="QLabel" name="UserLabel">
+   <item row="11" column="1">
+    <widget class="QCheckBox" name="paymentStateCheckBox">
      <property name="text">
-      <string>Adressed User</string>
+      <string>Payed?</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="1">
-    <widget class="MyComboBox" name="userComboBox"/>
-   </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="senderLabel">
+   <item row="12" column="0">
+    <widget class="QLabel" name="debitLabel">
      <property name="text">
-      <string>Sender</string>
+      <string>Debit/Credit</string>
      </property>
     </widget>
    </item>
-   <item row="3" column="1">
-    <widget class="MyComboBox" name="senderComboBox"/>
-   </item>
-   <item row="4" column="0">
-    <widget class="QLabel" name="referenceLabel">
-     <property name="text">
-      <string>Reference</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="1">
-    <widget class="QLineEdit" name="referenceLineEdit">
-     <property name="toolTip">
-      <string/>
-     </property>
-     <property name="statusTip">
-      <string/>
-     </property>
-     <property name="accessibleDescription">
-      <string/>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="0">
-    <widget class="QLabel" name="scanLabel">
-     <property name="text">
-      <string>Scan</string>
-     </property>
-    </widget>
-   </item>
-   <item row="5" column="1">
-    <widget class="MyDragDropBox" name="scanFileDrop" native="true">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>100</height>
-      </size>
-     </property>
-     <property name="acceptDrops">
-      <bool>true</bool>
-     </property>
-     <property name="autoFillBackground">
-      <bool>false</bool>
-     </property>
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
-    </widget>
+   <item row="12" column="1">
+    <widget class="QCheckBox" name="debitCheckBox"/>
    </item>
   </layout>
  </widget>
@@ -140,12 +191,6 @@
    <class>MyComboBox</class>
    <extends>QComboBox</extends>
    <header>MyQtness.myWidgets.h</header>
-  </customwidget>
-  <customwidget>
-   <class>MyDragDropBox</class>
-   <extends>QWidget</extends>
-   <header>MyQtness.myWidgets.h</header>
-   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

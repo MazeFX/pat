@@ -8,49 +8,49 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-class Ui_LetterFormInsert(object):
-    def setupUi(self, LetterFormInsert):
-        LetterFormInsert.setObjectName("LetterFormInsert")
-        LetterFormInsert.resize(286, 273)
-        self.formLayout = QtWidgets.QFormLayout(LetterFormInsert)
+class Ui_BankAccountFormInsert(object):
+    def setupUi(self, BankAccountFormInsert):
+        BankAccountFormInsert.setObjectName("BankAccountFormInsert")
+        BankAccountFormInsert.resize(286, 273)
+        self.formLayout = QtWidgets.QFormLayout(BankAccountFormInsert)
         self.formLayout.setObjectName("formLayout")
-        self.bankNameLabel = QtWidgets.QLabel(LetterFormInsert)
+        self.bankNameLabel = QtWidgets.QLabel(BankAccountFormInsert)
         self.bankNameLabel.setObjectName("bankNameLabel")
         self.formLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.bankNameLabel)
-        self.bankNameLineEdit = QtWidgets.QLineEdit(LetterFormInsert)
+        self.bankNameLineEdit = QtWidgets.QLineEdit(BankAccountFormInsert)
         self.bankNameLineEdit.setObjectName("bankNameLineEdit")
         self.formLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.bankNameLineEdit)
-        self.UserLabel = QtWidgets.QLabel(LetterFormInsert)
+        self.UserLabel = QtWidgets.QLabel(BankAccountFormInsert)
         self.UserLabel.setObjectName("UserLabel")
         self.formLayout.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.UserLabel)
-        self.userComboBox = MyComboBox(LetterFormInsert)
+        self.userComboBox = MyComboBox(BankAccountFormInsert)
         self.userComboBox.setObjectName("userComboBox")
         self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.userComboBox)
-        self.accountLabel = QtWidgets.QLabel(LetterFormInsert)
+        self.accountLabel = QtWidgets.QLabel(BankAccountFormInsert)
         self.accountLabel.setObjectName("accountLabel")
         self.formLayout.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.accountLabel)
-        self.accountLineEdit = QtWidgets.QLineEdit(LetterFormInsert)
+        self.accountLineEdit = QtWidgets.QLineEdit(BankAccountFormInsert)
         self.accountLineEdit.setToolTip("")
         self.accountLineEdit.setStatusTip("")
         self.accountLineEdit.setAccessibleDescription("")
         self.accountLineEdit.setObjectName("accountLineEdit")
         self.formLayout.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.accountLineEdit)
-        self.balanceLabel = QtWidgets.QLabel(LetterFormInsert)
+        self.balanceLabel = QtWidgets.QLabel(BankAccountFormInsert)
         self.balanceLabel.setObjectName("balanceLabel")
         self.formLayout.setWidget(3, QtWidgets.QFormLayout.LabelRole, self.balanceLabel)
-        self.balanceLineEdit = QtWidgets.QLineEdit(LetterFormInsert)
+        self.balanceLineEdit = QtWidgets.QLineEdit(BankAccountFormInsert)
         self.balanceLineEdit.setObjectName("balanceLineEdit")
         self.formLayout.setWidget(3, QtWidgets.QFormLayout.FieldRole, self.balanceLineEdit)
 
-        self.retranslateUi(LetterFormInsert)
-        QtCore.QMetaObject.connectSlotsByName(LetterFormInsert)
+        self.retranslateUi(BankAccountFormInsert)
+        QtCore.QMetaObject.connectSlotsByName(BankAccountFormInsert)
 
-    def retranslateUi(self, LetterFormInsert):
+    def retranslateUi(self, BankAccountFormInsert):
         _translate = QtCore.QCoreApplication.translate
-        LetterFormInsert.setWindowTitle(_translate("LetterFormInsert", "Form"))
-        self.bankNameLabel.setText(_translate("LetterFormInsert", "Bank name"))
-        self.UserLabel.setText(_translate("LetterFormInsert", "User"))
-        self.accountLabel.setText(_translate("LetterFormInsert", "Account Nr."))
-        self.balanceLabel.setText(_translate("LetterFormInsert", "Balance"))
+        BankAccountFormInsert.setWindowTitle(_translate("BankAccountFormInsert", "Form"))
+        self.bankNameLabel.setText(_translate("BankAccountFormInsert", "Bank name"))
+        self.UserLabel.setText(_translate("BankAccountFormInsert", "User"))
+        self.accountLabel.setText(_translate("BankAccountFormInsert", "Account Nr."))
+        self.balanceLabel.setText(_translate("BankAccountFormInsert", "Balance"))
 
 from MyQtness.myWidgets import MyComboBox

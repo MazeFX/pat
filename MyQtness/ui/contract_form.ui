@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>LetterFormInsert</class>
- <widget class="QWidget" name="LetterFormInsert">
+ <class>ContractFormInsert</class>
+ <widget class="QWidget" name="ContractFormInsert">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -15,17 +15,17 @@
   </property>
   <layout class="QFormLayout" name="formLayout">
    <item row="0" column="0">
-    <widget class="QLabel" name="senderLabel">
+    <widget class="QLabel" name="relationLabel">
      <property name="text">
       <string>Relation</string>
      </property>
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="MyComboBox" name="senderComboBox"/>
+    <widget class="MyComboBox" name="relationComboBox"/>
    </item>
    <item row="1" column="0">
-    <widget class="QLabel" name="UserLabel">
+    <widget class="QLabel" name="userLabel">
      <property name="text">
       <string>User</string>
      </property>
@@ -35,14 +35,14 @@
     <widget class="MyComboBox" name="userComboBox"/>
    </item>
    <item row="2" column="0">
-    <widget class="QLabel" name="bankAccountLabel">
+    <widget class="QLabel" name="accountLabel">
      <property name="text">
       <string>Bank account</string>
      </property>
     </widget>
    </item>
    <item row="2" column="1">
-    <widget class="MyComboBox" name="bankAccountComboBox"/>
+    <widget class="MyComboBox" name="accountComboBox"/>
    </item>
    <item row="3" column="0">
     <widget class="QLabel" name="letterLabel">
@@ -181,14 +181,14 @@
     </widget>
    </item>
    <item row="9" column="0">
-    <widget class="QLabel" name="occurenceLabel">
+    <widget class="QLabel" name="recurenceLabel">
      <property name="text">
-      <string>Occurence</string>
+      <string>Recurence</string>
      </property>
     </widget>
    </item>
    <item row="9" column="1">
-    <widget class="QSpinBox" name="occurenceBox"/>
+    <widget class="QSpinBox" name="recurenceBox"/>
    </item>
   </layout>
  </widget>

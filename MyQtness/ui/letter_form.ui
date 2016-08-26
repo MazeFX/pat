@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>286</width>
-    <height>273</height>
+    <height>296</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -134,10 +134,10 @@
     </widget>
    </item>
    <item row="5" column="1">
-    <widget class="MyComboBox" name="letterTypeComboBox"/>
+    <widget class="MyComboBox" name="typeComboBox"/>
    </item>
    <item row="5" column="0">
-    <widget class="QLabel" name="letterTypeLabel">
+    <widget class="QLabel" name="typeLabel">
      <property name="text">
       <string>Letter type</string>
      </property>

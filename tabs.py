@@ -220,6 +220,7 @@ class RelationListTab(QWidget):
 
         self.setLayout(self.horizontalLayout)
 
+
 class TransactionListTab(QWidget):
 
     dbhelper = None

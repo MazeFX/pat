@@ -16,7 +16,8 @@ import sys
 from PyQt5.QtCore import QCoreApplication, Qt, QDate, QModelIndex
 from PyQt5.QtWidgets import QApplication, QWidget, QDataWidgetMapper, QPushButton, QFormLayout
 
-from db.models import AlchemicalTableModel, BankAccount, EmailAddress, Letter, Relation, Type, User
+from db.models import AlchemicalTableModel, BankAccount, Contract, EmailAddress, \
+    Letter, Relation, Type, User
 from db.helper import DbHelper, DbFileHandler
 
 from MyQtness.ui_basic_form import Ui_BasicForm
@@ -240,7 +241,7 @@ class BankAccountForm(BasicForm, Ui_BankAccountFormInsert):
     def set_mapper(self):
         self.mapper.addMapping(self.bankNameLineEdit, 0)
         self.mapper.addMapping(self.userComboBox, 1)
-        self.mapper.addMapping(self.accountComboBox, 2)
+        self.mapper.addMapping(self.accountLineEdit, 2)
         self.mapper.addMapping(self.balanceLineEdit, 3)
 
     def set_controls(self):
@@ -276,7 +277,7 @@ class ContractForm(BasicForm, Ui_ContractFormInsert):
         self.mapper.addMapping(self.userComboBox, 1)
         self.mapper.addMapping(self.accountComboBox, 2)
         self.mapper.addMapping(self.letterComboBox, 3)
-        self.mapper.addMapping(self.emailAddressComboBox, 4)
+        self.mapper.addMapping(self.emailComboBox, 4)
         self.mapper.addMapping(self.amountLineEdit, 5)
         self.mapper.addMapping(self.recurrenceBox, 6)
         self.mapper.addMapping(self.startDateDateEdit, 7)
@@ -313,7 +314,7 @@ class ContractForm(BasicForm, Ui_ContractFormInsert):
         self.userComboBox.setModel(user_model)
         self.accountComboBox.setModel(account_model)
         self.letterComboBox.setModel(letter_model)
-        self.emailAddressComboBox.setModel(email_model)
+        self.emailComboBox.setModel(email_model)
 
         self.mapper.setCurrentIndex(0)
         self.toggle_edit_mode(False, None, None)
@@ -375,6 +376,7 @@ class LetterForm(BasicForm, Ui_LetterFormInsert):
         self.mapper.addMapping(self.referenceLineEdit, 3)
         self.mapper.addMapping(self.userComboBox, 4)
         self.mapper.addMapping(self.scanFileDrop, 5)
+        self.mapper.addMapping(self.typeComboBox, 6)
         self.mapper.setCurrentIndex(0)
 
     def set_controls(self):
@@ -389,8 +391,14 @@ class LetterForm(BasicForm, Ui_LetterFormInsert):
             Relation,
             [('Name', Relation.name, 'name', {})])
 
+        type_model = AlchemicalTableModel(
+            session,
+            Type,
+            [('Letter type', Type.letter, 'letter', {})])
+
         self.userComboBox.setModel(user_model)
         self.senderComboBox.setModel(relation_model)
+        self.typeComboBox.setModel(type_model)
         self.toggle_edit_mode(False, None, None)
 
     def save_check(self):
@@ -433,8 +441,6 @@ class RelationForm(BasicForm, Ui_RelationFormInsert):
         self.mapper.addMapping(self.referenceLineEdit, 2)
         self.mapper.addMapping(self.bankAccountLineEdit, 3)
         self.mapper.addMapping(self.typeComboBox, 4)
-        self.mapper.addMapping(self.startDateEdit, 5)
-        self.mapper.addMapping(self.endDateEdit, 6)
 
     def set_controls(self):
         session = self.dbhelper.get_app_db_session()

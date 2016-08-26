@@ -8,35 +8,35 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-class Ui_LetterFormInsert(object):
-    def setupUi(self, LetterFormInsert):
-        LetterFormInsert.setObjectName("LetterFormInsert")
-        LetterFormInsert.resize(286, 273)
-        self.formLayout = QtWidgets.QFormLayout(LetterFormInsert)
+class Ui_EmailAddressFormInsert(object):
+    def setupUi(self, EmailAddressFormInsert):
+        EmailAddressFormInsert.setObjectName("EmailAddressFormInsert")
+        EmailAddressFormInsert.resize(286, 273)
+        self.formLayout = QtWidgets.QFormLayout(EmailAddressFormInsert)
         self.formLayout.setObjectName("formLayout")
-        self.UserLabel = QtWidgets.QLabel(LetterFormInsert)
-        self.UserLabel.setObjectName("UserLabel")
-        self.formLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.UserLabel)
-        self.userComboBox = MyComboBox(LetterFormInsert)
+        self.userLabel = QtWidgets.QLabel(EmailAddressFormInsert)
+        self.userLabel.setObjectName("userLabel")
+        self.formLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.userLabel)
+        self.userComboBox = MyComboBox(EmailAddressFormInsert)
         self.userComboBox.setObjectName("userComboBox")
         self.formLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.userComboBox)
-        self.addressLabel = QtWidgets.QLabel(LetterFormInsert)
+        self.addressLabel = QtWidgets.QLabel(EmailAddressFormInsert)
         self.addressLabel.setObjectName("addressLabel")
         self.formLayout.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.addressLabel)
-        self.emailAddressLineEdit = QtWidgets.QLineEdit(LetterFormInsert)
-        self.emailAddressLineEdit.setToolTip("")
-        self.emailAddressLineEdit.setStatusTip("")
-        self.emailAddressLineEdit.setAccessibleDescription("")
-        self.emailAddressLineEdit.setObjectName("emailAddressLineEdit")
-        self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.emailAddressLineEdit)
+        self.addressLineEdit = QtWidgets.QLineEdit(EmailAddressFormInsert)
+        self.addressLineEdit.setToolTip("")
+        self.addressLineEdit.setStatusTip("")
+        self.addressLineEdit.setAccessibleDescription("")
+        self.addressLineEdit.setObjectName("addressLineEdit")
+        self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.addressLineEdit)
 
-        self.retranslateUi(LetterFormInsert)
-        QtCore.QMetaObject.connectSlotsByName(LetterFormInsert)
+        self.retranslateUi(EmailAddressFormInsert)
+        QtCore.QMetaObject.connectSlotsByName(EmailAddressFormInsert)
 
-    def retranslateUi(self, LetterFormInsert):
+    def retranslateUi(self, EmailAddressFormInsert):
         _translate = QtCore.QCoreApplication.translate
-        LetterFormInsert.setWindowTitle(_translate("LetterFormInsert", "Form"))
-        self.UserLabel.setText(_translate("LetterFormInsert", "User"))
-        self.addressLabel.setText(_translate("LetterFormInsert", "Email address"))
+        EmailAddressFormInsert.setWindowTitle(_translate("EmailAddressFormInsert", "Form"))
+        self.userLabel.setText(_translate("EmailAddressFormInsert", "User"))
+        self.addressLabel.setText(_translate("EmailAddressFormInsert", "Email address"))
 
 from MyQtness.myWidgets import MyComboBox

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>LetterFormInsert</class>
- <widget class="QWidget" name="LetterFormInsert">
+ <class>BankAccountFormInsert</class>
+ <widget class="QWidget" name="BankAccountFormInsert">
   <property name="geometry">
    <rect>
     <x>0</x>

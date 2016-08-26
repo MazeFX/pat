@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_LetterFormInsert(object):
     def setupUi(self, LetterFormInsert):
         LetterFormInsert.setObjectName("LetterFormInsert")
-        LetterFormInsert.resize(286, 273)
+        LetterFormInsert.resize(286, 296)
         self.formLayout = QtWidgets.QFormLayout(LetterFormInsert)
         self.formLayout.setObjectName("formLayout")
         self.dateLabel = QtWidgets.QLabel(LetterFormInsert)
@@ -64,12 +64,12 @@ class Ui_LetterFormInsert(object):
         self.scanFileDrop.setStyleSheet("")
         self.scanFileDrop.setObjectName("scanFileDrop")
         self.formLayout.setWidget(6, QtWidgets.QFormLayout.FieldRole, self.scanFileDrop)
-        self.letterTypeComboBox = MyComboBox(LetterFormInsert)
-        self.letterTypeComboBox.setObjectName("letterTypeComboBox")
-        self.formLayout.setWidget(5, QtWidgets.QFormLayout.FieldRole, self.letterTypeComboBox)
-        self.letterTypeLabel = QtWidgets.QLabel(LetterFormInsert)
-        self.letterTypeLabel.setObjectName("letterTypeLabel")
-        self.formLayout.setWidget(5, QtWidgets.QFormLayout.LabelRole, self.letterTypeLabel)
+        self.typeComboBox = MyComboBox(LetterFormInsert)
+        self.typeComboBox.setObjectName("typeComboBox")
+        self.formLayout.setWidget(5, QtWidgets.QFormLayout.FieldRole, self.typeComboBox)
+        self.typeLabel = QtWidgets.QLabel(LetterFormInsert)
+        self.typeLabel.setObjectName("typeLabel")
+        self.formLayout.setWidget(5, QtWidgets.QFormLayout.LabelRole, self.typeLabel)
 
         self.retranslateUi(LetterFormInsert)
         QtCore.QMetaObject.connectSlotsByName(LetterFormInsert)
@@ -83,6 +83,6 @@ class Ui_LetterFormInsert(object):
         self.senderLabel.setText(_translate("LetterFormInsert", "Sender"))
         self.referenceLabel.setText(_translate("LetterFormInsert", "Reference"))
         self.scanLabel.setText(_translate("LetterFormInsert", "Scan"))
-        self.letterTypeLabel.setText(_translate("LetterFormInsert", "Letter type"))
+        self.typeLabel.setText(_translate("LetterFormInsert", "Letter type"))
 
 from MyQtness.myWidgets import MyComboBox, MyDragDropBox
