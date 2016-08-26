@@ -16,16 +16,18 @@ import sys
 from PyQt5.QtCore import QCoreApplication, Qt, QDate, QModelIndex
 from PyQt5.QtWidgets import QApplication, QWidget, QDataWidgetMapper, QPushButton, QFormLayout
 
-
-
-from db.models import AlchemicalTableModel, User, Relation, Type
+from db.models import AlchemicalTableModel, BankAccount, EmailAddress, Letter, Relation, Type, User
 from db.helper import DbHelper, DbFileHandler
 
 from MyQtness.ui_basic_form import Ui_BasicForm
+from MyQtness.ui_bank_account_form import Ui_BankAccountFormInsert
+from MyQtness.ui_contract_form import Ui_ContractFormInsert
+from MyQtness.ui_email_address_form import Ui_EmailAddressFormInsert
 from MyQtness.ui_letter_form import Ui_LetterFormInsert
 from MyQtness.ui_relation_form import Ui_RelationFormInsert
+from MyQtness.ui_bank_account_form import Ui_BankAccountFormInsert
 from MyQtness.ui_user_form import Ui_UserFormInsert
-
+from MyQtness.ui_transaction_form import Ui_TransactionFormInsert
 from MyQtness.myWidgets import MyItemDelegate
 from dialogs import SaveDialog
 
@@ -218,6 +220,135 @@ class BasicForm(QWidget, Ui_BasicForm):
     def on_reset(self):
         print(Fore.CYAN + 'Reset signal sent and recieved.')
         self.mapper.revert()
+        
+
+class BankAccountForm(BasicForm, Ui_BankAccountFormInsert):
+
+    def __init__(self, *args):
+        super(BankAccountForm, self).__init__(*args)
+        Ui_BankAccountFormInsert.setupUi(self, self.FormContainer)
+        Ui_BankAccountFormInsert.retranslateUi(self, self.FormContainer)
+
+        for x in range(self.formLayout.rowCount()):
+            widget = self.formLayout.itemAt(x, QFormLayout.FieldRole)
+            self.field_list.append(widget.widget())
+
+        self.titleLabel.setText('Bank accounts')
+        self.set_controls()
+        self.set_mapper()
+
+    def set_mapper(self):
+        self.mapper.addMapping(self.bankNameLineEdit, 0)
+        self.mapper.addMapping(self.userComboBox, 1)
+        self.mapper.addMapping(self.accountComboBox, 2)
+        self.mapper.addMapping(self.balanceLineEdit, 3)
+
+    def set_controls(self):
+        session = self.dbhelper.get_app_db_session()
+        user_model = AlchemicalTableModel(
+            session,
+            User,
+            [('Full Name', User.fullname, 'fullname', {})])
+
+        self.userComboBox.setModel(user_model)
+
+        self.mapper.setCurrentIndex(0)
+        self.toggle_edit_mode(False, None, None)
+
+
+class ContractForm(BasicForm, Ui_ContractFormInsert):
+
+    def __init__(self, *args):
+        super(ContractForm, self).__init__(*args)
+        Ui_ContractFormInsert.setupUi(self, self.FormContainer)
+        Ui_ContractFormInsert.retranslateUi(self, self.FormContainer)
+
+        for x in range(self.formLayout.rowCount()):
+            widget = self.formLayout.itemAt(x, QFormLayout.FieldRole)
+            self.field_list.append(widget.widget())
+
+        self.titleLabel.setText('Contracts')
+        self.set_controls()
+        self.set_mapper()
+
+    def set_mapper(self):
+        self.mapper.addMapping(self.relationComboBox, 0)
+        self.mapper.addMapping(self.userComboBox, 1)
+        self.mapper.addMapping(self.accountComboBox, 2)
+        self.mapper.addMapping(self.letterComboBox, 3)
+        self.mapper.addMapping(self.emailAddressComboBox, 4)
+        self.mapper.addMapping(self.amountLineEdit, 5)
+        self.mapper.addMapping(self.recurrenceBox, 6)
+        self.mapper.addMapping(self.startDateDateEdit, 7)
+        self.mapper.addMapping(self.endDateDateEdit, 8)
+
+    def set_controls(self):
+        session = self.dbhelper.get_app_db_session()
+        relation_model = AlchemicalTableModel(
+            session,
+            Relation,
+            [('Name', Relation.name, 'name', {})])
+        
+        user_model = AlchemicalTableModel(
+            session,
+            User,
+            [('Full Name', User.fullname, 'fullname', {})])
+
+        account_model = AlchemicalTableModel(
+            session,
+            BankAccount,
+            [('Account Nr.', BankAccount.account, 'account', {})])
+
+        letter_model = AlchemicalTableModel(
+            session,
+            Letter,
+            [('Reference', Letter.reference, 'reference', {})])
+
+        email_model = AlchemicalTableModel(
+            session,
+            EmailAddress,
+            [('Address', EmailAddress.address, 'address', {})])
+
+        self.relationComboBox.setModel(relation_model)
+        self.userComboBox.setModel(user_model)
+        self.accountComboBox.setModel(account_model)
+        self.letterComboBox.setModel(letter_model)
+        self.emailAddressComboBox.setModel(email_model)
+
+        self.mapper.setCurrentIndex(0)
+        self.toggle_edit_mode(False, None, None)
+
+
+class EmailAddressForm(BasicForm, Ui_EmailAddressFormInsert):
+
+    def __init__(self, *args):
+        super(EmailAddressForm, self).__init__(*args)
+        Ui_EmailAddressFormInsert.setupUi(self, self.FormContainer)
+        Ui_EmailAddressFormInsert.retranslateUi(self, self.FormContainer)
+
+        for x in range(self.formLayout.rowCount()):
+            widget = self.formLayout.itemAt(x, QFormLayout.FieldRole)
+            self.field_list.append(widget.widget())
+
+        self.titleLabel.setText('Email addresses')
+        self.set_controls()
+        self.set_mapper()
+
+    def set_mapper(self):
+        self.mapper.addMapping(self.userComboBox, 0)
+        self.mapper.addMapping(self.addressLineEdit, 1)
+
+    def set_controls(self):
+        session = self.dbhelper.get_app_db_session()
+        user_model = AlchemicalTableModel(
+            session,
+            User,
+            [('Full Name', User.fullname, 'fullname', {})])
+
+        self.userComboBox.setModel(user_model)
+
+        self.mapper.setCurrentIndex(0)
+        self.toggle_edit_mode(False, None, None)
 
 
 class LetterForm(BasicForm, Ui_LetterFormInsert):
@@ -318,6 +449,77 @@ class RelationForm(BasicForm, Ui_RelationFormInsert):
         self.toggle_edit_mode(False, None, None)
 
 
-class UserForm(object):
-    pass
+class TransactionForm(BasicForm, Ui_TransactionFormInsert):
+
+    def __init__(self, *args):
+        super(TransactionForm, self).__init__(*args)
+        Ui_TransactionFormInsert.setupUi(self, self.FormContainer)
+        Ui_TransactionFormInsert.retranslateUi(self, self.FormContainer)
+
+        for x in range(self.formLayout.rowCount()):
+            widget = self.formLayout.itemAt(x, QFormLayout.FieldRole)
+            self.field_list.append(widget.widget())
+
+        self.titleLabel.setText('Transactions')
+        self.set_controls()
+        self.set_mapper()
+
+    def set_mapper(self):
+        self.mapper.addMapping(self.contractComboBox, 0)
+        self.mapper.addMapping(self.letterComboBox, 1)
+        self.mapper.addMapping(self.accountComboBox, 2)
+        self.mapper.addMapping(self.amountLineEdit, 3)
+        self.mapper.addMapping(self.transactionDateEdit, 4)
+        self.mapper.addMapping(self.paymentDateEdit, 5)
+        self.mapper.addMapping(self.paymentStateCheckBox, 6)
+        self.mapper.addMapping(self.debitCheckBox, 7)
+        
+    def set_controls(self):
+        session = self.dbhelper.get_app_db_session()        
+        contract_model = AlchemicalTableModel(
+            session,
+            Contract,
+            [('Reference', Contract.reference, 'reference', {})])
+
+        letter_model = AlchemicalTableModel(
+            session,
+            Letter,
+            [('Reference', Letter.reference, 'reference', {})])
+
+        account_model = AlchemicalTableModel(
+            session,
+            BankAccount,
+            [('Account Nr.', BankAccount.account, 'account', {})])
+
+        self.contractComboBox.setModel(contract_model)
+        self.letterComboBox.setModel(letter_model)
+        self.accountComboBox.setModel(account_model)
+
+        self.mapper.setCurrentIndex(0)
+        self.toggle_edit_mode(False, None, None)
+
+
+class UserForm(BasicForm, Ui_UserFormInsert):
+
+    def __init__(self, *args):
+        super(UserForm, self).__init__(*args)
+        Ui_UserFormInsert.setupUi(self, self.FormContainer)
+        Ui_UserFormInsert.retranslateUi(self, self.FormContainer)
+
+        for x in range(self.formLayout.rowCount()):
+            widget = self.formLayout.itemAt(x, QFormLayout.FieldRole)
+            self.field_list.append(widget.widget())
+
+        self.titleLabel.setText('Users')
+        self.set_controls()
+        self.set_mapper()
+
+    def set_mapper(self):
+        self.mapper.addMapping(self.nameLineEdit, 0)
+        self.mapper.addMapping(self.fullnameLineEdit, 1)
+        self.mapper.addMapping(self.passwordLineEdit, 2)
+        
+    def set_controls(self):
+        self.mapper.setCurrentIndex(0)
+        self.toggle_edit_mode(False, None, None)
 
