@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'C:\PDE\projects\qt\pat\MyQtness\ui\letter_form.ui'
+# Form implementation generated from reading ui file 'C:\PDE\projects\qt\pat\MyQtness\ui\transaction_form.ui'
 #
 # Created by: PyQt5 UI code generator 5.7
 #
@@ -56,20 +56,14 @@ class Ui_LetterFormInsert(object):
         self.formLayout.setWidget(4, QtWidgets.QFormLayout.FieldRole, self.referenceLineEdit)
         self.scanLabel = QtWidgets.QLabel(LetterFormInsert)
         self.scanLabel.setObjectName("scanLabel")
-        self.formLayout.setWidget(6, QtWidgets.QFormLayout.LabelRole, self.scanLabel)
+        self.formLayout.setWidget(5, QtWidgets.QFormLayout.LabelRole, self.scanLabel)
         self.scanFileDrop = MyDragDropBox(LetterFormInsert)
         self.scanFileDrop.setMinimumSize(QtCore.QSize(0, 100))
         self.scanFileDrop.setAcceptDrops(True)
         self.scanFileDrop.setAutoFillBackground(False)
         self.scanFileDrop.setStyleSheet("")
         self.scanFileDrop.setObjectName("scanFileDrop")
-        self.formLayout.setWidget(6, QtWidgets.QFormLayout.FieldRole, self.scanFileDrop)
-        self.letterTypeComboBox = MyComboBox(LetterFormInsert)
-        self.letterTypeComboBox.setObjectName("letterTypeComboBox")
-        self.formLayout.setWidget(5, QtWidgets.QFormLayout.FieldRole, self.letterTypeComboBox)
-        self.letterTypeLabel = QtWidgets.QLabel(LetterFormInsert)
-        self.letterTypeLabel.setObjectName("letterTypeLabel")
-        self.formLayout.setWidget(5, QtWidgets.QFormLayout.LabelRole, self.letterTypeLabel)
+        self.formLayout.setWidget(5, QtWidgets.QFormLayout.FieldRole, self.scanFileDrop)
 
         self.retranslateUi(LetterFormInsert)
         QtCore.QMetaObject.connectSlotsByName(LetterFormInsert)
@@ -83,6 +77,5 @@ class Ui_LetterFormInsert(object):
         self.senderLabel.setText(_translate("LetterFormInsert", "Sender"))
         self.referenceLabel.setText(_translate("LetterFormInsert", "Reference"))
         self.scanLabel.setText(_translate("LetterFormInsert", "Scan"))
-        self.letterTypeLabel.setText(_translate("LetterFormInsert", "Letter type"))
 
 from MyQtness.myWidgets import MyComboBox, MyDragDropBox

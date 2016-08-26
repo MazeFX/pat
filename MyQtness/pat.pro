@@ -17,20 +17,20 @@ SOURCES += main.cpp\
 
 HEADERS  += letter_form.h
 
-FORMS    += letter_form.ui \
+FORMS    += ui/basic_form.ui \
+    ui/bank_account_form.ui \
+    ui/contract_form.ui \
+    ui/email_address_form.ui \
     ui/letter_form.ui \
     ui/relation_form.ui \
+    ui/transaction_form.ui \
     ui/user_form.ui \
-    ui/basic_form.ui \
-    ui/login_dialog.ui \
-    ui/mainwindow.ui \
     ui/main_window.ui \
-    ui/letter_tab.ui \
-    ui/settings_dialog.ui \
+    ui/login_dialog.ui \
     ui/home_tab.ui \
+    ui/settings_dialog.ui \
     ui/save_dialog.ui \
     ui/close_dialog.ui \
-    ui/form.ui
 
 DISTFILES += \
     __pycache__/ui_letter_form.cpython-35.pyc \

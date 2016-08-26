@@ -17,7 +17,7 @@ import datetime
 
 from PyQt5.QtGui import QFont, QPainter
 from PyQt5.QtCore import Qt, pyqtProperty, pyqtSignal, QDate
-from PyQt5.QtWidgets import QVBoxLayout, QTableView, QAbstractItemView, \
+from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QTableView, QAbstractItemView, \
     QFrame, QComboBox, QLabel, QItemDelegate, QStyleOption, QStyle
 from colorama import Fore, Back, Style
 
@@ -193,6 +193,11 @@ class MyDragDropBox(QFrame):
             self.DropLabel.setText('Open File')
         else:
             self.DropLabel.setText('Drop File')
+
+
+class MyOccurrenceBox(QHBoxLayout):
+    # TODO - Build a occurrence selector for Contract model based on spinbox
+    pass
 
 
 class MyItemDelegate(QItemDelegate):
