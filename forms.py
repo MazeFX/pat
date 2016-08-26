@@ -26,7 +26,6 @@ from MyQtness.ui_contract_form import Ui_ContractFormInsert
 from MyQtness.ui_email_address_form import Ui_EmailAddressFormInsert
 from MyQtness.ui_letter_form import Ui_LetterFormInsert
 from MyQtness.ui_relation_form import Ui_RelationFormInsert
-from MyQtness.ui_bank_account_form import Ui_BankAccountFormInsert
 from MyQtness.ui_user_form import Ui_UserFormInsert
 from MyQtness.ui_transaction_form import Ui_TransactionFormInsert
 from MyQtness.myWidgets import MyItemDelegate
