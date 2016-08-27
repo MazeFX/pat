@@ -15,8 +15,12 @@ login events. Populating the main window with the necessary
 sub-forms and widgets.
 """
 
-
+import traceback
+import logging.config
+import os
 import sys
+
+# import logging
 
 from PyQt5.QtGui import QFontDatabase, QIcon
 from PyQt5.QtCore import QCoreApplication, QSettings, Qt
@@ -30,6 +34,9 @@ from MyQtness.ui_main_window import Ui_MainWindow
 from MyQtness import style
 from tabs import LetterListTab, UserListTab, RelationListTab, HomeTab
 from db.helper import DbHelper
+
+
+
 
 
 class MainApp(QMainWindow, Ui_MainWindow):
@@ -184,8 +191,38 @@ class MainApp(QMainWindow, Ui_MainWindow):
 
 
 if __name__ == "__main__":
+
+
+
+
+
+    logging.config.fileConfig('lumberjack.conf')
+
+    # create logger
+    Lumberjack = logging.getLogger('root')
+
+
+    def my_excepthook(excType, excValue, traceback, logger=Lumberjack):
+        logger.error(Fore.MAGENTA + "Logging an uncaught exception---------------------------->",
+                     exc_info=(excType, excValue, traceback))
+        sys.exit(-1)
+
+
+    sys.excepthook = my_excepthook
+
+    # 'application' code
+    Lumberjack.debug('debug message')
+    Lumberjack.info('info message')
+    Lumberjack.warn('warn message')
+    Lumberjack.error('error message')
+    Lumberjack.critical('critical message')
+
+    #Lumberjack.basicConfig(filename='myapp.log', level=Lumberjack.DEBUG)
+    Lumberjack.info('Started')
+
     visible = True
     colorama(autoreset=True)
+    Lumberjack.error('LumberJack Error!!')
     app = QApplication(sys.argv)
     app.setApplicationName('PAT')
     app.setOrganizationName("MazeFX Solutions")
@@ -194,7 +231,7 @@ if __name__ == "__main__":
     QFontDatabase().addApplicationFont("C:\PDE\projects\qt\pat\MyQtness\style\ethnocentric.ttf")
     QFontDatabase().addApplicationFont("C:\PDE\projects\qt\pat\MyQtness\style/ubuntu_bold.ttf")
 
-    loginDialog = LoginDialog()
+    # loginDialog = LoginDialog()
     '''
     isAuth = False
     result = -1
@@ -220,4 +257,7 @@ if __name__ == "__main__":
     if not isolated:
         w.show()
     app.exec_()
+    Lumberjack.info('Finished')
     sys.exit(-1)
+
+
