@@ -37,9 +37,6 @@ from tabs import BankAccountListTab, ContractListTab, EmailAddressListTab, Lette
 from db.helper import DbHelper
 
 
-
-
-
 class MainApp(QMainWindow, Ui_MainWindow):
 
     _translate = QCoreApplication.translate
@@ -48,6 +45,7 @@ class MainApp(QMainWindow, Ui_MainWindow):
 
     def __init__(self, isolated, *args):
         super(MainApp, self).__init__(*args)
+        Lumberjack.info('spawning the <<< MainApp >>> hey says: I am the Main man here see!')
         self.load_settings()
         self.setup_tray(isolated)
         self.dbhelper = DbHelper()
@@ -86,7 +84,6 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.actionListRelations.setIcon(relationIcon)
         userIcon = qta.icon('fa.user', color='white')
         self.actionListUsers.setIcon(userIcon)
-
 
     def setup_tray(self, isolated):
         Lumberjack.info('< MainApp > - -> (setup_tray)')
