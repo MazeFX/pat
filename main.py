@@ -117,8 +117,11 @@ class MainApp(QMainWindow, Ui_MainWindow):
 
     def show_list(self, *args):
         Lumberjack.info('< MainApp > - -> (show_list)')
+        Lumberjack.debug('(show_list) - args = ', args)
+
         action_text = args[0].text()
         icon = args[0].icon()
+
         Lumberjack.debug('(show_list) - Action text selector = ', action_text)
         print(Fore.MAGENTA + '$! Action text received: ', action_text)
 
