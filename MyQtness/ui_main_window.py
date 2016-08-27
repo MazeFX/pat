@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# form implementation generated from reading ui file 'C:\PDE\projects\qt\pat\MyQtness\ui\main_window.ui'
+# Form implementation generated from reading ui file 'C:\PDE\projects\qt\pat\MyQtness\ui\main_window.ui'
 #
 # Created by: PyQt5 UI code generator 5.7
 #
@@ -25,7 +25,7 @@ class Ui_MainWindow(object):
         self.menuPAT = QtWidgets.QMenu(self.menubar)
         self.menuPAT.setObjectName("menuPAT")
         self.menuLists = QtWidgets.QMenu(self.menubar)
-        self.menuLists.setGeometry(QtCore.QRect(381, 116, 159, 126))
+        self.menuLists.setGeometry(QtCore.QRect(-1539, 116, 168, 222))
         self.menuLists.setObjectName("menuLists")
         self.menuHelp = QtWidgets.QMenu(self.menubar)
         self.menuHelp.setObjectName("menuHelp")
@@ -43,10 +43,25 @@ class Ui_MainWindow(object):
         self.actionListUsers.setObjectName("actionListUsers")
         self.actionListRelations = QtWidgets.QAction(MainWindow)
         self.actionListRelations.setObjectName("actionListRelations")
+        self.actionHome = QtWidgets.QAction(MainWindow)
+        self.actionHome.setObjectName("actionHome")
+        self.actionListBankAccounts = QtWidgets.QAction(MainWindow)
+        self.actionListBankAccounts.setObjectName("actionListBankAccounts")
+        self.actionListContracts = QtWidgets.QAction(MainWindow)
+        self.actionListContracts.setObjectName("actionListContracts")
+        self.actionListEmailAddresses = QtWidgets.QAction(MainWindow)
+        self.actionListEmailAddresses.setObjectName("actionListEmailAddresses")
+        self.actionListTransactions = QtWidgets.QAction(MainWindow)
+        self.actionListTransactions.setObjectName("actionListTransactions")
+        self.menuPAT.addAction(self.actionHome)
         self.menuPAT.addAction(self.actionSettings)
-        self.menuLists.addAction(self.actionListUsers)
+        self.menuLists.addAction(self.actionListBankAccounts)
+        self.menuLists.addAction(self.actionListContracts)
+        self.menuLists.addAction(self.actionListEmailAddresses)
         self.menuLists.addAction(self.actionListLetters)
         self.menuLists.addAction(self.actionListRelations)
+        self.menuLists.addAction(self.actionListTransactions)
+        self.menuLists.addAction(self.actionListUsers)
         self.menuHelp.addAction(self.actionAbout)
         self.menubar.addAction(self.menuPAT.menuAction())
         self.menubar.addAction(self.menuLists.menuAction())
@@ -69,4 +84,9 @@ class Ui_MainWindow(object):
         self.actionListUsers.setToolTip(_translate("MainWindow", "List of Users"))
         self.actionListRelations.setText(_translate("MainWindow", "Relations"))
         self.actionListRelations.setToolTip(_translate("MainWindow", "List of Relations"))
+        self.actionHome.setText(_translate("MainWindow", "Home"))
+        self.actionListBankAccounts.setText(_translate("MainWindow", "Bank accounts"))
+        self.actionListContracts.setText(_translate("MainWindow", "Contracts"))
+        self.actionListEmailAddresses.setText(_translate("MainWindow", "Email addresses"))
+        self.actionListTransactions.setText(_translate("MainWindow", "Transactions"))
 

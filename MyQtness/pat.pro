@@ -31,6 +31,7 @@ FORMS    += ui/basic_form.ui \
     ui/settings_dialog.ui \
     ui/save_dialog.ui \
     ui/close_dialog.ui \
+    ui/termination_dialog.ui
 
 DISTFILES += \
     __pycache__/ui_letter_form.cpython-35.pyc \

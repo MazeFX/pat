@@ -2,6 +2,7 @@
 
 # GIFS - Clean up the file
 # DOCS - Write some documentation
+# TODO - replace prints with logs for the lumberjack
 
 """
 File: myWidgets.py

@@ -2,6 +2,7 @@
 
 # GIFS - Clean up the file
 # DOCS - Write some documentation
+# TODO - replace prints with logs for the lumberjack
 
 """
 File: helper.py
@@ -24,12 +25,16 @@ from db.models import Base, BankAccount, Contract, EmailAddress, Letter, \
     Relation, Transaction, Type, User
 from colorama import Fore, Back, Style
 
+import logging
+Lumberjack = logging.getLogger(__name__)
+
 
 class DbHelper(object):
 
     session = None
 
     def __init__(self, *args):
+        Lumberjack.info('spawning the <<< DbHelper >>>, he says: There can be only one!')
         self.settings = QSettings()
         self.db_string = 'sqlite:///{base}{db}'.format(
             base=self.settings.value('db_base_path'),
@@ -163,7 +168,7 @@ class DbHelper(object):
 class DbFileHandler(object):
 
     def __init__(self, *args):
-        print('DbFileHandler Initialising')
+        Lumberjack.info('spawning a << DbFileHandler >>')
         self.settings = QSettings()
 
     def store_file(self, mapper_file_name, file_projection):

@@ -24,6 +24,9 @@ from MyQtness.myWidgets import MyTableView
 from MyQtness.ui_home_tab import Ui_HomeTab
 from colorama import Fore, Back, Style
 
+import logging
+Lumberjack = logging.getLogger(__name__)
+
 
 class HomeTab(QWidget, Ui_HomeTab):
 
@@ -31,6 +34,7 @@ class HomeTab(QWidget, Ui_HomeTab):
 
     def __init__(self, dbhelper, *args):
         super(HomeTab, self).__init__(*args)
+        Lumberjack.info('spawning a << HomeTab >>')
         self.dbhelper = dbhelper
 
         self.setupUi(self)
@@ -58,6 +62,7 @@ class BankAccountListTab(QWidget):
 
     def __init__(self, dbhelper, *args):
         super(BankAccountListTab, self).__init__(*args)
+        Lumberjack.info('spawning a << BankAccountListTab >>')
         self.dbhelper = dbhelper
 
         self.horizontalLayout = QHBoxLayout(self)
@@ -91,6 +96,7 @@ class ContractListTab(QWidget):
 
     def __init__(self, dbhelper, *args):
         super(ContractListTab, self).__init__(*args)
+        Lumberjack.info('spawning a << ContractListTab >>')
         self.dbhelper = dbhelper
 
         self.horizontalLayout = QHBoxLayout(self)
@@ -128,6 +134,7 @@ class EmailAddressListTab(QWidget):
 
     def __init__(self, dbhelper, *args):
         super(EmailAddressListTab, self).__init__(*args)
+        Lumberjack.info('spawning a << EmailAddressListTab >>')
         self.dbhelper = dbhelper
 
         self.horizontalLayout = QHBoxLayout(self)
@@ -158,6 +165,7 @@ class LetterListTab(QWidget):
 
     def __init__(self, dbhelper, *args):
         super(LetterListTab, self).__init__(*args)
+        Lumberjack.info('spawning a << LetterListTab >>')
         self.dbhelper = dbhelper
 
         self.horizontalLayout = QHBoxLayout(self)
@@ -193,6 +201,7 @@ class RelationListTab(QWidget):
 
     def __init__(self, dbhelper, *args):
         super(RelationListTab, self).__init__(*args)
+        Lumberjack.info('spawning a << RelationListTab >>')
         self.dbhelper = dbhelper
 
         self.horizontalLayout = QHBoxLayout(self)
@@ -227,6 +236,7 @@ class TransactionListTab(QWidget):
 
     def __init__(self, dbhelper, *args):
         super(TransactionListTab, self).__init__(*args)
+        Lumberjack.info('spawning a << TransactionListTab >>')
         self.dbhelper = dbhelper
 
         self.horizontalLayout = QHBoxLayout(self)

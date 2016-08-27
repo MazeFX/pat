@@ -15,12 +15,12 @@ login events. Populating the main window with the necessary
 sub-forms and widgets.
 """
 
-import traceback
-import logging.config
-import os
-import sys
+import logging
+Lumberjack = logging.getLogger(__name__)
 
-# import logging
+import os
+import json
+import sys
 
 from PyQt5.QtGui import QFontDatabase, QIcon
 from PyQt5.QtCore import QCoreApplication, QSettings, Qt
@@ -29,10 +29,11 @@ import qtawesome as qta
 from colorama import Fore, Back, Style
 from colorama import init as colorama
 
-from dialogs import LoginDialog, SettingsDialog, CloseDialog
+from dialogs import LoginDialog, SettingsDialog, CloseDialog, TerminationDialog
 from MyQtness.ui_main_window import Ui_MainWindow
 from MyQtness import style
-from tabs import LetterListTab, UserListTab, RelationListTab, HomeTab
+from tabs import BankAccountListTab, ContractListTab, EmailAddressListTab, LetterListTab, \
+    UserListTab, RelationListTab, TransactionListTab, HomeTab
 from db.helper import DbHelper
 
 
@@ -52,28 +53,13 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.dbhelper = DbHelper()
 
         self.setupUi(self)
-
-        self.menubar.setFocusPolicy(Qt.NoFocus)
-        envelopeIcon = qta.icon('fa.envelope', color='white')
-        self.actionListLetters.setIcon(envelopeIcon)
-        relationIcon = qta.icon('fa.group', color='white')
-        self.actionListRelations.setIcon(relationIcon)
-        userIcon = qta.icon('fa.user', color='white')
-        self.actionListUsers.setIcon(userIcon)
-        wrenchIcon = qta.icon('fa.wrench', color='white')
-        self.actionSettings.setIcon(wrenchIcon)
+        self.iconize_controls()
 
         self.tabWidget = QTabWidget(self.centralwidget)
         self.tabWidget.setTabsClosable(True)
         self.tabWidget.setMovable(True)
         self.tabWidget.setTabBarAutoHide(True)
         self.tabWidget.setObjectName("tabWidget")
-        self.tab_home = HomeTab(self.dbhelper)
-        self.tab_list.append(self.tab_home)
-        self.tab_home.dbhelper = self.dbhelper
-        self.tab_home.setObjectName("tab_home")
-        icon = qta.icon('fa.home', color='white')
-        self.tabWidget.addTab(self.tab_home, icon, self._translate("MainWindow", "Home"))
         self.verticalLayout.addWidget(self.tabWidget)
 
         self._retranslateUi(self)
@@ -86,7 +72,24 @@ class MainApp(QMainWindow, Ui_MainWindow):
         builderLabel = QLabel('made by: MazeFX Solutions')
         self.statusbar.addPermanentWidget(builderLabel)
 
+    def iconize_controls(self):
+        Lumberjack.info('< MainApp > - -> (iconize_controls)')
+
+        homeIcon = qta.icon('fa.home', color='white')
+        self.actionHome.setIcon(homeIcon)
+        wrenchIcon = qta.icon('fa.wrench', color='white')
+        self.actionSettings.setIcon(wrenchIcon)
+
+        envelopeIcon = qta.icon('fa.envelope', color='white')
+        self.actionListLetters.setIcon(envelopeIcon)
+        relationIcon = qta.icon('fa.group', color='white')
+        self.actionListRelations.setIcon(relationIcon)
+        userIcon = qta.icon('fa.user', color='white')
+        self.actionListUsers.setIcon(userIcon)
+
+
     def setup_tray(self, isolated):
+        Lumberjack.info('< MainApp > - -> (setup_tray)')
         self.trayIcon = QSystemTrayIcon(QIcon(':/app_icons/rc/PAT_icon.png'), self)
         self.trayMenu = QMenu(self)
         showAction = self.trayMenu.addAction("Open PAT")
@@ -100,6 +103,7 @@ class MainApp(QMainWindow, Ui_MainWindow):
             self.trayIcon.showMessage('PAT Service', 'PAT service is now running..')
 
     def handle_tray_event(self, *args):
+        Lumberjack.info('< MainApp > - -> (handle_tray_event)')
         print(Fore.MAGENTA + '$! Received a tray action with args: ', args)
         if args[0] == 3:
             self.show()
@@ -112,22 +116,46 @@ class MainApp(QMainWindow, Ui_MainWindow):
                 self.close()
 
     def _retranslateUi(self, MainWindow):
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_home), self._translate("MainWindow", "Home"))
+        pass
 
     def show_list(self, *args):
-        print(Fore.MAGENTA + '$! Showing the list called with args: ', args)
+        Lumberjack.info('< MainApp > - -> (show_list)')
         action_text = args[0].text()
         icon = args[0].icon()
+        Lumberjack.debug('(show_list) - Action text selector = ', action_text)
         print(Fore.MAGENTA + '$! Action text received: ', action_text)
+
+        if action_text == 'Bank accounts':
+            Lumberjack.info('< MainApp > >User action> : Adding Bank account List tab to self')
+            self.add_tab(BankAccountListTab, 'Bank accounts', icon)
+
+        if action_text == 'Contracts':
+            Lumberjack.info('< MainApp > >User action> : Adding Contracts List tab to self')
+            self.add_tab(ContractListTab, 'Contracts', icon)
+
+        if action_text == 'Email addresses':
+            Lumberjack.info('< MainApp > >User action> : Adding EmailAddress List tab to self')
+            self.add_tab(EmailAddressListTab, 'Email addresses', icon)
+
         if action_text == 'Letters':
-            print(Fore.MAGENTA + '$! Opening Letter List tab..')
+            Lumberjack.info('< MainApp > >User action> :  Adding Letter List tab to self')
             self.add_tab(LetterListTab, 'Letters', icon)
+
         if action_text == 'Users':
-            print(Fore.MAGENTA + '$! Opening User List tab..')
+            Lumberjack.info('< MainApp > >User action> :  Adding User List tab to self')
             self.add_tab(UserListTab, 'Users', icon)
+
         if action_text == 'Relations':
-            print(Fore.MAGENTA + '$! Opening Relation List tab..')
+            Lumberjack.info('< MainApp > >User action> :  Adding Relation List tab to self')
             self.add_tab(RelationListTab, 'Relations', icon)
+
+        if action_text == 'Transactions':
+            Lumberjack.info('< MainApp > >User action> :  Adding Transaction List tab to self')
+            self.add_tab(TransactionListTab, 'Transactions', icon)
+
+        if action_text == 'Home':
+            Lumberjack.info('< MainApp > >User action> :  Adding Transaction List tab to self')
+            self.add_tab(HomeTab, 'Home', icon)
 
     def add_tab(self, tab_cls, tab_name, icon):
         new_tab = tab_cls(self.dbhelper)
@@ -190,39 +218,47 @@ class MainApp(QMainWindow, Ui_MainWindow):
             event.accept()
 
 
+def setup_logging(
+    default_path='lumberjack_config.json',
+    default_level=logging.INFO,
+    env_key='LOG_CFG'
+):
+    """Setup logging configuration
+
+    """
+    path = default_path
+    value = os.getenv(env_key, None)
+    if value:
+        path = value
+    if os.path.exists(path):
+        with open(path, 'rt') as f:
+            config = json.load(f)
+        logging.config.dictConfig(config)
+    else:
+        logging.basicConfig(level=default_level)
+
+
 if __name__ == "__main__":
-
-
-
-
-
-    logging.config.fileConfig('lumberjack.conf')
-
-    # create logger
-    Lumberjack = logging.getLogger('root')
-
+    import logging.config
+    setup_logging()
+    Lumberjack.info('=======================  Logger set up.. ')
 
     def my_excepthook(excType, excValue, traceback, logger=Lumberjack):
-        logger.error(Fore.MAGENTA + "Logging an uncaught exception---------------------------->",
+        logger.error("------  Logging an uncaught exception  ---------------------------->",
                      exc_info=(excType, excValue, traceback))
-        sys.exit(-1)
-
+        termination_dialog = TerminationDialog()
+        result = termination_dialog.exec_()
+        if result == 0:
+            Lumberjack.info('-->Trying to exit the app..')
+            sys.exit(-1)
+        Lumberjack.info('[result] = ', result)
 
     sys.excepthook = my_excepthook
 
-    # 'application' code
-    Lumberjack.debug('debug message')
-    Lumberjack.info('info message')
-    Lumberjack.warn('warn message')
-    Lumberjack.error('error message')
-    Lumberjack.critical('critical message')
-
-    #Lumberjack.basicConfig(filename='myapp.log', level=Lumberjack.DEBUG)
-    Lumberjack.info('Started')
+    Lumberjack.info('=======================  Starting Application.. ')
 
     visible = True
     colorama(autoreset=True)
-    Lumberjack.error('LumberJack Error!!')
     app = QApplication(sys.argv)
     app.setApplicationName('PAT')
     app.setOrganizationName("MazeFX Solutions")
@@ -257,7 +293,7 @@ if __name__ == "__main__":
     if not isolated:
         w.show()
     app.exec_()
-    Lumberjack.info('Finished')
+    Lumberjack.info('=======================  Ending Application.. ')
     sys.exit(-1)
 
 

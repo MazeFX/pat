@@ -17,14 +17,18 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QDialog, QMessageBox, QDialogButtonBox
 
 import qdarkstyle
+import qtawesome as qta
 
 from auth import Auth
 from MyQtness.ui_login_dialog import Ui_LoginDialog
 from MyQtness.ui_settings_dialog import Ui_SettingsDialog
 from MyQtness.ui_save_dialog import Ui_SaveDialog
 from MyQtness.ui_close_dialog import Ui_CloseDialog
+from MyQtness.ui_termination_dialog import Ui_TerminationDialog
 from colorama import Fore, Back, Style
 
+import logging
+Lumberjack = logging.getLogger(__name__)
 
 try:
     _encoding = QApplication.UnicodeUTF8
@@ -40,11 +44,13 @@ except AttributeError:
 
 # TODO - change for all dialogs: window icon and title
 
+
 class LoginDialog(QDialog, Ui_LoginDialog):
     Rejected, Success, Failed = range(0, 3)
 
     def __init__(self):
         QDialog.__init__(self)
+        Lumberjack.info('spawning a << LoginDialog >>')
         self.setupUi(self)
 
         # TODO - Change the stylesheet to local version
@@ -76,6 +82,7 @@ class SettingsDialog(QDialog, Ui_SettingsDialog):
 
     def __init__(self):
         QDialog.__init__(self)
+        Lumberjack.info('spawning a << SettingsDialog >>')
         self.setupUi(self)
         self.currentDatabaseComboBox.addItems(['DB for development',
                                                'DB for storage'])
@@ -116,6 +123,7 @@ class SaveDialog(QDialog, Ui_SaveDialog):
 
     def __init__(self):
         QDialog.__init__(self)
+        Lumberjack.info('spawning a << SaveDialog >>')
         self.setupUi(self)
 
         # TODO - Change the stylesheet to local version
@@ -131,6 +139,7 @@ class SaveDialog(QDialog, Ui_SaveDialog):
         self.buttonBox.clicked.connect(self.on_click)
 
     def on_accept(self):
+        Lumberjack.debug('-functioncall (SaveDialog -- on accept)')
         print(Fore.YELLOW + 'SaveDialog -- accept event for saving?')
         self.setResult(self.Success)
 
@@ -174,3 +183,29 @@ class CloseDialog(QDialog, Ui_CloseDialog):
 
     def on_reject(self):
         self.done(self.Rejected)
+
+
+class TerminationDialog(QDialog, Ui_TerminationDialog):
+
+    def __init__(self):
+        QDialog.__init__(self)
+        Lumberjack.info('spawning a << TerminationDialog >>')
+        self.setupUi(self)
+
+        # TODO - Make styling and other window related layout uniform
+        stylesheet = qdarkstyle.load_stylesheet_pyqt5()
+        self.setStyleSheet(stylesheet)
+        errorIcon = qta.icon('fa.times-circle', color='red')
+        errorPixmap = errorIcon.pixmap(50, 50)
+        self.iconContainer.setPixmap(errorPixmap)
+
+        self.buttonBox.accepted.connect(self.on_accept)
+        self.buttonBox.rejected.connect(self.on_reject)
+
+    def on_accept(self):
+        Lumberjack.info('< TerminationDialog > - -> (on_accept)')
+        self.done(0)
+
+    def on_reject(self):
+        Lumberjack.info('< TerminationDialog > - -> (on_reject)')
+        self.done(0)

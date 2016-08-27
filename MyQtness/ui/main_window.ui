@@ -35,23 +35,28 @@
     <property name="title">
      <string>PAT</string>
     </property>
+    <addaction name="actionHome"/>
     <addaction name="actionSettings"/>
    </widget>
    <widget class="QMenu" name="menuLists">
     <property name="geometry">
      <rect>
-      <x>381</x>
+      <x>-1539</x>
       <y>116</y>
-      <width>159</width>
-      <height>126</height>
+      <width>168</width>
+      <height>222</height>
      </rect>
     </property>
     <property name="title">
      <string>Lists</string>
     </property>
-    <addaction name="actionListUsers"/>
+    <addaction name="actionListBankAccounts"/>
+    <addaction name="actionListContracts"/>
+    <addaction name="actionListEmailAddresses"/>
     <addaction name="actionListLetters"/>
     <addaction name="actionListRelations"/>
+    <addaction name="actionListTransactions"/>
+    <addaction name="actionListUsers"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
     <property name="title">
@@ -96,6 +101,31 @@
    </property>
    <property name="toolTip">
     <string>List of Relations</string>
+   </property>
+  </action>
+  <action name="actionHome">
+   <property name="text">
+    <string>Home</string>
+   </property>
+  </action>
+  <action name="actionListBankAccounts">
+   <property name="text">
+    <string>Bank accounts</string>
+   </property>
+  </action>
+  <action name="actionListContracts">
+   <property name="text">
+    <string>Contracts</string>
+   </property>
+  </action>
+  <action name="actionListEmailAddresses">
+   <property name="text">
+    <string>Email addresses</string>
+   </property>
+  </action>
+  <action name="actionListTransactions">
+   <property name="text">
+    <string>Transactions</string>
    </property>
   </action>
  </widget>
