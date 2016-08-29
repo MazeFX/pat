@@ -271,8 +271,9 @@ if __name__ == "__main__":
     app.setOrganizationName("MazeFX Solutions")
     app.setOrganizationDomain("MazeFX.pythonanywhere.com")
 
-    QFontDatabase().addApplicationFont("C:\PDE\projects\qt\pat\MyQtness\style\ethnocentric.ttf")
-    QFontDatabase().addApplicationFont("C:\PDE\projects\qt\pat\MyQtness\style/ubuntu_bold.ttf")
+    # TODO - Make font path relative
+    QFontDatabase().addApplicationFont("C:\PDE\projects\qt\pat\MyQtness\style/fonts/ethnocentric.ttf")
+    QFontDatabase().addApplicationFont("C:\PDE\projects\qt\pat\MyQtness\style/fonts/ubuntu_bold.ttf")
 
     # loginDialog = LoginDialog()
     '''

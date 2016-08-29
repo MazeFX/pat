@@ -44,6 +44,7 @@ class HomeTab(QWidget, Ui_HomeTab):
         self.LogoContainer.setPixmap(myScaledPixmap)
 
     def showEvent(self, *args):
+        Lumberjack.info('< HomeTab > - -> (showEvent)')
         self.refresh_stats()
 
     def refresh_stats(self):
