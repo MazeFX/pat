@@ -60,15 +60,15 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.tabWidget.setObjectName("tabWidget")
         self.verticalLayout.addWidget(self.tabWidget)
 
-        self._retranslateUi(self)
-
         self.actionSettings.triggered.connect(self.show_settings)
+        self.menuPAT.triggered.connect(self.show_list)
         self.menuLists.triggered.connect(self.show_list)
         self.tabWidget.tabCloseRequested.connect(self.close_tab)
 
         self.setWindowIcon(QIcon(':/app_icons/rc/PAT_icon.png'))
         builderLabel = QLabel('made by: MazeFX Solutions')
         self.statusbar.addPermanentWidget(builderLabel)
+        self._retranslateUi(self)
 
     def iconize_controls(self):
         Lumberjack.info('< MainApp > - -> (iconize_controls)')
@@ -157,7 +157,17 @@ class MainApp(QMainWindow, Ui_MainWindow):
             Lumberjack.info('< MainApp > >User action> :  Adding Transaction List tab to self')
             self.add_tab(HomeTab, 'Home', icon)
 
+    def show_home(self, *args):
+        Lumberjack.info('< MainApp > - -> (show_home)')
+        Lumberjack.debug('(show_home) - args = ', args)
+
+    def show_settings(self):
+        Lumberjack.info('< MainApp > - -> (show_settings)')
+        settings_dialog = SettingsDialog()
+        settings_dialog.exec_()
+
     def add_tab(self, tab_cls, tab_name, icon):
+        Lumberjack.info('< MainApp > - -> (add_tab)')
         new_tab = tab_cls(self.dbhelper)
         print(Fore.MAGENTA + 'Adding a tab with class: ', str(tab_cls))
         new_tab.setObjectName(str(tab_cls))
@@ -192,11 +202,6 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.setStyleSheet(stylesheet)
         print(Fore.MAGENTA + "load choosen database setting: %s" % repr(int_value))
 
-    def show_settings(self):
-        print(Fore.MAGENTA + 'Showing the Settings Dialog..')
-        settings_dialog = SettingsDialog()
-        settings_dialog.exec_()
-
     def closeEvent(self, event):
         print(Fore.MAGENTA + "User has clicked the red x on the main window")
         for tab in self.tab_list:
@@ -226,6 +231,7 @@ def setup_logging(
     """Setup logging configuration
 
     """
+
     path = default_path
     value = os.getenv(env_key, None)
     if value:
@@ -240,6 +246,7 @@ def setup_logging(
 
 if __name__ == "__main__":
     import logging.config
+    colorama(autoreset=True)
     setup_logging()
     Lumberjack.info('=======================  Logger set up.. ')
 
@@ -258,7 +265,7 @@ if __name__ == "__main__":
     Lumberjack.info('=======================  Starting Application.. ')
 
     visible = True
-    colorama(autoreset=True)
+
     app = QApplication(sys.argv)
     app.setApplicationName('PAT')
     app.setOrganizationName("MazeFX Solutions")
