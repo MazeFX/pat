@@ -218,6 +218,8 @@ class MyItemDelegate(QItemDelegate):
             qtDate = QDate.fromString(date, 'yyyy-MM-dd')
             widget.setDate(qtDate)
 
+        # TODO - create a link between the spinbox and a datetime.delta; possible with custom widget
+
         elif hasattr(widget, 'text'):
             text = modelIndex.data()
             widget.setText(text)

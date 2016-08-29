@@ -62,7 +62,7 @@ class Contract(Base):
     reference = Column(String(250))
     email_id = Column(Integer, ForeignKey('e_addresses.id'), nullable=False)
     amount = Column(Numeric(8, 2))
-    occurrence = Column(DateTime)
+    recurrence = Column(DateTime)
     start_date = Column(Date)
     end_date = Column(Date)
     date_created = Column(DateTime, default=datetime.datetime.now)
@@ -85,7 +85,7 @@ class Contract(Base):
         self.reference = ''
         self.email_id = 1
         self.amount = 0
-        self.occurrence = ''
+        self.recurrence = 0
         self.start_date = datetime.date.today()
         self.end_date = datetime.date.today()
 

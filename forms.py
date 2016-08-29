@@ -31,6 +31,9 @@ from MyQtness.ui_transaction_form import Ui_TransactionFormInsert
 from MyQtness.myWidgets import MyItemDelegate
 from dialogs import SaveDialog
 
+import logging
+Lumberjack = logging.getLogger(__name__)
+
 from colorama import Fore, Back, Style
 
 
@@ -47,6 +50,7 @@ class BasicForm(QWidget, Ui_BasicForm):
 
     def __init__(self, model, db_helper, *args):
         super(BasicForm, self).__init__(*args)
+        Lumberjack.info('spawning a << BasicForm >>')
 
         self.setupUi(self)
         self.edit_mode = None
@@ -68,8 +72,8 @@ class BasicForm(QWidget, Ui_BasicForm):
         self.pushButtonSave.setFocusPolicy(Qt.NoFocus)
         self.pushButtonSave.clicked.connect(self.on_save)
 
-        self.pushButtonReset.setFocusPolicy(Qt.NoFocus)
-        self.pushButtonReset.clicked.connect(self.on_reset)
+        self.pushButtonCancel.setFocusPolicy(Qt.NoFocus)
+        self.pushButtonCancel.clicked.connect(self.on_cancel)
 
         self.mapper = QDataWidgetMapper(self)
         self.mapper.setSubmitPolicy(QDataWidgetMapper.ManualSubmit)
@@ -96,11 +100,11 @@ class BasicForm(QWidget, Ui_BasicForm):
         pass
 
     def toggle_edit_mode(self, flag, mode, row):
+        Lumberjack.info('< BasicForm > - -> (toggle_edit_mode)')
         print(Fore.CYAN + 'Setting edit mode for letter form: ', flag, mode)
 
         if flag and self.edit_mode is None:
             self.openItem = self.model.results[row]
-            self.edit_mode = mode
 
         elif not flag and self.edit_mode:
             item_changed_saved = self.check_item_change()
@@ -115,6 +119,7 @@ class BasicForm(QWidget, Ui_BasicForm):
                     self.model.rollback_row(self.newRow)
                     self.newRow = None
 
+        Lumberjack.debug('(toggle_edit_mode) -  set edit mode = {}'.format(mode))
         self.edit_mode = mode
         for field in self.field_list:
             if hasattr(field, 'edit'):
@@ -122,7 +127,13 @@ class BasicForm(QWidget, Ui_BasicForm):
             else:
                 field.setEnabled(flag)
 
+        if self.edit_mode is None or self.edit_mode == 'add':
+            self.pushButtonCancel.setText('Cancel')
+        if self.edit_mode == 'edit':
+            self.pushButtonCancel.setText('Reset')
+
     def on_add(self):
+        Lumberjack.info('< BasicForm > - -> (on_add)')
         # TODO - when adding new item remove current list selection
         print(Fore.CYAN + 'Add signal sent and recieved.')
         row = self.model.rowCount(None)
@@ -217,9 +228,14 @@ class BasicForm(QWidget, Ui_BasicForm):
         else:
             return True
 
-    def on_reset(self):
-        print(Fore.CYAN + 'Reset signal sent and recieved.')
-        self.mapper.revert()
+    def on_cancel(self):
+        Lumberjack.info('< BasicForm > - -> (on_cancel)')
+        Lumberjack.debug('(on_cancel) - edit mode = {}'.format(self.edit_mode))
+        if self.edit_mode == 'add':
+            # TODO - write cancel action: closing form and deleting projected row
+            print(Fore.CYAN + 'Canceling the add action.')
+        if self.edit_mode == 'edit':
+            self.mapper.revert()
         
 
 class BankAccountForm(BasicForm, Ui_BankAccountFormInsert):
@@ -228,6 +244,7 @@ class BankAccountForm(BasicForm, Ui_BankAccountFormInsert):
         super(BankAccountForm, self).__init__(*args)
         Ui_BankAccountFormInsert.setupUi(self, self.FormContainer)
         Ui_BankAccountFormInsert.retranslateUi(self, self.FormContainer)
+        Lumberjack.info('evolving to a << BankAccountForm >>')
 
         for x in range(self.formLayout.rowCount()):
             widget = self.formLayout.itemAt(x, QFormLayout.FieldRole)

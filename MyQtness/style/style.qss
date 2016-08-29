@@ -210,12 +210,12 @@ QMenuBar::item
 QMenuBar::item:selected
 {
     background: transparent;
-    border: 1px solid #76797C;
+    border: 1px solid #FF1744;
 }
 
 QMenuBar::item:pressed
 {
-    border: 1px solid #76797C;
+    border: 1px solid #FF1744;
     background-color: #3daee9;
     color: #eff0f1;
     margin-bottom:-1px;

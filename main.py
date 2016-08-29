@@ -52,6 +52,7 @@ class MainApp(QMainWindow, Ui_MainWindow):
 
         self.setupUi(self)
         self.iconize_controls()
+        self.setWindowIcon(QIcon(':/app_icons/rc/PAT_icon.png'))
 
         self.tabWidget = QTabWidget(self.centralwidget)
         self.tabWidget.setTabsClosable(True)
@@ -60,14 +61,15 @@ class MainApp(QMainWindow, Ui_MainWindow):
         self.tabWidget.setObjectName("tabWidget")
         self.verticalLayout.addWidget(self.tabWidget)
 
+        builderLabel = QLabel('made by: MazeFX Solutions')
+        self.statusbar.addPermanentWidget(builderLabel)
+
         self.actionSettings.triggered.connect(self.show_settings)
         self.menuPAT.triggered.connect(self.show_list)
         self.menuLists.triggered.connect(self.show_list)
         self.tabWidget.tabCloseRequested.connect(self.close_tab)
+        self.actionHome.trigger()
 
-        self.setWindowIcon(QIcon(':/app_icons/rc/PAT_icon.png'))
-        builderLabel = QLabel('made by: MazeFX Solutions')
-        self.statusbar.addPermanentWidget(builderLabel)
         self._retranslateUi(self)
 
     def iconize_controls(self):
@@ -78,12 +80,32 @@ class MainApp(QMainWindow, Ui_MainWindow):
         wrenchIcon = qta.icon('fa.wrench', color='white')
         self.actionSettings.setIcon(wrenchIcon)
 
+        bankIcon = qta.icon('fa.bank', color='white')
+        self.actionListBankAccounts.setIcon(bankIcon)
+
+        contractIcon = QIcon(':/app_icons/rc/handshake_icon.svg')
+        self.actionListContracts.setIcon(contractIcon)
+
+        atIcon = qta.icon('fa.at', color='white')
+        self.actionListEmailAddresses.setIcon(atIcon)
+
         envelopeIcon = qta.icon('fa.envelope', color='white')
         self.actionListLetters.setIcon(envelopeIcon)
+
         relationIcon = qta.icon('fa.group', color='white')
         self.actionListRelations.setIcon(relationIcon)
+
+        transactionIcon = qta.icon('fa.money', color='white')
+        self.actionListTransactions.setIcon(transactionIcon)
+
         userIcon = qta.icon('fa.user', color='white')
         self.actionListUsers.setIcon(userIcon)
+
+        helpIcon = qta.icon('fa.question', color='white')
+        self.actionHelp.setIcon(helpIcon)
+
+        aboutIcon = qta.icon('fa.info', color='white')
+        self.actionAbout.setIcon(aboutIcon)
 
     def setup_tray(self, isolated):
         Lumberjack.info('< MainApp > - -> (setup_tray)')
@@ -117,12 +139,12 @@ class MainApp(QMainWindow, Ui_MainWindow):
 
     def show_list(self, *args):
         Lumberjack.info('< MainApp > - -> (show_list)')
-        Lumberjack.debug('(show_list) - args = ', args)
+        Lumberjack.debug('(show_list) - args = {}'.format(args))
 
         action_text = args[0].text()
         icon = args[0].icon()
 
-        Lumberjack.debug('(show_list) - Action text selector = ', action_text)
+        Lumberjack.debug('(show_list) - Action text selector = {}'.format(action_text))
         print(Fore.MAGENTA + '$! Action text received: ', action_text)
 
         if action_text == 'Bank accounts':

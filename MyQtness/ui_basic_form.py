@@ -46,7 +46,7 @@ class Ui_BasicForm(object):
         self.FormContainer.setFrameShadow(QtWidgets.QFrame.Raised)
         self.FormContainer.setObjectName("FormContainer")
         self.verticalLayout.addWidget(self.FormContainer)
-        spacerItem = QtWidgets.QSpacerItem(40, 50, QtWidgets.QSizePolicy.MinimumExpanding, QtWidgets.QSizePolicy.Minimum)
+        spacerItem = QtWidgets.QSpacerItem(20, 40, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem)
         self.horizontalLayout = QtWidgets.QHBoxLayout()
         self.horizontalLayout.setSizeConstraint(QtWidgets.QLayout.SetMaximumSize)
@@ -54,9 +54,9 @@ class Ui_BasicForm(object):
         self.pushButtonSave = QtWidgets.QPushButton(BasicForm)
         self.pushButtonSave.setObjectName("pushButtonSave")
         self.horizontalLayout.addWidget(self.pushButtonSave)
-        self.pushButtonReset = QtWidgets.QPushButton(BasicForm)
-        self.pushButtonReset.setObjectName("pushButtonReset")
-        self.horizontalLayout.addWidget(self.pushButtonReset)
+        self.pushButtonCancel = QtWidgets.QPushButton(BasicForm)
+        self.pushButtonCancel.setObjectName("pushButtonCancel")
+        self.horizontalLayout.addWidget(self.pushButtonCancel)
         self.verticalLayout.addLayout(self.horizontalLayout)
 
         self.retranslateUi(BasicForm)
@@ -70,5 +70,5 @@ class Ui_BasicForm(object):
         self.pushButtonEdit.setText(_translate("BasicForm", "Edit"))
         self.pushButtonDelete.setText(_translate("BasicForm", "Delete"))
         self.pushButtonSave.setText(_translate("BasicForm", "Save"))
-        self.pushButtonReset.setText(_translate("BasicForm", "Reset"))
+        self.pushButtonCancel.setText(_translate("BasicForm", "Cancel"))
 

@@ -62,6 +62,7 @@
     <property name="title">
      <string>Help</string>
     </property>
+    <addaction name="actionHelp"/>
     <addaction name="actionAbout"/>
    </widget>
    <addaction name="menuPAT"/>
@@ -126,6 +127,11 @@
   <action name="actionListTransactions">
    <property name="text">
     <string>Transactions</string>
+   </property>
+  </action>
+  <action name="actionHelp">
+   <property name="text">
+    <string>Help</string>
    </property>
   </action>
  </widget>

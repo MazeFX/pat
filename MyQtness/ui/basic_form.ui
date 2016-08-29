@@ -87,17 +87,14 @@
     </widget>
    </item>
    <item>
-    <spacer name="horizontalSpacer">
+    <spacer name="verticalSpacer">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::MinimumExpanding</enum>
+      <enum>Qt::Vertical</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>40</width>
-       <height>50</height>
+       <width>20</width>
+       <height>40</height>
       </size>
      </property>
     </spacer>
@@ -115,9 +112,9 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButtonReset">
+      <widget class="QPushButton" name="pushButtonCancel">
        <property name="text">
-        <string>Reset</string>
+        <string>Cancel</string>
        </property>
       </widget>
      </item>

@@ -53,6 +53,8 @@ class Ui_MainWindow(object):
         self.actionListEmailAddresses.setObjectName("actionListEmailAddresses")
         self.actionListTransactions = QtWidgets.QAction(MainWindow)
         self.actionListTransactions.setObjectName("actionListTransactions")
+        self.actionHelp = QtWidgets.QAction(MainWindow)
+        self.actionHelp.setObjectName("actionHelp")
         self.menuPAT.addAction(self.actionHome)
         self.menuPAT.addAction(self.actionSettings)
         self.menuLists.addAction(self.actionListBankAccounts)
@@ -62,6 +64,7 @@ class Ui_MainWindow(object):
         self.menuLists.addAction(self.actionListRelations)
         self.menuLists.addAction(self.actionListTransactions)
         self.menuLists.addAction(self.actionListUsers)
+        self.menuHelp.addAction(self.actionHelp)
         self.menuHelp.addAction(self.actionAbout)
         self.menubar.addAction(self.menuPAT.menuAction())
         self.menubar.addAction(self.menuLists.menuAction())
@@ -89,4 +92,5 @@ class Ui_MainWindow(object):
         self.actionListContracts.setText(_translate("MainWindow", "Contracts"))
         self.actionListEmailAddresses.setText(_translate("MainWindow", "Email addresses"))
         self.actionListTransactions.setText(_translate("MainWindow", "Transactions"))
+        self.actionHelp.setText(_translate("MainWindow", "Help"))
 
