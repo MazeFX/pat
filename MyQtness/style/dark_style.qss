@@ -1206,6 +1206,11 @@ QProgressBar::chunk {
     background-color: #05B8CC;
 }
 
+MyCurrencyBox {
+    border: 1px solid #000000;
+    border-radius: 2px;
+}
+
 MyDragDropBox#scanFileDrop
 {
     background-color: #232629;
@@ -1234,3 +1239,4 @@ QLabel#Header2_3 {
     font-family: 'Ubuntu';
     font-size: 22px;
 }
+

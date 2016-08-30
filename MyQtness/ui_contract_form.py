@@ -56,7 +56,7 @@ class Ui_ContractFormInsert(object):
         self.amountLabel = QtWidgets.QLabel(ContractFormInsert)
         self.amountLabel.setObjectName("amountLabel")
         self.formLayout.setWidget(6, QtWidgets.QFormLayout.LabelRole, self.amountLabel)
-        self.amountLineEdit = QtWidgets.QLineEdit(ContractFormInsert)
+        self.amountLineEdit = MyCurrencyBox(ContractFormInsert)
         self.amountLineEdit.setObjectName("amountLineEdit")
         self.formLayout.setWidget(6, QtWidgets.QFormLayout.FieldRole, self.amountLineEdit)
         self.startDateLabel = QtWidgets.QLabel(ContractFormInsert)
@@ -110,4 +110,4 @@ class Ui_ContractFormInsert(object):
         self.recurrenceLabel.setText(_translate("ContractFormInsert", "Recurrence"))
         self.recurrenceBox.setText(_translate("ContractFormInsert", "Recurrence"))
 
-from MyQtness.myWidgets import MyComboBox
+from MyQtness.myWidgets import MyComboBox, MyCurrencyBox

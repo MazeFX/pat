@@ -18,8 +18,12 @@ import datetime
 
 from PyQt5.QtGui import QFont, QPainter
 from PyQt5.QtCore import Qt, pyqtProperty, pyqtSignal, QDate
-from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QTableView, QAbstractItemView, \
-    QFrame, QComboBox, QLabel, QItemDelegate, QStyleOption, QStyle
+from PyQt5.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout, QTableView, QAbstractItemView, \
+    QFrame, QComboBox, QLineEdit, QLabel, QItemDelegate, QStyleOption, QStyle
+
+import logging
+Lumberjack = logging.getLogger(__name__)
+
 from colorama import Fore, Back, Style
 
 
@@ -196,7 +200,37 @@ class MyDragDropBox(QFrame):
             self.DropLabel.setText('Drop File')
 
 
-class MyOccurrenceBox(QHBoxLayout):
+class MyCurrencyBox(QFrame):
+    # TODO - build custom widget for editing Currency amount
+
+    _ammount = None
+
+    def __init__(self, *args):
+        super(MyCurrencyBox, self).__init__(*args)
+        Lumberjack.info('spawning a << MyCurrencyBox >>')
+        self.currencyBoxlayout = QHBoxLayout(self)
+        self.currencyBoxlayout.setObjectName("currencyBoxlayout")
+        self.currencyLabel = QLabel('€')
+        self.euroLineEdit = QLineEdit()
+        self.commaLabel = QLabel(',')
+        self.centsLineEdit = QLineEdit()
+        self.currencyBoxlayout.addWidget(self.currencyLabel)
+        self.currencyBoxlayout.addWidget(self.euroLineEdit)
+        self.currencyBoxlayout.addWidget(self.commaLabel)
+        self.currencyBoxlayout.addWidget(self.centsLineEdit)
+
+    def getAmmount(self):
+        Lumberjack.info('< MyCurrencyBox > - -> (getAmmount)')
+        return self._ammount
+
+    def setAmmount(self, ammount):
+        Lumberjack.info('< MyCurrencyBox > - -> (setAmmount)')
+        self._ammount = ammount
+
+    ammount = pyqtProperty(str, fget=getAmmount, fset=setAmmount)
+
+
+class MyRecurrenceBox(QHBoxLayout):
     # TODO - Build a occurrence selector for Contract model based on spinbox
     pass
 

@@ -92,7 +92,7 @@
     </widget>
    </item>
    <item row="6" column="1">
-    <widget class="QLineEdit" name="amountLineEdit"/>
+    <widget class="MyCurrencyBox" name="amountLineEdit"/>
    </item>
    <item row="7" column="0">
     <widget class="QLabel" name="startDateLabel">
@@ -200,6 +200,11 @@
   <customwidget>
    <class>MyComboBox</class>
    <extends>QComboBox</extends>
+   <header>MyQtness.myWidgets.h</header>
+  </customwidget>
+  <customwidget>
+   <class>MyCurrencyBox</class>
+   <extends>QLineEdit</extends>
    <header>MyQtness.myWidgets.h</header>
   </customwidget>
  </customwidgets>

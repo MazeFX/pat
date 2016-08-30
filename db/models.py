@@ -35,7 +35,7 @@ class BankAccount(Base):
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
     bank_name = Column(String)
     account = Column(String)
-    balance = Column(Currency)
+    balance = Column(Integer)
     date_created = Column(DateTime, default=datetime.datetime.now)
 
     user = relationship('User', foreign_keys=[user_id])
@@ -61,7 +61,7 @@ class Contract(Base):
     letter_id = Column(Integer, ForeignKey('letters.id'), nullable=False)
     reference = Column(String(250))
     email_id = Column(Integer, ForeignKey('e_addresses.id'), nullable=False)
-    amount = Column(Currency)
+    amount = Column(Integer)
     recurrence = Column(DateTime)
     start_date = Column(Date)
     end_date = Column(Date)
