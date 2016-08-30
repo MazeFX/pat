@@ -62,7 +62,14 @@
     </widget>
    </item>
    <item row="3" column="1">
-    <widget class="MyCurrencyBox" name="balanceLineEdit"/>
+    <widget class="MyCurrencyBox" name="balanceCurrencyEdit">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
@@ -74,8 +81,9 @@
   </customwidget>
   <customwidget>
    <class>MyCurrencyBox</class>
-   <extends>QLineEdit</extends>
+   <extends>QFrame</extends>
    <header>MyQtness.myWidgets.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

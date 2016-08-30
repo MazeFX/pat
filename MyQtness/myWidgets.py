@@ -16,9 +16,9 @@ import os
 import operator
 import datetime
 
-from PyQt5.QtGui import QFont, QPainter
+from PyQt5.QtGui import QFont, QPainter, QIntValidator
 from PyQt5.QtCore import Qt, pyqtProperty, pyqtSignal, QDate
-from PyQt5.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout, QTableView, QAbstractItemView, \
+from PyQt5.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout, QSpacerItem, QSizePolicy, QTableView, QAbstractItemView, \
     QFrame, QComboBox, QLineEdit, QLabel, QItemDelegate, QStyleOption, QStyle
 
 import logging
@@ -203,7 +203,7 @@ class MyDragDropBox(QFrame):
 class MyCurrencyBox(QFrame):
     # TODO - build custom widget for editing Currency amount
 
-    _ammount = None
+    _amount = None
 
     def __init__(self, *args):
         super(MyCurrencyBox, self).__init__(*args)
@@ -212,22 +212,38 @@ class MyCurrencyBox(QFrame):
         self.currencyBoxlayout.setObjectName("currencyBoxlayout")
         self.currencyLabel = QLabel('€')
         self.euroLineEdit = QLineEdit()
+        self.euroLineEdit.setObjectName("euroLineEdit")
+        euroValidator = QIntValidator()
+        self.euroLineEdit.setValidator(euroValidator)
+        self.euroLineEdit.setMaxLength(6)
         self.commaLabel = QLabel(',')
         self.centsLineEdit = QLineEdit()
+        self.centsLineEdit.setObjectName("centsLineEdit")
+        centsValidator = QIntValidator(0, 99)
+        self.centsLineEdit.setValidator(centsValidator)
+        self.centsLineEdit.setMaxLength(2)
+        spacerItem1 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        spacerItem2 = QSpacerItem(40, 20, QSizePolicy.Expanding, QSizePolicy.Minimum)
+        self.currencyBoxlayout.addItem(spacerItem1)
         self.currencyBoxlayout.addWidget(self.currencyLabel)
         self.currencyBoxlayout.addWidget(self.euroLineEdit)
         self.currencyBoxlayout.addWidget(self.commaLabel)
         self.currencyBoxlayout.addWidget(self.centsLineEdit)
+        self.currencyBoxlayout.addItem(spacerItem2)
 
-    def getAmmount(self):
-        Lumberjack.info('< MyCurrencyBox > - -> (getAmmount)')
+    def getAmount(self):
+        Lumberjack.info('< MyCurrencyBox > - -> (getAmount)')
+        euros = self.euroLineEdit.text()
+        cents = self.centsLineEdit.text()
+        Lumberjack.debug('(getAmount) - euros = {}({})'.format(type(euros), euros))
+        Lumberjack.debug('(getAmount) - cents = {}({})'.format(type(cents), cents))
         return self._ammount
 
-    def setAmmount(self, ammount):
-        Lumberjack.info('< MyCurrencyBox > - -> (setAmmount)')
-        self._ammount = ammount
+    def setAmount(self, amount):
+        Lumberjack.info('< MyCurrencyBox > - -> (setAmount)')
+        self._amount = amount
 
-    ammount = pyqtProperty(str, fget=getAmmount, fset=setAmmount)
+    amount = pyqtProperty(str, fget=getAmount, fset=setAmount)
 
 
 class MyRecurrenceBox(QHBoxLayout):
@@ -266,4 +282,6 @@ class MyItemDelegate(QItemDelegate):
         elif hasattr(widget, 'date'):
             abstractItemModel.setData(modelIndex, widget.date())
         elif hasattr(widget, 'text'):
+            abstractItemModel.setData(modelIndex, widget.text())
+        elif hasattr(widget, 'amount'):
             abstractItemModel.setData(modelIndex, widget.text())

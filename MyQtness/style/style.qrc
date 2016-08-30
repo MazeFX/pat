@@ -47,7 +47,6 @@
     <file>rc/PAT_Logo.png</file>
     <file>rc/handshake_icon.svg</file>
   </qresource>
-
   <qresource>
       <file>style.qss</file>
       <file>dark_style.qss</file>

@@ -13,7 +13,8 @@ Python Test docstring.
 
 import sys
 
-from PyQt5.QtCore import QCoreApplication, Qt, QDate, QModelIndex
+from PyQt5.QtGui import QRegExpValidator
+from PyQt5.QtCore import QCoreApplication, Qt, QDate, QModelIndex, QRegExp
 from PyQt5.QtWidgets import QApplication, QWidget, QDataWidgetMapper, QPushButton, QFormLayout
 
 from db.models import AlchemicalTableModel, BankAccount, Contract, EmailAddress, \
@@ -114,7 +115,6 @@ class BasicForm(QWidget, Ui_BasicForm):
             elif item_changed_saved is None:
                 return
             else:
-                self.on_reset()
                 if self.edit_mode == 'add':
                     self.model.rollback_row(self.newRow)
                     self.newRow = None
@@ -234,6 +234,7 @@ class BasicForm(QWidget, Ui_BasicForm):
         if self.edit_mode == 'add':
             # TODO - write cancel action: closing form and deleting projected row
             print(Fore.CYAN + 'Canceling the add action.')
+            self.toggle_edit_mode(False, None, None)
         if self.edit_mode == 'edit':
             self.mapper.revert()
         
@@ -249,6 +250,7 @@ class BankAccountForm(BasicForm, Ui_BankAccountFormInsert):
         for x in range(self.formLayout.rowCount()):
             widget = self.formLayout.itemAt(x, QFormLayout.FieldRole)
             self.field_list.append(widget.widget())
+            Lumberjack.debug('(__init__) - fieldlist add = {}'.format(widget.widget()))
 
         self.titleLabel.setText('Bank accounts')
         self.set_controls()
@@ -258,7 +260,7 @@ class BankAccountForm(BasicForm, Ui_BankAccountFormInsert):
         self.mapper.addMapping(self.bankNameLineEdit, 0)
         self.mapper.addMapping(self.userComboBox, 1)
         self.mapper.addMapping(self.accountLineEdit, 2)
-        self.mapper.addMapping(self.balanceLineEdit, 3)
+        self.mapper.addMapping(self.balanceCurrencyEdit, 3)
 
     def set_controls(self):
         session = self.dbhelper.get_app_db_session()
