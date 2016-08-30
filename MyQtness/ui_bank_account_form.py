@@ -39,6 +39,7 @@ class Ui_BankAccountFormInsert(object):
         self.balanceLabel.setObjectName("balanceLabel")
         self.formLayout.setWidget(3, QtWidgets.QFormLayout.LabelRole, self.balanceLabel)
         self.balanceLineEdit = QtWidgets.QLineEdit(BankAccountFormInsert)
+        self.balanceLineEdit.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.balanceLineEdit.setObjectName("balanceLineEdit")
         self.formLayout.setWidget(3, QtWidgets.QFormLayout.FieldRole, self.balanceLineEdit)
 
@@ -52,5 +53,6 @@ class Ui_BankAccountFormInsert(object):
         self.UserLabel.setText(_translate("BankAccountFormInsert", "User"))
         self.accountLabel.setText(_translate("BankAccountFormInsert", "Account Nr."))
         self.balanceLabel.setText(_translate("BankAccountFormInsert", "Balance"))
+        self.balanceLineEdit.setPlaceholderText(_translate("BankAccountFormInsert", "€"))
 
 from MyQtness.myWidgets import MyComboBox

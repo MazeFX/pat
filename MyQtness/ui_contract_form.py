@@ -88,7 +88,7 @@ class Ui_ContractFormInsert(object):
         self.recurrenceLabel = QtWidgets.QLabel(ContractFormInsert)
         self.recurrenceLabel.setObjectName("recurrenceLabel")
         self.formLayout.setWidget(9, QtWidgets.QFormLayout.LabelRole, self.recurrenceLabel)
-        self.recurrenceBox = QtWidgets.QSpinBox(ContractFormInsert)
+        self.recurrenceBox = QtWidgets.QCheckBox(ContractFormInsert)
         self.recurrenceBox.setObjectName("recurrenceBox")
         self.formLayout.setWidget(9, QtWidgets.QFormLayout.FieldRole, self.recurrenceBox)
 
@@ -108,5 +108,6 @@ class Ui_ContractFormInsert(object):
         self.startDateLabel.setText(_translate("ContractFormInsert", "Date"))
         self.endDateLabel.setText(_translate("ContractFormInsert", "End Date"))
         self.recurrenceLabel.setText(_translate("ContractFormInsert", "Recurrence"))
+        self.recurrenceBox.setText(_translate("ContractFormInsert", "Recurrence"))
 
 from MyQtness.myWidgets import MyComboBox

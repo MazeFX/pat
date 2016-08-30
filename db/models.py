@@ -22,7 +22,7 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from colorama import Fore, Back, Style
 
-from db.qvariantalchemy import Boolean, String, Integer, Numeric, DateTime, Date
+from db.qvariantalchemy import Boolean, Currency, String, Integer, DateTime, Date
 
 
 Base = declarative_base()
@@ -35,7 +35,7 @@ class BankAccount(Base):
     user_id = Column(Integer, ForeignKey('users.id'), nullable=False)
     bank_name = Column(String)
     account = Column(String)
-    balance = Column(Numeric(8, 2))
+    balance = Column(Currency)
     date_created = Column(DateTime, default=datetime.datetime.now)
 
     user = relationship('User', foreign_keys=[user_id])
@@ -61,7 +61,7 @@ class Contract(Base):
     letter_id = Column(Integer, ForeignKey('letters.id'), nullable=False)
     reference = Column(String(250))
     email_id = Column(Integer, ForeignKey('e_addresses.id'), nullable=False)
-    amount = Column(Numeric(8, 2))
+    amount = Column(Currency)
     recurrence = Column(DateTime)
     start_date = Column(Date)
     end_date = Column(Date)
@@ -172,7 +172,7 @@ class Transaction(Base):
     contract_id = Column(Integer, ForeignKey('contracts.id'))
     letter_id = Column(Integer, ForeignKey('letters.id'), nullable=False)
     account_id = Column(Integer, ForeignKey('bank_accounts.id'), nullable=False)
-    amount = Column(Numeric(8, 2))
+    amount = Column(Currency)
     transaction_date = Column(Date)
     payment_date = Column(Date)
     payment_state = Column(Boolean)

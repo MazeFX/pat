@@ -64,9 +64,9 @@ class MainApp(QMainWindow, Ui_MainWindow):
         builderLabel = QLabel('made by: MazeFX Solutions')
         self.statusbar.addPermanentWidget(builderLabel)
 
-        self.actionSettings.triggered.connect(self.show_settings)
-        self.menuPAT.triggered.connect(self.show_list)
-        self.menuLists.triggered.connect(self.show_list)
+        self.menuPAT.triggered.connect(self.handle_menu_event)
+        self.menuLists.triggered.connect(self.handle_menu_event)
+        self.menuHelp.triggered.connect(self.handle_menu_event)
         self.tabWidget.tabCloseRequested.connect(self.close_tab)
         self.actionHome.trigger()
 
@@ -137,51 +137,59 @@ class MainApp(QMainWindow, Ui_MainWindow):
     def _retranslateUi(self, MainWindow):
         pass
 
-    def show_list(self, *args):
-        Lumberjack.info('< MainApp > - -> (show_list)')
-        Lumberjack.debug('(show_list) - args = {}'.format(args))
+    def handle_menu_event(self, *args):
+        Lumberjack.info('< MainApp > - -> (handle_menu_event)')
+        Lumberjack.debug('(handle_menu_event) - args = {}'.format(args))
 
         action_text = args[0].text()
         icon = args[0].icon()
 
-        Lumberjack.debug('(show_list) - Action text selector = {}'.format(action_text))
+        Lumberjack.debug('(handle_menu_event) - Action text selector = {}'.format(action_text))
         print(Fore.MAGENTA + '$! Action text received: ', action_text)
 
-        if action_text == 'Bank accounts':
-            Lumberjack.info('< MainApp > >User action> : Adding Bank account List tab to self')
-            self.add_tab(BankAccountListTab, 'Bank accounts', icon)
-
-        if action_text == 'Contracts':
-            Lumberjack.info('< MainApp > >User action> : Adding Contracts List tab to self')
-            self.add_tab(ContractListTab, 'Contracts', icon)
-
-        if action_text == 'Email addresses':
-            Lumberjack.info('< MainApp > >User action> : Adding EmailAddress List tab to self')
-            self.add_tab(EmailAddressListTab, 'Email addresses', icon)
-
-        if action_text == 'Letters':
-            Lumberjack.info('< MainApp > >User action> :  Adding Letter List tab to self')
-            self.add_tab(LetterListTab, 'Letters', icon)
-
-        if action_text == 'Users':
-            Lumberjack.info('< MainApp > >User action> :  Adding User List tab to self')
-            self.add_tab(UserListTab, 'Users', icon)
-
-        if action_text == 'Relations':
-            Lumberjack.info('< MainApp > >User action> :  Adding Relation List tab to self')
-            self.add_tab(RelationListTab, 'Relations', icon)
-
-        if action_text == 'Transactions':
-            Lumberjack.info('< MainApp > >User action> :  Adding Transaction List tab to self')
-            self.add_tab(TransactionListTab, 'Transactions', icon)
-
         if action_text == 'Home':
-            Lumberjack.info('< MainApp > >User action> :  Adding Transaction List tab to self')
+            Lumberjack.info('(handle_menu_event) >User action> :  Adding Home tab to self')
             self.add_tab(HomeTab, 'Home', icon)
 
-    def show_home(self, *args):
-        Lumberjack.info('< MainApp > - -> (show_home)')
-        Lumberjack.debug('(show_home) - args = ', args)
+        if action_text == 'Settings':
+            Lumberjack.info('(handle_menu_event) >User action> :  Showing settings dialog')
+            self.show_settings()
+
+        elif action_text == 'Bank accounts':
+            Lumberjack.info('(handle_menu_event) >User action> : Adding Bank account List tab to self')
+            self.add_tab(BankAccountListTab, 'Bank accounts', icon)
+
+        elif action_text == 'Contracts':
+            Lumberjack.info('(handle_menu_event) >User action> : Adding Contracts List tab to self')
+            self.add_tab(ContractListTab, 'Contracts', icon)
+
+        elif action_text == 'Email addresses':
+            Lumberjack.info('(handle_menu_event) >User action> : Adding EmailAddress List tab to self')
+            self.add_tab(EmailAddressListTab, 'Email addresses', icon)
+
+        elif action_text == 'Letters':
+            Lumberjack.info('(handle_menu_event) >User action> :  Adding Letter List tab to self')
+            self.add_tab(LetterListTab, 'Letters', icon)
+
+        elif action_text == 'Users':
+            Lumberjack.info('(handle_menu_event) >User action> :  Adding User List tab to self')
+            self.add_tab(UserListTab, 'Users', icon)
+
+        elif action_text == 'Relations':
+            Lumberjack.info('(handle_menu_event) >User action> :  Adding Relation List tab to self')
+            self.add_tab(RelationListTab, 'Relations', icon)
+
+        elif action_text == 'Transactions':
+            Lumberjack.info('(handle_menu_event) >User action> :  Adding Transaction List tab to self')
+            self.add_tab(TransactionListTab, 'Transactions', icon)
+
+        elif action_text == 'Help':
+            Lumberjack.info('(handle_menu_event) >User action> :  Showing help dialog')
+            # TODO - build help dialog and help files
+
+        elif action_text == 'About':
+            Lumberjack.info('(handle_menu_event) >User action> :  Showing about dialog')
+            # TODO build About dialog.
 
     def show_settings(self):
         Lumberjack.info('< MainApp > - -> (show_settings)')

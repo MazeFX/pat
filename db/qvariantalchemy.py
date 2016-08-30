@@ -35,7 +35,8 @@ def gen_process_bind_param(pytype, toqtype, self, value, dialect):
         return value.toPyDate()
     elif not isinstance(value, pytype):
         print('-value not is instance pytype = ', value)
-
+        if dialect == 'Currency':
+            value *= 100
         return pytype(value)
     else:
         print('-value unchanged return = ', value)
@@ -51,15 +52,15 @@ class Integer(types.TypeDecorator):
             self, value, dialect)
 
 
-class Numeric(types.TypeDecorator):
-    impl = types.Numeric
+class Currency(types.TypeDecorator):
+    impl = types.Integer
 
     def process_bind_param(self, value, dialect):
-        print('--------- From Numeric type:  -------------')
+        print('--------- From Currency type:  -------------')
         print('-value = ', value)
         return gen_process_bind_param(
-            int, lambda value: round(Decimal(value), 2),
-            self, value, dialect)
+            int, lambda value: round(Decimal(value / 100), 2),
+            self, value, 'Currency')
 
 
 class Boolean(types.TypeDecorator):
