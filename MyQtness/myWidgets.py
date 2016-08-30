@@ -237,7 +237,8 @@ class MyCurrencyBox(QFrame):
         cents = self.centsLineEdit.text()
         Lumberjack.debug('(getAmount) - euros = {}({})'.format(type(euros), euros))
         Lumberjack.debug('(getAmount) - cents = {}({})'.format(type(cents), cents))
-        return self._ammount
+        self._amount = euros
+        return int(self._ammount)
 
     def setAmount(self, amount):
         Lumberjack.info('< MyCurrencyBox > - -> (setAmount)')
@@ -255,8 +256,10 @@ class MyItemDelegate(QItemDelegate):
 
     def __init__(self, *args):
         super(MyItemDelegate, self).__init__(*args)
+        Lumberjack.info('spawning a << MyItemDelegate >>')
 
     def setEditorData(self, widget, modelIndex):
+        Lumberjack.info('< MyItemDelegate > - -> (setEditorData)')
         if hasattr(widget, 'currentIndex'):
             widget.currentItem = modelIndex.data(role=Qt.EditRole)
 
@@ -269,10 +272,17 @@ class MyItemDelegate(QItemDelegate):
             widget.setDate(qtDate)
 
         # TODO - create a link between the spinbox and a datetime.delta; possible with custom widget
+        elif hasattr(widget, 'amount'):
+            value = modelIndex.data(role=Qt.EditRole)
+            Lumberjack.debug('(setEditorData) - ammount = {}({})'.format(type(value), value))
+            widget.amount(value)
 
         elif hasattr(widget, 'text'):
             text = modelIndex.data()
             widget.setText(text)
+        else:
+            Lumberjack.warning('(setEditorData) - NO MATCH FOUND!')
+            Lumberjack.debug('(setEditorData) - mismatching widget = {}'.format(widget))
 
     def setModelData(self, widget, abstractItemModel, modelIndex):
         if hasattr(widget, 'currentIndex'):
@@ -284,4 +294,4 @@ class MyItemDelegate(QItemDelegate):
         elif hasattr(widget, 'text'):
             abstractItemModel.setData(modelIndex, widget.text())
         elif hasattr(widget, 'amount'):
-            abstractItemModel.setData(modelIndex, widget.text())
+            abstractItemModel.setData(modelIndex, widget.amount())

@@ -22,6 +22,9 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from colorama import Fore, Back, Style
 
+import logging
+Lumberjack = logging.getLogger(__name__)
+
 from db.qvariantalchemy import Boolean, Currency, String, Integer, DateTime, Date
 
 
@@ -246,6 +249,7 @@ class AlchemicalTableModel(QAbstractTableModel):
 
     def __init__(self, session, model, columns):
         super(AlchemicalTableModel, self).__init__()
+        Lumberjack.info('spawning a << AlchemicalTableModel >>')
         #TODO self.sort_data = None
         self.session = session
         self.fields = columns
@@ -338,7 +342,7 @@ class AlchemicalTableModel(QAbstractTableModel):
 
         row = self.results[index.row()]
         name = self.fields[index.column()][2]
-        # TODO - create function for displaying scnafile present icon.
+        # TODO - create function for displaying scanfile present icon.
         if '.' in name:
             foreign_column = name.split('.')
             foreign_item = getattr(row, foreign_column[0])

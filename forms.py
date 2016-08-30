@@ -251,6 +251,10 @@ class BankAccountForm(BasicForm, Ui_BankAccountFormInsert):
             widget = self.formLayout.itemAt(x, QFormLayout.FieldRole)
             self.field_list.append(widget.widget())
             Lumberjack.debug('(__init__) - fieldlist add = {}'.format(widget.widget()))
+            if hasattr(widget, 'amount'):
+                Lumberjack.debug('(__init__) - widget with amount attr.')
+            if widget == self.balanceCurrencyEdit:
+                Lumberjack.debug('(__init__) - widget is self.balanceCurrencyEdit')
 
         self.titleLabel.setText('Bank accounts')
         self.set_controls()
