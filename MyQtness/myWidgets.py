@@ -65,13 +65,18 @@ class MyTableView(QTableView):
         hh.setSortIndicatorShown(True)
         hh.setHighlightSections(False)
 
-    def setCurrentRow(self, index):
-        self._currentSelectedRow = index
-
     def selectionChanged(self, QItemSelection, QItemSelection_1):
+        Lumberjack.info('< MyTableView > - -> (selectionChanged)')
         super(MyTableView, self).selectionChanged(QItemSelection, QItemSelection_1)
         if not QItemSelection.isEmpty():
             self.setCurrentRow(QItemSelection.indexes()[0].row())
+
+    def removeSelection(self):
+        Lumberjack.info('< MyTableView > - -> (selectionChanged)')
+        self.clearSelection()
+
+    def setCurrentRow(self, index):
+        self._currentSelectedRow = index
 
     def getCurrentRow(self, *args):
         return self._currentSelectedRow

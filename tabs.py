@@ -82,6 +82,7 @@ class BankAccountListTab(QWidget):
         self.tableView.setModel(model)
 
         self.form = BankAccountForm(model, self.dbhelper)
+        self.form.tableBuddy = self.tableView
         selectionModel = self.tableView.selectionModel()
         selectionModel.selectionChanged.connect(self.form.set_mapper_index_from_selection)
 

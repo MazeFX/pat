@@ -45,6 +45,7 @@ class BasicForm(QWidget, Ui_BasicForm):
     from this class.
     '''
 
+    tableBuddy = None
     dbhelper = None
     model = None
     field_list = []
@@ -144,6 +145,8 @@ class BasicForm(QWidget, Ui_BasicForm):
         print(Fore.CYAN + 'New row at index: ', row)
         print(Fore.CYAN + 'mapper index: ', self.mapper.currentIndex())
         self.toggle_edit_mode(True, 'add', row)
+        if self.tableBuddy:
+            self.tableBuddy.removeSelection()
 
     def on_edit(self):
         print(Fore.CYAN + 'Edit signal sent and recieved.')
