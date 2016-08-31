@@ -111,15 +111,14 @@ class MyComboBox(QComboBox):
 
 class MyDragDropBox(QFrame):
 
-    # Emitted when selection of combobox changes
     _currentFile = None
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args):
         super(MyDragDropBox, self).__init__(*args)
+        Lumberjack.info('spawning a << MyDragDropBox >>')
         print(Fore.GREEN + '--=== DRAGDROPBOX ===--')
         print(Fore.GREEN + 'Here come the inits!')
         print(Fore.GREEN + 'args: ', args)
-        print(Fore.GREEN + 'kwargs: ', kwargs)
         print(Fore.GREEN + '==--- DRAGDROPBOX ---==')
 
         self.verticalLayout = QVBoxLayout(self)
@@ -134,10 +133,7 @@ class MyDragDropBox(QFrame):
         self.DropLabel.setAlignment(Qt.AlignCenter)
         self.DropLabel.setObjectName("DropLabel")
         self.verticalLayout.addWidget(self.DropLabel)
-        print(Fore.GREEN + '-- DRAGDROPBOX -- setting layout for: ', self.DropLabel)
         self.edit = False
-
-
 
     def dragEnterEvent(self, event):
         print(Fore.GREEN + '-- DRAGDROPBOX -- Enter with drag')
@@ -167,13 +163,15 @@ class MyDragDropBox(QFrame):
             event.ignore()
 
     def mouseDoubleClickEvent(self, QMouseEvent):
-        print(Fore.GREEN + '-- DRAGDROPBOX -- Registered a double click')
+        Lumberjack.info('< MyDragDropBox > - -> (mouseDoubleClickEvent)')
         filename = self.getCurrentFile()
         print(Fore.GREEN + 'Current file name for opening = ', filename)
         if filename:
             if os.path.exists(filename):
                 print(Fore.GREEN + 'Current file exists and now opening')
                 os.startfile(filename)
+        for attr in self.__dict__:
+            Lumberjack.debug('(mouseDoubleClickEvent) - widget attr = {}'.format(attr))
 
     def getCurrentFile(self):
         print(Fore.GREEN + '-- DRAGDROPBOX -- Getting the file: ')
@@ -201,7 +199,6 @@ class MyDragDropBox(QFrame):
 
 
 class MyCurrencyBox(QFrame):
-    # TODO - build custom widget for editing Currency amount
 
     _amount = None
 
@@ -235,16 +232,18 @@ class MyCurrencyBox(QFrame):
         Lumberjack.info('< MyCurrencyBox > - -> (getAmount)')
         euros = self.euroLineEdit.text()
         cents = self.centsLineEdit.text()
+        #Lumberjack.debug('(getAmount) - breaking for traceback {}'.format(traceback))
         Lumberjack.debug('(getAmount) - euros = {}({})'.format(type(euros), euros))
         Lumberjack.debug('(getAmount) - cents = {}({})'.format(type(cents), cents))
-        self._amount = euros
-        return int(self._ammount)
+        full_amount = euros + cents
+        self._amount = int(full_amount)
+        return self._amount
 
     def setAmount(self, amount):
         Lumberjack.info('< MyCurrencyBox > - -> (setAmount)')
         self._amount = amount
 
-    amount = pyqtProperty(str, fget=getAmount, fset=setAmount)
+    amount = pyqtProperty(int, fget=getAmount, fset=setAmount)
 
 
 class MyRecurrenceBox(QHBoxLayout):
@@ -274,8 +273,8 @@ class MyItemDelegate(QItemDelegate):
         # TODO - create a link between the spinbox and a datetime.delta; possible with custom widget
         elif hasattr(widget, 'amount'):
             value = modelIndex.data(role=Qt.EditRole)
-            Lumberjack.debug('(setEditorData) - ammount = {}({})'.format(type(value), value))
-            widget.amount(value)
+            Lumberjack.debug('(setEditorData) - amount = {}({})'.format(type(value), value))
+            widget.amount = value
 
         elif hasattr(widget, 'text'):
             text = modelIndex.data()
@@ -283,6 +282,8 @@ class MyItemDelegate(QItemDelegate):
         else:
             Lumberjack.warning('(setEditorData) - NO MATCH FOUND!')
             Lumberjack.debug('(setEditorData) - mismatching widget = {}'.format(widget))
+            for attr in widget.__dict__:
+                Lumberjack.debug('(setEditorData) - widget attr = {}'.format(attr))
 
     def setModelData(self, widget, abstractItemModel, modelIndex):
         if hasattr(widget, 'currentIndex'):
@@ -294,4 +295,4 @@ class MyItemDelegate(QItemDelegate):
         elif hasattr(widget, 'text'):
             abstractItemModel.setData(modelIndex, widget.text())
         elif hasattr(widget, 'amount'):
-            abstractItemModel.setData(modelIndex, widget.amount())
+            abstractItemModel.setData(modelIndex, widget.amount)
