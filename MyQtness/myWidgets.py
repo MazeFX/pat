@@ -209,12 +209,14 @@ class MyCurrencyBox(QFrame):
         self.currencyBoxlayout.setObjectName("currencyBoxlayout")
         self.currencyLabel = QLabel('€')
         self.euroLineEdit = QLineEdit()
+        self.euroLineEdit.setText('0')
         self.euroLineEdit.setObjectName("euroLineEdit")
         euroValidator = QIntValidator()
         self.euroLineEdit.setValidator(euroValidator)
         self.euroLineEdit.setMaxLength(6)
         self.commaLabel = QLabel(',')
         self.centsLineEdit = QLineEdit()
+        self.centsLineEdit.setText('0')
         self.centsLineEdit.setObjectName("centsLineEdit")
         centsValidator = QIntValidator(0, 99)
         self.centsLineEdit.setValidator(centsValidator)
@@ -232,7 +234,6 @@ class MyCurrencyBox(QFrame):
         Lumberjack.info('< MyCurrencyBox > - -> (getAmount)')
         euros = self.euroLineEdit.text()
         cents = self.centsLineEdit.text()
-        #Lumberjack.debug('(getAmount) - breaking for traceback {}'.format(traceback))
         Lumberjack.debug('(getAmount) - euros = {}({})'.format(type(euros), euros))
         Lumberjack.debug('(getAmount) - cents = {}({})'.format(type(cents), cents))
         full_amount = euros + cents
@@ -241,6 +242,17 @@ class MyCurrencyBox(QFrame):
 
     def setAmount(self, amount):
         Lumberjack.info('< MyCurrencyBox > - -> (setAmount)')
+        Lumberjack.debug('(setAmount) - amount recieved = {}({})'.format(type(amount), amount))
+        euros = str(amount)[:-2]
+        if euros == '':
+            euros = '0'
+        cents = str(amount)[-2:]
+        if cents == '0':
+            cents = '00'
+        Lumberjack.debug('(setAmount) - euros = {}({})'.format(type(euros), euros))
+        Lumberjack.debug('(setAmount) - cents = {}({})'.format(type(cents), cents))
+        self.euroLineEdit.setText(euros)
+        self.centsLineEdit.setText(cents)
         self._amount = amount
 
     amount = pyqtProperty(int, fget=getAmount, fset=setAmount)
