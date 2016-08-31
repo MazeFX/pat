@@ -264,17 +264,20 @@ class AlchemicalTableModel(QAbstractTableModel):
         self.refresh()
 
     def headerData(self, col, orientation, role):
+        Lumberjack.info('< AlchemicalTableModel > - -> (headerData)')
         if orientation == Qt.Horizontal and role == Qt.DisplayRole:
             return QVariant(self.fields[col][0])
         return QVariant()
 
     def setFilter(self, filter):
         """Sets or clears the filter, clear the filter by setting to None"""
+        Lumberjack.info('< AlchemicalTableModel > - -> (setFilter)')
         self.filter = filter
         self.refresh()
 
     def refresh(self):
         """Recalculates, self.results and self.count"""
+        Lumberjack.info('< AlchemicalTableModel > - -> (refresh)')
 
         self.layoutAboutToBeChanged.emit()
 
@@ -297,6 +300,7 @@ class AlchemicalTableModel(QAbstractTableModel):
         self.layoutChanged.emit()
 
     def flags(self, index):
+        Lumberjack.info('< AlchemicalTableModel > - -> (flags)')
         _flags = Qt.ItemIsEnabled | Qt.ItemIsSelectable
 
         if self.sort is not None:
@@ -311,21 +315,26 @@ class AlchemicalTableModel(QAbstractTableModel):
         return _flags
 
     def supportedDropActions(self):
+        Lumberjack.info('< AlchemicalTableModel > - -> (supportedDropActions)')
         return Qt.MoveAction
 
     def dropMimeData(self, data, action, row, col, parent):
+        Lumberjack.info('< AlchemicalTableModel > - -> (dropMimeData)')
         if action != Qt.MoveAction:
             return
 
         return False
 
     def rowCount(self, parent):
+        Lumberjack.debug('< AlchemicalTableModel > - -> (rowCount)')
         return len(self.results) or 0
 
     def columnCount(self, parent):
+        Lumberjack.debug('< AlchemicalTableModel > - -> (columnCount)')
         return len(self.fields)
 
     def get_column_index(self, name):
+        Lumberjack.debug('< AlchemicalTableModel > - -> (get_column_index)')
         for x in range(len(self.fields)):
             if name == self.fields[x][2]:
                 return x
@@ -333,6 +342,7 @@ class AlchemicalTableModel(QAbstractTableModel):
         return None
 
     def data(self, index, role):
+        Lumberjack.debug('< AlchemicalTableModel > - -> (data)')
         if not index.isValid():
             return QVariant()
         elif role == Qt.TextAlignmentRole:
@@ -342,7 +352,17 @@ class AlchemicalTableModel(QAbstractTableModel):
 
         row = self.results[index.row()]
         name = self.fields[index.column()][2]
+        print(Fore.RED + 'MODEL -- Set field attr: ', self.fields[index.column()])
+        if self.fields[index.column()][3].get('type', False):
+            field_type = self.fields[index.column()][3]['type']
+            print(Fore.RED + 'field type: ', field_type)
+            if field_type == 'currency':
+                value = str(getattr(row, name))
+                value = '€ {},{}'.format(value[:-2], value[-2:])
+                return value
+
         # TODO - create function for displaying scanfile present icon.
+        # TODO - create function to display currencies.
         if '.' in name:
             foreign_column = name.split('.')
             foreign_item = getattr(row, foreign_column[0])
@@ -362,6 +382,7 @@ class AlchemicalTableModel(QAbstractTableModel):
         return str(getattr(row, name))
 
     def setData(self, index, value, role=None):
+        Lumberjack.debug('< AlchemicalTableModel > - -> (setData)')
         print(Fore.BLUE + '-- setting data for: ', index, 'with value: ', value)
         print(Fore.BLUE + '-- index column', index.column(), 'with row: ', index.row())
         row = self.results[index.row()]
@@ -389,18 +410,20 @@ class AlchemicalTableModel(QAbstractTableModel):
 
     def sort(self, col, order):
         """Sort table by given column number."""
+        Lumberjack.info('< AlchemicalTableModel > - -> (sort)')
+        # TODO - create sort for foreign key columns
         self.sort = order, col
         self.refresh()
 
     def createNewRow(self, index):
-        print('createNewRow from model is called.')
+        Lumberjack.info('< AlchemicalTableModel > - -> (createNewRow)')
         new_row = []
         for x in self.results:
             new_row.append('')
         self.results.append(new_row)
 
     def projectNewRow(self, index):
-        print(Fore.BLUE + '-- Projecting New Row --')
+        Lumberjack.info('< AlchemicalTableModel > - -> (projectNewRow)')
         print(Fore.BLUE + '-- Current results: ', self.results)
         new_object = self.model().load_dummy()
 
@@ -418,6 +441,7 @@ class AlchemicalTableModel(QAbstractTableModel):
     '''
 
     def insertRow(self, row, parent=None, *args, **kwargs):
+        Lumberjack.info('< AlchemicalTableModel > - -> (insertRow)')
         print(Fore.BLUE + '-- Projecting New Row --')
         print(Fore.BLUE + '-- Current results: ', self.results)
         print("\n\t\t ...insertRows() Starting position: '%s'" % row)
@@ -431,11 +455,13 @@ class AlchemicalTableModel(QAbstractTableModel):
         print(Fore.BLUE + '-- Current results: ', self.results)
         return True
 
-    def rollback_row(self, row):
+    def rollbackRow(self, row):
+        Lumberjack.info('< AlchemicalTableModel > - -> (rollbackRow)')
         self.results.pop()
         self.refresh()
 
     def storeRow(self, row):
+        Lumberjack.info('< AlchemicalTableModel > - -> (storeRow)')
         new_object = self.results[row]
         self.session.add(new_object)
         self.session.commit()

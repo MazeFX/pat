@@ -74,7 +74,7 @@ class BankAccountListTab(QWidget):
             [('Bank name', BankAccount.bank_name, 'bank_name', {}),
              ('User', BankAccount.user, 'user.name', {}),
              ('Account Nr.', BankAccount.account, 'account', {}),
-             ('Balance', BankAccount.balance, 'balance', {}),
+             ('Balance', BankAccount.balance, 'balance', {'type': 'currency', }),
              ('Date created', BankAccount.date_created, 'date_created', {})])
         # TODO - Create visual effect for negative balance or amount eg: green for positive, red for negative.
 

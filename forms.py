@@ -116,7 +116,7 @@ class BasicForm(QWidget, Ui_BasicForm):
                 return
             else:
                 if self.edit_mode == 'add':
-                    self.model.rollback_row(self.newRow)
+                    self.model.rollbackRow(self.newRow)
                     self.newRow = None
 
         Lumberjack.debug('(toggle_edit_mode) -  set edit mode = {}'.format(mode))
