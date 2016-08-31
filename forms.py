@@ -144,8 +144,6 @@ class BasicForm(QWidget, Ui_BasicForm):
         print(Fore.CYAN + 'New row at index: ', row)
         print(Fore.CYAN + 'mapper index: ', self.mapper.currentIndex())
         self.toggle_edit_mode(True, 'add', row)
-        print(Fore.CYAN + 'New row at index: ', row)
-        print(Fore.CYAN + 'mapper index: ', self.mapper.currentIndex())
 
     def on_edit(self):
         print(Fore.CYAN + 'Edit signal sent and recieved.')
@@ -163,13 +161,15 @@ class BasicForm(QWidget, Ui_BasicForm):
         if hasattr(self, 'save_check'):
             print(Fore.CYAN + 'Checking for onsave checks.')
             self.save_check()
-        if self.edit_mode == 'add':
+        if self.edit_mode == 'edit':
+            self.mapper.submit()
+        elif self.edit_mode == 'add':
             self.model.storeRow(self.newRow)
             # TODO - Check sql insert unnecessary
             self.mapper.submit()
             self.NewRow = None
-        if self.edit_mode == 'edit':
-            self.mapper.submit()
+            self.edit_mode = None
+
         self.toggle_edit_mode(False, None, None)
 
     def check_item_change(self):
@@ -201,6 +201,10 @@ class BasicForm(QWidget, Ui_BasicForm):
                 elif hasattr(widget, 'text'):
                     new_value = widget.text()
                     print(Fore.CYAN + '-New Widget value for: ', widget, 'with value: ', new_value)
+                elif hasattr(widget, 'amount'):
+                    new_value = widget.amount
+                    print(Fore.CYAN + '-New Widget value for: ', widget, 'with value: ', new_value)
+
 
                 if old_value == new_value:
                     print(Fore.CYAN + '++++ Matching value for: ', widget, 'with values: ', old_value, new_value)
@@ -235,6 +239,7 @@ class BasicForm(QWidget, Ui_BasicForm):
             # TODO - write cancel action: closing form and deleting projected row
             print(Fore.CYAN + 'Canceling the add action.')
             self.toggle_edit_mode(False, None, None)
+            self.mapper.setCurrentIndex(0)
         if self.edit_mode == 'edit':
             self.mapper.revert()
         
@@ -265,6 +270,7 @@ class BankAccountForm(BasicForm, Ui_BankAccountFormInsert):
         self.mapper.addMapping(self.userComboBox, 1)
         self.mapper.addMapping(self.accountLineEdit, 2)
         self.mapper.addMapping(self.balanceCurrencyEdit, 3)
+        self.mapper.setCurrentIndex(0)
 
     def set_controls(self):
         session = self.dbhelper.get_app_db_session()
@@ -304,6 +310,7 @@ class ContractForm(BasicForm, Ui_ContractFormInsert):
         self.mapper.addMapping(self.recurrenceBox, 6)
         self.mapper.addMapping(self.startDateDateEdit, 7)
         self.mapper.addMapping(self.endDateDateEdit, 8)
+        self.mapper.setCurrentIndex(0)
 
     def set_controls(self):
         session = self.dbhelper.get_app_db_session()
@@ -360,6 +367,7 @@ class EmailAddressForm(BasicForm, Ui_EmailAddressFormInsert):
     def set_mapper(self):
         self.mapper.addMapping(self.userComboBox, 0)
         self.mapper.addMapping(self.addressLineEdit, 1)
+        self.mapper.setCurrentIndex(0)
 
     def set_controls(self):
         session = self.dbhelper.get_app_db_session()
@@ -463,6 +471,7 @@ class RelationForm(BasicForm, Ui_RelationFormInsert):
         self.mapper.addMapping(self.referenceLineEdit, 2)
         self.mapper.addMapping(self.bankAccountLineEdit, 3)
         self.mapper.addMapping(self.typeComboBox, 4)
+        self.mapper.setCurrentIndex(0)
 
     def set_controls(self):
         session = self.dbhelper.get_app_db_session()
@@ -501,6 +510,7 @@ class TransactionForm(BasicForm, Ui_TransactionFormInsert):
         self.mapper.addMapping(self.paymentDateEdit, 5)
         self.mapper.addMapping(self.paymentStateCheckBox, 6)
         self.mapper.addMapping(self.debitCheckBox, 7)
+        self.mapper.setCurrentIndex(0)
         
     def set_controls(self):
         session = self.dbhelper.get_app_db_session()        
@@ -546,6 +556,7 @@ class UserForm(BasicForm, Ui_UserFormInsert):
         self.mapper.addMapping(self.nameLineEdit, 0)
         self.mapper.addMapping(self.fullnameLineEdit, 1)
         self.mapper.addMapping(self.passwordLineEdit, 2)
+        self.mapper.setCurrentIndex(0)
         
     def set_controls(self):
         self.mapper.setCurrentIndex(0)

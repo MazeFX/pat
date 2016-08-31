@@ -264,7 +264,6 @@ class AlchemicalTableModel(QAbstractTableModel):
         self.refresh()
 
     def headerData(self, col, orientation, role):
-        Lumberjack.info('< AlchemicalTableModel > - -> (headerData)')
         if orientation == Qt.Horizontal and role == Qt.DisplayRole:
             return QVariant(self.fields[col][0])
         return QVariant()
@@ -300,7 +299,7 @@ class AlchemicalTableModel(QAbstractTableModel):
         self.layoutChanged.emit()
 
     def flags(self, index):
-        Lumberjack.info('< AlchemicalTableModel > - -> (flags)')
+        Lumberjack.debug('< AlchemicalTableModel > - -> (flags)')
         _flags = Qt.ItemIsEnabled | Qt.ItemIsSelectable
 
         if self.sort is not None:
@@ -352,11 +351,12 @@ class AlchemicalTableModel(QAbstractTableModel):
 
         row = self.results[index.row()]
         name = self.fields[index.column()][2]
-        print(Fore.RED + 'MODEL -- Set field attr: ', self.fields[index.column()])
+        # IDEA  - This could be done better. Need to ponder a bit..
         if self.fields[index.column()][3].get('type', False):
             field_type = self.fields[index.column()][3]['type']
-            print(Fore.RED + 'field type: ', field_type)
             if field_type == 'currency':
+                if role == Qt.EditRole:
+                    return getattr(row, name)
                 value = str(getattr(row, name))
                 value = '€ {},{}'.format(value[:-2], value[-2:])
                 return value
@@ -387,16 +387,8 @@ class AlchemicalTableModel(QAbstractTableModel):
         print(Fore.BLUE + '-- index column', index.column(), 'with row: ', index.row())
         row = self.results[index.row()]
         name = self.fields[index.column()][2]
-
         if '.' in name:
             name = name.split('.')[0]
-
-        if index.column() == 5:
-            print(Fore.BLUE + '====== setting the date =======')
-            print(Fore.BLUE + '-- sending value : ', value)
-            print(Fore.BLUE + '-- with type : ', type(value))
-            print(Fore.BLUE + '-- While current: ', getattr(row, name))
-            print(Fore.BLUE + '-- with type : ', type(getattr(row, name)))
 
         try:
             setattr(row, name, value)
@@ -421,13 +413,6 @@ class AlchemicalTableModel(QAbstractTableModel):
         for x in self.results:
             new_row.append('')
         self.results.append(new_row)
-
-    def projectNewRow(self, index):
-        Lumberjack.info('< AlchemicalTableModel > - -> (projectNewRow)')
-        print(Fore.BLUE + '-- Current results: ', self.results)
-        new_object = self.model().load_dummy()
-
-
 
     '''
     def removeRow(self, row, parent=None, *args, **kwargs):

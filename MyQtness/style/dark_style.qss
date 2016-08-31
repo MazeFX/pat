@@ -1229,6 +1229,7 @@ MyDragDropBox#scanFileDrop
 
 #DropLabel {
     background-color: #232629;
+    font-family: 'Ethnocentric Rg';
 }
 
 QLabel#Header1 {
