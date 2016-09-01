@@ -49,7 +49,6 @@ def load_stylesheet_pyqt5():
     # Smart import of the rc file
 
     f = QFile(":dark_style.qss")
-    print('Loaded my own custom style sheet', f)
     if not f.exists():
         print('Custom stylesheet not present')
         Lumberjack.error("Unable to load stylesheet, file not found in "
@@ -58,9 +57,7 @@ def load_stylesheet_pyqt5():
     else:
         f.open(QFile.ReadOnly | QFile.Text)
         ts = QTextStream(f)
-        print('StyleSheet is now returning as: ', ts)
         stylesheet = ts.readAll()
-        #print('StyleSheet is now returning as: ', stylesheet)
         if platform.system().lower() == 'darwin':  # see issue #12 on github
             mac_fix = '''
             QDockWidget::title
@@ -81,7 +78,6 @@ def set_window_style(window):
     # Smart import of the rc file
 
     f = QFile(":dark_style.qss")
-    print('Loaded my own custom style sheet', f)
     if not f.exists():
         print('Custom stylesheet not present')
         Lumberjack.error("Unable to load stylesheet, file not found in "
@@ -90,9 +86,7 @@ def set_window_style(window):
     else:
         f.open(QFile.ReadOnly | QFile.Text)
         ts = QTextStream(f)
-        print('StyleSheet is now returning as: ', ts)
         stylesheet = ts.readAll()
-        # print('StyleSheet is now returning as: ', stylesheet)
         if platform.system().lower() == 'darwin':  # see issue #12 on github
             mac_fix = '''
             QDockWidget::title

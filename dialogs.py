@@ -181,34 +181,32 @@ class CloseDialog(QDialog, Ui_CloseDialog):
 
 
 class DeleteDialog(QDialog, Ui_DeleteDialog):
-    Rejected, Minimize, Exit = range(0, 3)
+    Rejected, Accepted = range(0, 2)
 
     def __init__(self):
         QDialog.__init__(self)
+        Lumberjack.info('spawning a << DeleteDialog >>')
         self.setupUi(self)
 
         style.set_window_style(self)
 
-        self.buttonBox.addButton('Minimize', QDialogButtonBox.YesRole)
-        self.buttonBox.addButton('Exit', QDialogButtonBox.AcceptRole)
+        self.buttonBox.addButton('Delete', QDialogButtonBox.AcceptRole)
         button_list = self.buttonBox.buttons()
         for button in button_list:
             button.setFocusPolicy(Qt.NoFocus)
 
         self.buttonBox.rejected.connect(self.on_reject)
-        self.buttonBox.clicked.connect(self.on_click)
+        self.buttonBox.accepted.connect(self.on_accept)
 
-    def on_click(self, *args):
-        button_role = self.buttonBox.buttonRole(args[0])
-        if button_role == 5:
-            self.done(self.Minimize)
-        elif button_role == 0:
-            self.done(self.Exit)
+    def on_accept(self):
+        Lumberjack.info('< DeleteDialog > - -> (on_accept)')
+        self.done(self.Accepted)
 
     def on_reject(self):
+        Lumberjack.info('< DeleteDialog > - -> (on_reject)')
         self.done(self.Rejected)
 
-        
+
 class TerminationDialog(QDialog, Ui_TerminationDialog):
 
     def __init__(self):

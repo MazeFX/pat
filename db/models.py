@@ -370,7 +370,6 @@ class AlchemicalTableModel(QAbstractTableModel):
                 print('TableModel - data -- EditRole for foreignkey with index: ', index)
                 return foreign_item
             else:
-                print('TableModel - get attr: ', foreign_item, ', ', foreign_column[1])
                 if foreign_item is None:
                     return None
                 return getattr(foreign_item, foreign_column[1])

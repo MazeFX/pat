@@ -30,7 +30,7 @@ from MyQtness.ui_relation_form import Ui_RelationFormInsert
 from MyQtness.ui_user_form import Ui_UserFormInsert
 from MyQtness.ui_transaction_form import Ui_TransactionFormInsert
 from MyQtness.myWidgets import MyItemDelegate
-from dialogs import SaveDialog
+from dialogs import SaveDialog, DeleteDialog
 
 import logging
 Lumberjack = logging.getLogger(__name__)
@@ -159,6 +159,14 @@ class BasicForm(QWidget, Ui_BasicForm):
 
     def on_delete(self):
         Lumberjack.info('< BasicForm > - -> (on_delete)')
+        delete_dialog = DeleteDialog()
+        result = delete_dialog.exec_()
+        if result == DeleteDialog.Accepted:
+            Lumberjack.debug('(on_delete) - Deleting current selected row : {}'. format(self.mapper.currentIndex()))
+            if self.tableBuddy:
+                self.tableBuddy.removeSelection()
+
+
 
     def on_save(self):
         print(Fore.CYAN + 'Save signal sent and recieved.')
