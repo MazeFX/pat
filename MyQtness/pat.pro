@@ -30,6 +30,7 @@ FORMS    += ui/basic_form.ui \
     ui/home_tab.ui \
     ui/settings_dialog.ui \
     ui/save_dialog.ui \
+    ui/delete_dialog.ui \
     ui/close_dialog.ui \
     ui/termination_dialog.ui \
     ui/custom_widget_test.ui

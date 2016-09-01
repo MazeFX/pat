@@ -32,6 +32,6 @@ class Ui_CloseDialog(object):
 
     def retranslateUi(self, CloseDialog):
         _translate = QtCore.QCoreApplication.translate
-        CloseDialog.setWindowTitle(_translate("CloseDialog", "Dialog"))
+        CloseDialog.setWindowTitle(_translate("CloseDialog", "Close PAT"))
         self.TextLabel.setText(_translate("CloseDialog", "<html><head/><body><p>You are about to close PAT.<br/>Do you want to exit or minimize to tray?</p></body></html>"))
 

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# form implementation generated from reading ui file 'C:\PDE\projects\qt\pat\MyQtness\ui\settings_dialog.ui'
+# Form implementation generated from reading ui file 'C:\PDE\projects\qt\pat\MyQtness\ui\settings_dialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.7
 #
@@ -38,6 +38,6 @@ class Ui_SettingsDialog(object):
 
     def retranslateUi(self, SettingsDialog):
         _translate = QtCore.QCoreApplication.translate
-        SettingsDialog.setWindowTitle(_translate("SettingsDialog", "Dialog"))
+        SettingsDialog.setWindowTitle(_translate("SettingsDialog", "Settings"))
         self.currentDatabaseLabel.setText(_translate("SettingsDialog", "Current database"))
 

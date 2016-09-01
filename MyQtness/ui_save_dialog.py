@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# form implementation generated from reading ui file 'C:\PDE\projects\qt\pat\MyQtness\ui\save_dialog.ui'
+# Form implementation generated from reading ui file 'C:\PDE\projects\qt\pat\MyQtness\ui\save_dialog.ui'
 #
 # Created by: PyQt5 UI code generator 5.7
 #
@@ -35,6 +35,6 @@ class Ui_SaveDialog(object):
 
     def retranslateUi(self, SaveDialog):
         _translate = QtCore.QCoreApplication.translate
-        SaveDialog.setWindowTitle(_translate("SaveDialog", "Dialog"))
+        SaveDialog.setWindowTitle(_translate("SaveDialog", "Save changes"))
         self.TextLabel.setText(_translate("SaveDialog", "You have unsaved changes, what do you want to do?"))
 

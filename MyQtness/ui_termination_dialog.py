@@ -55,7 +55,7 @@ class Ui_TerminationDialog(object):
 
     def retranslateUi(self, TerminationDialog):
         _translate = QtCore.QCoreApplication.translate
-        TerminationDialog.setWindowTitle(_translate("TerminationDialog", "Dialog"))
+        TerminationDialog.setWindowTitle(_translate("TerminationDialog", "Error encountered!"))
         self.label.setText(_translate("TerminationDialog", "The application has encountered a serious error!"))
         self.label_2.setText(_translate("TerminationDialog", "Please contact your local administrator to address the situation. Please note time and date for referral to stored logfiles."))
         self.label_3.setText(_translate("TerminationDialog", "The application will now terminate to prevent damage to the database. It is then safe to restart."))

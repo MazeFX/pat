@@ -52,7 +52,7 @@ class MainApp(QMainWindow, Ui_MainWindow):
 
         self.setupUi(self)
         self.iconize_controls()
-        self.setWindowIcon(QIcon(':/app_icons/rc/PAT_icon.png'))
+        self.load_styling()
 
         self.tabWidget = QTabWidget(self.centralwidget)
         self.tabWidget.setTabsClosable(True)
@@ -226,11 +226,12 @@ class MainApp(QMainWindow, Ui_MainWindow):
     def load_settings(self):
         self.settings = QSettings()
         int_value = self.settings.value('db_type', type=int)
+        print(Fore.MAGENTA + "load choosen database setting: %s" % repr(int_value))
 
-        # TODO - possible setting for style setting
+    def load_styling(self):
+        self.setWindowIcon(QIcon(':/app_icons/rc/PAT_icon.png'))
         stylesheet = style.load_stylesheet_pyqt5()
         self.setStyleSheet(stylesheet)
-        print(Fore.MAGENTA + "load choosen database setting: %s" % repr(int_value))
 
     def closeEvent(self, event):
         print(Fore.MAGENTA + "User has clicked the red x on the main window")

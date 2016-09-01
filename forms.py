@@ -90,7 +90,6 @@ class BasicForm(QWidget, Ui_BasicForm):
 
     def set_mapper_index_from_selection(self, QItemSelection, QItemSelection_1):
         Lumberjack.info('< BasicForm > - -> (set_mapper_index_from_selection)')
-        print('Setting letter form mapper index: ', QItemSelection, QItemSelection_1)
         if QItemSelection.isEmpty():
             return
         if self.edit_mode:
@@ -99,7 +98,6 @@ class BasicForm(QWidget, Ui_BasicForm):
         selected_index = QItemSelection.indexes()
         row_index = selected_index[0].row()
         self.mapper.setCurrentIndex(row_index)
-        print('Setting letter form mapper index: ', row_index)
 
     def set_controls(self):
         pass
@@ -151,7 +149,6 @@ class BasicForm(QWidget, Ui_BasicForm):
         print(Fore.CYAN + 'mapper index: ', self.mapper.currentIndex())
         self.toggle_edit_mode(True, 'add', row)
 
-
     def on_edit(self):
         print(Fore.CYAN + 'Edit signal sent and recieved.')
         print(Fore.CYAN + 'mapper index: ', self.mapper.currentIndex())
@@ -161,7 +158,7 @@ class BasicForm(QWidget, Ui_BasicForm):
             self.toggle_edit_mode(True, 'edit', self.mapper.currentIndex())
 
     def on_delete(self):
-        print(Fore.CYAN + 'Delete signal sent and recieved.')
+        Lumberjack.info('< BasicForm > - -> (on_delete)')
 
     def on_save(self):
         print(Fore.CYAN + 'Save signal sent and recieved.')
