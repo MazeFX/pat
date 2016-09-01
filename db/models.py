@@ -413,17 +413,6 @@ class AlchemicalTableModel(QAbstractTableModel):
             new_row.append('')
         self.results.append(new_row)
 
-    '''
-    def removeRow(self, row, parent=None, *args, **kwargs):
-        print("\n\t\t ...removeRows() Starting position: '%s'" % row)
-        self.beginRemoveRows()
-        self.beginRemoveRows(QModelIndex(), position, position + rows - 1)
-        self.items = self.items[:position] + self.items[position + rows:]
-        self.endRemoveRows()
-
-        return True
-    '''
-
     def insertRow(self, row, parent=None, *args, **kwargs):
         Lumberjack.info('< AlchemicalTableModel > - -> (insertRow)')
         print(Fore.BLUE + '-- Projecting New Row --')
@@ -450,14 +439,16 @@ class AlchemicalTableModel(QAbstractTableModel):
         self.session.add(new_object)
         self.session.commit()
 
-        '''
-        for x in range(len(self.fields)):
-            setattr(new_object, self.fields[x][2], self.result[index][x])
-        print('newobject = ', new_object)
-
-        self.session.add(new_object)
+    def removeRow(self, row, parent=None, *args, **kwargs):
+        Lumberjack.info('< AlchemicalTableModel > - -> (removeRow)')
+        print("\n\t\t ...removeRows() Starting position: '%s'" % row)
+        self.beginRemoveRows(QModelIndex(), row, row)
+        item = self.results[row]
+        self.session.delete(item)
         self.session.commit()
+        self.endRemoveRows()
         self.refresh()
-        '''
+
+        return True
 
 

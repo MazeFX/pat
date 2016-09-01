@@ -163,8 +163,10 @@ class BasicForm(QWidget, Ui_BasicForm):
         result = delete_dialog.exec_()
         if result == DeleteDialog.Accepted:
             Lumberjack.debug('(on_delete) - Deleting current selected row : {}'. format(self.mapper.currentIndex()))
+            self.model.removeRow(self.mapper.currentIndex())
             if self.tableBuddy:
                 self.tableBuddy.removeSelection()
+            self.mapper.setCurrentIndex(0)
 
 
 
