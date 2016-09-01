@@ -12,6 +12,7 @@ QtAwesome==0.3.3
 
 # SQLite database ORM
 sqlAlchemy==1.0.14
+alembic==0.8.7
 
 # Fancy Print
 colorama==0.3.7

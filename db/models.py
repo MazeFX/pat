@@ -64,7 +64,9 @@ class Contract(Base):
     letter_id = Column(Integer, ForeignKey('letters.id'), nullable=False)
     reference = Column(String(250))
     email_id = Column(Integer, ForeignKey('e_addresses.id'), nullable=False)
-    amount = Column(Integer)
+    contract_type = Column(Integer, ForeignKey('types.id'))
+    total_amount = Column(Integer)
+    recur_amount = Column(Integer)
     recurrence = Column(DateTime)
     start_date = Column(Date)
     end_date = Column(Date)
@@ -206,6 +208,7 @@ class Type(Base):
 
     id = Column(Integer, primary_key=True)
     letter = Column(String)
+    contract = Column(String)
     relation = Column(String)
     date_created = Column(DateTime, default=datetime.datetime.now)
 
