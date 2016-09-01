@@ -16,10 +16,10 @@ from PyQt5.QtCore import QSettings
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QDialog, QMessageBox, QDialogButtonBox
 
-import qdarkstyle
 import qtawesome as qta
 
 from auth import Auth
+from MyQtness import style
 from MyQtness.ui_login_dialog import Ui_LoginDialog
 from MyQtness.ui_settings_dialog import Ui_SettingsDialog
 from MyQtness.ui_save_dialog import Ui_SaveDialog
@@ -55,9 +55,7 @@ class LoginDialog(QDialog, Ui_LoginDialog):
         Lumberjack.info('spawning a << LoginDialog >>')
         self.setupUi(self)
 
-        # TODO - Change the stylesheet to local version
-        stylesheet = qdarkstyle.load_stylesheet_pyqt5()
-        self.setStyleSheet(stylesheet)
+        style.set_window_style(self)
 
         self.buttonBox.accepted.connect(self.on_accept)
         self.buttonBox.rejected.connect(self.on_reject)
@@ -91,9 +89,7 @@ class SettingsDialog(QDialog, Ui_SettingsDialog):
 
         self.load_settings()
 
-        # TODO - Change the stylesheet to local version
-        stylesheet = qdarkstyle.load_stylesheet_pyqt5()
-        self.setStyleSheet(stylesheet)
+        style.set_window_style(self)
 
         self.buttonBox.accepted.connect(self.on_accept)
         self.buttonBox.rejected.connect(self.on_reject)
@@ -128,9 +124,8 @@ class SaveDialog(QDialog, Ui_SaveDialog):
         Lumberjack.info('spawning a << SaveDialog >>')
         self.setupUi(self)
 
-        # TODO - Change the stylesheet to local version
-        stylesheet = qdarkstyle.load_stylesheet_pyqt5()
-        self.setStyleSheet(stylesheet)
+        style.set_window_style(self)
+
         button_list = self.buttonBox.buttons()
         for button in button_list:
             button.setFocusPolicy(Qt.NoFocus)
@@ -163,9 +158,7 @@ class CloseDialog(QDialog, Ui_CloseDialog):
         QDialog.__init__(self)
         self.setupUi(self)
 
-        # TODO - Change the stylesheet to local version
-        stylesheet = qdarkstyle.load_stylesheet_pyqt5()
-        self.setStyleSheet(stylesheet)
+        style.set_window_style(self)
 
         self.buttonBox.addButton('Minimize', QDialogButtonBox.YesRole)
         self.buttonBox.addButton('Exit', QDialogButtonBox.AcceptRole)
@@ -194,9 +187,7 @@ class DeleteDialog(QDialog, Ui_DeleteDialog):
         QDialog.__init__(self)
         self.setupUi(self)
 
-        # TODO - Change the stylesheet to local version
-        stylesheet = qdarkstyle.load_stylesheet_pyqt5()
-        self.setStyleSheet(stylesheet)
+        style.set_window_style(self)
 
         self.buttonBox.addButton('Minimize', QDialogButtonBox.YesRole)
         self.buttonBox.addButton('Exit', QDialogButtonBox.AcceptRole)
@@ -216,6 +207,8 @@ class DeleteDialog(QDialog, Ui_DeleteDialog):
 
     def on_reject(self):
         self.done(self.Rejected)
+
+        
 class TerminationDialog(QDialog, Ui_TerminationDialog):
 
     def __init__(self):
@@ -223,9 +216,8 @@ class TerminationDialog(QDialog, Ui_TerminationDialog):
         Lumberjack.info('spawning a << TerminationDialog >>')
         self.setupUi(self)
 
-        # TODO - Make styling and other window related layout uniform
-        stylesheet = qdarkstyle.load_stylesheet_pyqt5()
-        self.setStyleSheet(stylesheet)
+        style.set_window_style(self)
+
         errorIcon = qta.icon('fa.times-circle', color='red')
         errorPixmap = errorIcon.pixmap(50, 50)
         self.iconContainer.setPixmap(errorPixmap)

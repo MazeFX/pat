@@ -28,79 +28,32 @@ Initialise the QDarkStyleSheet module when used with python.
 This modules provides a function to transparently load the stylesheets
 with the correct rc file.
 """
-import logging
+
+
+
 import platform
 
+from PyQt5.QtGui import QIcon
+from PyQt5.QtCore import QFile, QTextStream
 
-__version__ = "2.2.1"
+import MyQtness.style.style_rc
 
-
-def _logger():
-    return logging.getLogger('qdarkstyle')
-
-
-def load_stylesheet(pyside=True):
-    """
-    Loads the stylesheet. Takes care of importing the rc module.
-
-    :param pyside: True to load the pyside rc file, False to load the PyQt rc file
-
-    :return the stylesheet string
-    """
-    # Smart import of the rc file
-    if pyside:
-        import qdarkstyle.pyside_style_rc
-    else:
-        import qdarkstyle.pyqt_style_rc
-
-    # Load the stylesheet content from resources
-    if not pyside:
-        from PyQt4.QtCore import QFile, QTextStream
-    else:
-        from PySide.QtCore import QFile, QTextStream
-
-    f = QFile(":qdarkstyle/style.qss")
-    if not f.exists():
-        _logger().error("Unable to load stylesheet, file not found in "
-                        "resources")
-        return ""
-    else:
-        f.open(QFile.ReadOnly | QFile.Text)
-        ts = QTextStream(f)
-        stylesheet = ts.readAll()
-        if platform.system().lower() == 'darwin':  # see issue #12 on github
-            mac_fix = '''
-            QDockWidget::title
-            {
-                background-color: #31363b;
-                text-align: center;
-                height: 12px;
-            }
-            '''
-            stylesheet += mac_fix
-        return stylesheet
+import logging
+Lumberjack = logging.getLogger(__name__)
 
 
 def load_stylesheet_pyqt5():
     """
-    Loads the stylesheet for use in a pyqt5 application.
-
-    :param pyside: True to load the pyside rc file, False to load the PyQt rc file
-
     :return the stylesheet string
     """
     # Smart import of the rc file
-    import MyQtness.style.style_rc
-
-    # Load the stylesheet content from resources
-    from PyQt5.QtCore import QFile, QTextStream
 
     f = QFile(":dark_style.qss")
     print('Loaded my own custom style sheet', f)
     if not f.exists():
         print('Custom stylesheet not present')
-        _logger().error("Unable to load stylesheet, file not found in "
-                        "resources")
+        Lumberjack.error("Unable to load stylesheet, file not found in "
+                         "resources")
         return ""
     else:
         f.open(QFile.ReadOnly | QFile.Text)
@@ -119,3 +72,36 @@ def load_stylesheet_pyqt5():
             '''
             stylesheet += mac_fix
         return stylesheet
+
+
+def set_window_style(window):
+    """
+    :return the stylesheet string
+    """
+    # Smart import of the rc file
+
+    f = QFile(":dark_style.qss")
+    print('Loaded my own custom style sheet', f)
+    if not f.exists():
+        print('Custom stylesheet not present')
+        Lumberjack.error("Unable to load stylesheet, file not found in "
+                         "resources")
+        return ""
+    else:
+        f.open(QFile.ReadOnly | QFile.Text)
+        ts = QTextStream(f)
+        print('StyleSheet is now returning as: ', ts)
+        stylesheet = ts.readAll()
+        # print('StyleSheet is now returning as: ', stylesheet)
+        if platform.system().lower() == 'darwin':  # see issue #12 on github
+            mac_fix = '''
+            QDockWidget::title
+            {
+                background-color: #31363b;
+                text-align: center;
+                height: 12px;
+            }
+            '''
+            stylesheet += mac_fix
+        window.setWindowIcon(QIcon(':/app_icons/rc/PAT_icon.png'))
+        window.setStyleSheet(stylesheet)

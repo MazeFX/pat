@@ -229,9 +229,7 @@ class MainApp(QMainWindow, Ui_MainWindow):
         print(Fore.MAGENTA + "load choosen database setting: %s" % repr(int_value))
 
     def load_styling(self):
-        self.setWindowIcon(QIcon(':/app_icons/rc/PAT_icon.png'))
-        stylesheet = style.load_stylesheet_pyqt5()
-        self.setStyleSheet(stylesheet)
+        style.set_window_style(self)
 
     def closeEvent(self, event):
         print(Fore.MAGENTA + "User has clicked the red x on the main window")
