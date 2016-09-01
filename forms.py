@@ -88,12 +88,15 @@ class BasicForm(QWidget, Ui_BasicForm):
     def set_mapper(self):
         pass
 
-    def set_mapper_index_from_selection(self, *args):
-        print('Setting letter form mapper index: ', args)
+    def set_mapper_index_from_selection(self, QItemSelection, QItemSelection_1):
+        Lumberjack.info('< BasicForm > - -> (set_mapper_index_from_selection)')
+        print('Setting letter form mapper index: ', QItemSelection, QItemSelection_1)
+        if QItemSelection.isEmpty():
+            return
         if self.edit_mode:
             self.toggle_edit_mode(False, None, None)
 
-        selected_index = args[0].indexes()
+        selected_index = QItemSelection.indexes()
         row_index = selected_index[0].row()
         self.mapper.setCurrentIndex(row_index)
         print('Setting letter form mapper index: ', row_index)
@@ -136,7 +139,9 @@ class BasicForm(QWidget, Ui_BasicForm):
     def on_add(self):
         Lumberjack.info('< BasicForm > - -> (on_add)')
         # TODO - when adding new item remove current list selection
-        print(Fore.CYAN + 'Add signal sent and recieved.')
+        if self.tableBuddy:
+            self.tableBuddy.removeSelection()
+
         row = self.model.rowCount(None)
         self.newRow = row
         self.model.insertRow(row)
@@ -145,8 +150,7 @@ class BasicForm(QWidget, Ui_BasicForm):
         print(Fore.CYAN + 'New row at index: ', row)
         print(Fore.CYAN + 'mapper index: ', self.mapper.currentIndex())
         self.toggle_edit_mode(True, 'add', row)
-        if self.tableBuddy:
-            self.tableBuddy.removeSelection()
+
 
     def on_edit(self):
         print(Fore.CYAN + 'Edit signal sent and recieved.')

@@ -68,12 +68,15 @@ class MyTableView(QTableView):
     def selectionChanged(self, QItemSelection, QItemSelection_1):
         Lumberjack.info('< MyTableView > - -> (selectionChanged)')
         super(MyTableView, self).selectionChanged(QItemSelection, QItemSelection_1)
+        Lumberjack.info('(selectionChanged) - Selection = {}'.format(QItemSelection))
+        Lumberjack.info('(selectionChanged) - Selection is empty = {}'.format(QItemSelection.isEmpty()))
         if not QItemSelection.isEmpty():
             self.setCurrentRow(QItemSelection.indexes()[0].row())
 
     def removeSelection(self):
-        Lumberjack.info('< MyTableView > - -> (selectionChanged)')
+        Lumberjack.info('< MyTableView > - -> (removeSelection)')
         self.clearSelection()
+        self._currentSelectedRow = None
 
     def setCurrentRow(self, index):
         self._currentSelectedRow = index
