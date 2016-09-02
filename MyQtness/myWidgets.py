@@ -16,10 +16,10 @@ import os
 import operator
 import datetime
 
-from PyQt5.QtGui import QFont, QPainter, QIntValidator
-from PyQt5.QtCore import Qt, pyqtProperty, pyqtSignal, QDate
+from PyQt5.QtGui import  QFont, QPainter, QIntValidator
+from PyQt5.QtCore import QCoreApplication, Qt, pyqtProperty, pyqtSignal, QDate
 from PyQt5.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout, QSpacerItem, QSizePolicy, QTableView, QAbstractItemView, \
-    QFrame, QComboBox, QLineEdit, QLabel, QItemDelegate, QStyleOption, QStyle
+    QFrame, QComboBox, QLineEdit, QLabel, QItemDelegate, QRadioButton, QSpinBox, QStyleOption, QStyle
 
 import logging
 Lumberjack = logging.getLogger(__name__)
@@ -265,6 +265,40 @@ class MyRecurrenceBox(QFrame):
     def __init__(self, *args):
         super(MyRecurrenceBox, self).__init__(*args)
         Lumberjack.info('spawning a << MyRecurrenceBox >>')
+        _translate = QCoreApplication.translate
+
+        self.setFrameShape(QFrame.StyledPanel)
+        self.setFrameShadow(QFrame.Raised)
+        self.verticalLayout = QVBoxLayout(self)
+        self.verticalLayout.setObjectName("verticalLayout")
+
+        self.spinBox = QSpinBox(self)
+        self.spinBox.setObjectName("spinBox")
+        self.verticalLayout.addWidget(self.spinBox)
+
+        self.horizontalLayout_2 = QHBoxLayout()
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+
+        self.dailyRadioButton = QRadioButton(self)
+        self.dailyRadioButton.setObjectName("dailyRadioButton")
+        self.horizontalLayout_2.addWidget(self.dailyRadioButton)
+        self.dailyRadioButton.setText(_translate("Form", "Days"))
+
+        self.weeklyRadioButton = QRadioButton(self)
+        self.weeklyRadioButton.setObjectName("weeklyRadioButton")
+        self.horizontalLayout_2.addWidget(self.weeklyRadioButton)
+        self.weeklyRadioButton.setText(_translate("Form", "Weeks"))
+
+        self.monthlyRadioButton = QRadioButton(self)
+        self.monthlyRadioButton.setObjectName("monthlyRadioButton")
+        self.horizontalLayout_2.addWidget(self.monthlyRadioButton)
+        self.monthlyRadioButton.setText(_translate("Form", "Months"))
+
+        self.yearlyRadioButton = QRadioButton(self)
+        self.yearlyRadioButton.setObjectName("yearlyRadioButton")
+        self.horizontalLayout_2.addWidget(self.yearlyRadioButton)
+        self.verticalLayout.addLayout(self.horizontalLayout_2)
+        self.yearlyRadioButton.setText(_translate("Form", "Years"))
 
 
 class MyItemDelegate(QItemDelegate):

@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_BasicForm(object):
     def setupUi(self, BasicForm):
         BasicForm.setObjectName("BasicForm")
-        BasicForm.resize(320, 559)
+        BasicForm.resize(317, 559)
         BasicForm.setMaximumSize(QtCore.QSize(350, 16777215))
         BasicForm.setStyleSheet("")
         self.verticalLayout = QtWidgets.QVBoxLayout(BasicForm)

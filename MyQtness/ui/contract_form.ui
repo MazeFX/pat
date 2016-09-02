@@ -204,8 +204,15 @@
      </property>
     </widget>
    </item>
-   <item row="10" column="1">
-    <widget class="MyRecurrenceBox" name="recurrenceBox">
+   <item row="12" column="0">
+    <widget class="QLabel" name="recurAmountLabel">
+     <property name="text">
+      <string>Recurring amount</string>
+     </property>
+    </widget>
+   </item>
+   <item row="12" column="1">
+    <widget class="MyCurrencyBox" name="recurAmountCurrencyEdit">
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -214,15 +221,22 @@
      </property>
     </widget>
    </item>
-   <item row="11" column="0">
-    <widget class="QLabel" name="recurAmountLabel">
+   <item row="10" column="1">
+    <widget class="QCheckBox" name="recurrenceCheckBox">
      <property name="text">
-      <string>Recurring amount</string>
+      <string/>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="0">
+    <widget class="QLabel" name="repeatLabel">
+     <property name="text">
+      <string>Repeat every:</string>
      </property>
     </widget>
    </item>
    <item row="11" column="1">
-    <widget class="MyCurrencyBox" name="recurAmountCurrencyEdit">
+    <widget class="MyRecurrenceBox" name="recurrenceBox">
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>

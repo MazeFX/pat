@@ -14,7 +14,7 @@ Python Test docstring.
 import sys
 
 from PyQt5.QtGui import QRegExpValidator
-from PyQt5.QtCore import QCoreApplication, Qt, QDate, QModelIndex, QRegExp
+from PyQt5.QtCore import QCoreApplication, Qt, QDate, QModelIndex, QRegExp, QSize
 from PyQt5.QtWidgets import QApplication, QWidget, QDataWidgetMapper, QPushButton, QFormLayout
 
 from db.models import AlchemicalTableModel, BankAccount, Contract, EmailAddress, \
@@ -31,6 +31,8 @@ from MyQtness.ui_user_form import Ui_UserFormInsert
 from MyQtness.ui_transaction_form import Ui_TransactionFormInsert
 from MyQtness.myWidgets import MyItemDelegate
 from dialogs import SaveDialog, DeleteDialog
+
+import qtawesome as qta
 
 import logging
 Lumberjack = logging.getLogger(__name__)
@@ -303,6 +305,7 @@ class ContractForm(BasicForm, Ui_ContractFormInsert):
         super(ContractForm, self).__init__(*args)
         Ui_ContractFormInsert.setupUi(self, self.FormContainer)
         Ui_ContractFormInsert.retranslateUi(self, self.FormContainer)
+        self.setMaximumSize(QSize(450, 16777215))
 
         for x in range(self.formLayout.rowCount()):
             widget = self.formLayout.itemAt(x, QFormLayout.FieldRole)
@@ -365,6 +368,8 @@ class ContractForm(BasicForm, Ui_ContractFormInsert):
         self.letterComboBox.setModel(letter_model)
         self.emailComboBox.setModel(email_model)
         self.contractTypeComboBox.setModel(type_model)
+        recurIcon = qta.icon('fa.refresh', color='white')
+        self.recurrenceCheckBox.setIcon(recurIcon)
 
         self.toggle_edit_mode(False, None, None)
 
