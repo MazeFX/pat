@@ -64,7 +64,7 @@ class Contract(Base):
     letter_id = Column(Integer, ForeignKey('letters.id'), nullable=False)
     reference = Column(String(250))
     email_id = Column(Integer, ForeignKey('e_addresses.id'), nullable=False)
-    contract_type = Column(Integer, ForeignKey('types.id'))
+    contract_type_id = Column(Integer, ForeignKey('types.id'))
     total_amount = Column(Integer)
     recur_amount = Column(Integer)
     recurrence = Column(DateTime)
@@ -77,6 +77,7 @@ class Contract(Base):
     account = relationship('BankAccount', foreign_keys=[account_id])
     letter = relationship('Letter', foreign_keys=[letter_id])
     email = relationship('EmailAddress', foreign_keys=[email_id])
+    contract_type = relationship('Type', foreign_keys=[contract_type_id])
 
     def __repr__(self):
         return "<Contract(id= '%s', relation='%s', reference='%s')>" % (
