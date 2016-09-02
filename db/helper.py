@@ -108,16 +108,16 @@ class DbHelper(object):
         session = DBSession()
 
         # Insert types into db
-        type_list = [['Appointment', 'Bank'],
-                     ['Bill', 'Employer'],
-                     ['Contract', 'Housing'],
-                     ['Information', 'Insurance'],
-                     [None, 'IRS'],
-                     [None, 'Medical'],
-                     [None, 'Shop'],
-                     [None, 'Subscription']]
+        type_list = [['Appointment', 'Job contract', 'Bank'],
+                     ['Bill', 'Insurance', 'Employer'],
+                     ['Contract', 'Loan', 'Housing'],
+                     ['Information', None, 'Insurance'],
+                     [None, None, 'IRS'],
+                     [None, None, 'Medical'],
+                     [None, None, 'Shop'],
+                     [None, None, 'Subscription']]
         for type in type_list:
-            new_type = Type(letter=type[0], relation=type[1])
+            new_type = Type(letter=type[0], contract=type[1], relation=type[2])
             session.add(new_type)
 
         session.commit()

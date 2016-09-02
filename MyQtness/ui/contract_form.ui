@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>286</width>
-    <height>314</height>
+    <height>351</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -85,23 +85,40 @@
     <widget class="MyComboBox" name="emailComboBox"/>
    </item>
    <item row="6" column="0">
-    <widget class="QLabel" name="amountLabel">
+    <widget class="QLabel" name="contractTypeLabel">
      <property name="text">
-      <string>Amount</string>
+      <string>Contract type</string>
      </property>
     </widget>
    </item>
    <item row="6" column="1">
-    <widget class="MyCurrencyBox" name="amountLineEdit"/>
+    <widget class="MyComboBox" name="contractTypeComboBox"/>
    </item>
    <item row="7" column="0">
+    <widget class="QLabel" name="totalAmountLabel">
+     <property name="text">
+      <string>Total amount</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="1">
+    <widget class="MyCurrencyBox" name="totalAmountCurrencyEdit">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="0">
     <widget class="QLabel" name="startDateLabel">
      <property name="text">
       <string>Date</string>
      </property>
     </widget>
    </item>
-   <item row="7" column="1">
+   <item row="8" column="1">
     <widget class="QDateEdit" name="startDateDateEdit">
      <property name="enabled">
       <bool>true</bool>
@@ -137,14 +154,14 @@
      </property>
     </widget>
    </item>
-   <item row="8" column="0">
+   <item row="9" column="0">
     <widget class="QLabel" name="endDateLabel">
      <property name="text">
       <string>End Date</string>
      </property>
     </widget>
    </item>
-   <item row="8" column="1">
+   <item row="9" column="1">
     <widget class="QDateEdit" name="endDateDateEdit">
      <property name="enabled">
       <bool>true</bool>
@@ -180,17 +197,37 @@
      </property>
     </widget>
    </item>
-   <item row="9" column="0">
+   <item row="10" column="0">
     <widget class="QLabel" name="recurrenceLabel">
      <property name="text">
       <string>Recurrence</string>
      </property>
     </widget>
    </item>
-   <item row="9" column="1">
-    <widget class="QCheckBox" name="recurrenceBox">
+   <item row="10" column="1">
+    <widget class="MyRecurrenceBox" name="recurrenceBox">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="0">
+    <widget class="QLabel" name="recurAmountLabel">
      <property name="text">
-      <string>Recurrence</string>
+      <string>Recurring amount</string>
+     </property>
+    </widget>
+   </item>
+   <item row="11" column="1">
+    <widget class="MyCurrencyBox" name="recurAmountCurrencyEdit">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
      </property>
     </widget>
    </item>
@@ -203,9 +240,16 @@
    <header>MyQtness.myWidgets.h</header>
   </customwidget>
   <customwidget>
-   <class>MyCurrencyBox</class>
-   <extends>QLineEdit</extends>
+   <class>MyRecurrenceBox</class>
+   <extends>QFrame</extends>
    <header>MyQtness.myWidgets.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>MyCurrencyBox</class>
+   <extends>QFrame</extends>
+   <header>MyQtness.myWidgets.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

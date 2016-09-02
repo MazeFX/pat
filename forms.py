@@ -168,8 +168,6 @@ class BasicForm(QWidget, Ui_BasicForm):
                 self.tableBuddy.removeSelection()
             self.mapper.setCurrentIndex(0)
 
-
-
     def on_save(self):
         print(Fore.CYAN + 'Save signal sent and recieved.')
         if hasattr(self, 'save_check'):
@@ -320,10 +318,12 @@ class ContractForm(BasicForm, Ui_ContractFormInsert):
         self.mapper.addMapping(self.accountComboBox, 2)
         self.mapper.addMapping(self.letterComboBox, 3)
         self.mapper.addMapping(self.emailComboBox, 4)
-        self.mapper.addMapping(self.amountLineEdit, 5)
-        self.mapper.addMapping(self.recurrenceBox, 6)
-        self.mapper.addMapping(self.startDateDateEdit, 7)
-        self.mapper.addMapping(self.endDateDateEdit, 8)
+        self.mapper.addMapping(self.contractTypeComboBox, 5)
+        self.mapper.addMapping(self.totalAmountCurrencyEdit, 6)
+        self.mapper.addMapping(self.recurAmountCurrencyEdit, 7)
+        self.mapper.addMapping(self.recurrenceBox, 8)
+        self.mapper.addMapping(self.startDateDateEdit, 9)
+        self.mapper.addMapping(self.endDateDateEdit, 10)
         self.mapper.setCurrentIndex(0)
 
     def set_controls(self):
@@ -353,13 +353,19 @@ class ContractForm(BasicForm, Ui_ContractFormInsert):
             EmailAddress,
             [('Address', EmailAddress.address, 'address', {})])
 
+        type_model = AlchemicalTableModel(
+            session,
+            Type,
+            [('Contract type', Type.contract, 'contract', {})])
+        # TODO - Type drop down also gives all None values
+
         self.relationComboBox.setModel(relation_model)
         self.userComboBox.setModel(user_model)
         self.accountComboBox.setModel(account_model)
         self.letterComboBox.setModel(letter_model)
         self.emailComboBox.setModel(email_model)
+        self.contractTypeComboBox.setModel(type_model)
 
-        self.mapper.setCurrentIndex(0)
         self.toggle_edit_mode(False, None, None)
 
 

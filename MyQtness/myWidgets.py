@@ -259,9 +259,12 @@ class MyCurrencyBox(QFrame):
     amount = pyqtProperty(int, fget=getAmount, fset=setAmount)
 
 
-class MyRecurrenceBox(QHBoxLayout):
+class MyRecurrenceBox(QFrame):
     # TODO - Build a occurrence selector for Contract model based on spinbox
-    pass
+    # Used information type is DateTime.TimeDelta
+    def __init__(self, *args):
+        super(MyRecurrenceBox, self).__init__(*args)
+        Lumberjack.info('spawning a << MyRecurrenceBox >>')
 
 
 class MyItemDelegate(QItemDelegate):
