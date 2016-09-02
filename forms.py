@@ -360,7 +360,7 @@ class ContractForm(BasicForm, Ui_ContractFormInsert):
             session,
             Type,
             [('Contract type', Type.contract, 'contract', {})])
-        # TODO - Type drop down also gives all None values
+        # FIXME - Type drop down also gives all None values
 
         self.relationComboBox.setModel(relation_model)
         self.userComboBox.setModel(user_model)
@@ -370,6 +370,9 @@ class ContractForm(BasicForm, Ui_ContractFormInsert):
         self.contractTypeComboBox.setModel(type_model)
         recurIcon = qta.icon('fa.refresh', color='white')
         self.recurrenceCheckBox.setIcon(recurIcon)
+
+        # TODO - build toggle function for recurrence checkbox
+        # form.addRow for adding, and form.removeItem;form.removeWidget for removing controls
 
         self.toggle_edit_mode(False, None, None)
 
