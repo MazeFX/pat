@@ -364,13 +364,18 @@ class AlchemicalTableModel(QAbstractTableModel):
             if field_type == 'currency':
                 if role == Qt.EditRole:
                     return getattr(row, name)
-                value = str(getattr(row, name))
+                value = getattr(row, name)
+                if value is None:
+                    return None
+                value = str(value)
                 value = '€ {},{}'.format(value[:-2], value[-2:])
                 return value
             if field_type == 'recurrence':
                 if role == Qt.EditRole:
                     return getattr(row, name)
                 value = getattr(row, name)
+                if value is None:
+                    return None
                 for key in value:
                     parrot = '{} {}'.format(str(value[key]), key)
                 return parrot

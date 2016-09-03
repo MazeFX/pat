@@ -239,6 +239,9 @@ class MyCurrencyBox(QFrame):
 
     def getAmount(self):
         Lumberjack.info('< MyCurrencyBox > - -> (getAmount)')
+        if self._amount is None:
+            return None
+        # FIXME - Something goes wrong with the Nuns, figure out what.
         euros = self.euroLineEdit.text()
         cents = self.centsLineEdit.text()
         full_amount = euros + cents
@@ -247,6 +250,9 @@ class MyCurrencyBox(QFrame):
 
     def setAmount(self, amount):
         Lumberjack.info('< MyCurrencyBox > - -> (setAmount)')
+        if amount is None:
+            self._amount = None
+            return
         euros = str(amount)[:-2]
         if euros == '':
             euros = '0'
@@ -264,6 +270,7 @@ class MyRecurrenceBox(QFrame):
     # TODO - Build a occurrence selector for Contract model based on spinbox
     # Used information type is DateTime.TimeDelta
 
+    valueSet = pyqtSignal(bool)
     _recurrenceValue = None
 
     def __init__(self, *args):
@@ -325,12 +332,20 @@ class MyRecurrenceBox(QFrame):
         Lumberjack.info('< MyRecurrenceBox > - -> (setRecurrenceValue)')
         self._recurrenceValue = rel_delta
         Lumberjack.debug('(setRecurrenceValue) - rel_delta = {}'.format(rel_delta))
-        for kw in rel_delta:
-            for radio_button in self.radio_buttons:
-                if kw == radio_button.text().lower():
-                    Lumberjack.debug('(setRecurrenceValue) - checking radiobutton = {}'.format(radio_button.text()))
-                    radio_button.setChecked(True)
-                    self.spinBox.setValue(rel_delta[kw])
+        if rel_delta is None:
+            self._recurrenceValue = None
+        else:
+            for kw in rel_delta:
+                for radio_button in self.radio_buttons:
+                    if kw == radio_button.text().lower():
+                        Lumberjack.debug('(setRecurrenceValue) - checking radiobutton = {}'.format(radio_button.text()))
+                        radio_button.setChecked(True)
+                        self.spinBox.setValue(rel_delta[kw])
+
+        if self._recurrenceValue is None:
+            self.valueSet.emit(False)
+        else:
+            self.valueSet.emit(True)
 
     recurrenceValue = pyqtProperty(dict, fget=getRecurrenceValue, fset=setRecurrenceValue)
 

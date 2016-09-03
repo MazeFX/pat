@@ -14,7 +14,7 @@ Python Test docstring.
 import sys
 
 from PyQt5.QtGui import QRegExpValidator
-from PyQt5.QtCore import QCoreApplication, Qt, QDate, QModelIndex, QRegExp, QSize
+from PyQt5.QtCore import QCoreApplication, Qt, QDate, QModelIndex, QRegExp, QSize, pyqtSignal
 from PyQt5.QtWidgets import QApplication, QWidget, QDataWidgetMapper, QPushButton, QFormLayout
 
 from db.models import AlchemicalTableModel, BankAccount, Contract, EmailAddress, \
@@ -378,7 +378,7 @@ class ContractForm(BasicForm, Ui_ContractFormInsert):
         recurIcon = qta.icon('fa.refresh', color='white')
         self.recurrenceCheckBox.setIcon(recurIcon)
         self.recurrenceCheckBox.stateChanged.connect(self.on_recurrence)
-        self.on_recurrence()
+        self.recurrenceBox.valueSet.connect(self.set_checkbox)
 
         self.toggle_edit_mode(False, None, None)
 
@@ -400,7 +400,19 @@ class ContractForm(BasicForm, Ui_ContractFormInsert):
             self.formLayout.removeWidget(self.recurAmountLabel)
             self.recurAmountCurrencyEdit.hide()
             self.formLayout.removeWidget(self.recurAmountCurrencyEdit)
+            if self.recurrenceBox.recurrenceValue is not None:
+                self.recurrenceBox.recurrenceValue = None
+            if self.recurAmountCurrencyEdit.amount is not None:
+                self.recurAmountCurrencyEdit.amount = None
 
+    def set_checkbox(self, *args):
+        Lumberjack.info('< ContractForm > - -> (set_checkbox)')
+        Lumberjack.info('(set_checkbox) - args = {}'.format(args))
+        if args[0]:
+            self.recurrenceCheckBox.setCheckState(Qt.Checked)
+        else:
+            self.recurrenceCheckBox.setCheckState(Qt.Unchecked)
+        self.on_recurrence()
 
 class EmailAddressForm(BasicForm, Ui_EmailAddressFormInsert):
 
