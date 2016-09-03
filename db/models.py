@@ -25,6 +25,8 @@ from colorama import Fore, Back, Style
 import logging
 Lumberjack = logging.getLogger(__name__)
 
+from sqlalchemy import PickleType
+
 from db.qvariantalchemy import Boolean, Currency, String, Integer, DateTime, Date
 
 
@@ -64,10 +66,10 @@ class Contract(Base):
     letter_id = Column(Integer, ForeignKey('letters.id'), nullable=False)
     reference = Column(String(250))
     email_id = Column(Integer, ForeignKey('e_addresses.id'), nullable=False)
-    contract_type_id = Column(Integer, ForeignKey('types.id'))
+    contract_type_id = Column(Integer, ForeignKey('types.id'), nullable=False)
     total_amount = Column(Integer)
     recur_amount = Column(Integer)
-    recurrence = Column(DateTime)
+    recurrence = Column(PickleType)
     start_date = Column(Date)
     end_date = Column(Date)
     date_created = Column(DateTime, default=datetime.datetime.now)
@@ -93,7 +95,7 @@ class Contract(Base):
         self.contract_type_id = 1
         self.total_amount = 0
         self.recur_amount = 0
-        self.recurrence = 0
+        self.recurrence = {}
         self.start_date = datetime.date.today()
         self.end_date = datetime.date.today()
 

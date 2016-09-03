@@ -278,7 +278,9 @@ class MyRecurrenceBox(QFrame):
 
         self.spinBox = QSpinBox(self)
         self.spinBox.setObjectName("spinBox")
+        self.spinBox.setValue(1)
         self.verticalLayout.addWidget(self.spinBox)
+        self.spinBox.valueChanged.connect(self.on_value_spin)
 
         self.horizontalLayout_2 = QHBoxLayout()
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
@@ -288,42 +290,76 @@ class MyRecurrenceBox(QFrame):
         self.horizontalLayout_2.addWidget(self.dailyRadioButton)
         self.dailyRadioButton.setText(_translate("Form", "Days"))
         self.dailyRadioButton.setChecked(True)
-        self.dailyRadioButton.toggled.connect(self.on_toggle)
+        self.selected_radio_button = self.dailyRadioButton
+        self.dailyRadioButton.toggled.connect(self.on_radio_toggle)
 
         self.weeklyRadioButton = QRadioButton(self)
         self.weeklyRadioButton.setObjectName("weeklyRadioButton")
         self.horizontalLayout_2.addWidget(self.weeklyRadioButton)
         self.weeklyRadioButton.setText(_translate("Form", "Weeks"))
-        self.weeklyRadioButton.toggled.connect(self.on_toggle)
+        self.weeklyRadioButton.toggled.connect(self.on_radio_toggle)
 
         self.monthlyRadioButton = QRadioButton(self)
         self.monthlyRadioButton.setObjectName("monthlyRadioButton")
         self.horizontalLayout_2.addWidget(self.monthlyRadioButton)
         self.monthlyRadioButton.setText(_translate("Form", "Months"))
-        self.monthlyRadioButton.toggled.connect(self.on_toggle)
+        self.monthlyRadioButton.toggled.connect(self.on_radio_toggle)
 
         self.yearlyRadioButton = QRadioButton(self)
         self.yearlyRadioButton.setObjectName("yearlyRadioButton")
         self.horizontalLayout_2.addWidget(self.yearlyRadioButton)
         self.verticalLayout.addLayout(self.horizontalLayout_2)
         self.yearlyRadioButton.setText(_translate("Form", "Years"))
-        self.yearlyRadioButton.toggled.connect(self.on_toggle)
+        self.yearlyRadioButton.toggled.connect(self.on_radio_toggle)
+
+        self.radio_buttons = [self.dailyRadioButton,
+                              self.weeklyRadioButton,
+                              self.monthlyRadioButton,
+                              self.yearlyRadioButton]
 
     def getRecurrenceValue(self):
         Lumberjack.info('< MyRecurrenceBox > - -> (getRecurrenceValue)')
+        return self._recurrenceValue
 
-    def setRecurrenceValue(self):
+    def setRecurrenceValue(self, rel_delta):
         Lumberjack.info('< MyRecurrenceBox > - -> (setRecurrenceValue)')
+        self._recurrenceValue = rel_delta
+        Lumberjack.debug('(setRecurrenceValue) - rel_delta = {}'.format(rel_delta))
+        for kw in rel_delta:
+            for radio_button in self.radio_buttons:
+                if kw == radio_button.text().lower():
+                    Lumberjack.debug('(setRecurrenceValue) - checking radiobutton = {}'.format(radio_button.text()))
+                    radio_button.setChecked(True)
+                    self.spinBox.setValue(rel_delta[kw])
 
-    recurrenceValue = pyqtProperty(int, fget=getRecurrenceValue, fset=setRecurrenceValue)
+    recurrenceValue = pyqtProperty(dict, fget=getRecurrenceValue, fset=setRecurrenceValue)
 
-    def on_toggle(self, *args):
-        Lumberjack.info('< MyRecurrenceBox > - -> (on_toggle)')
+    def on_radio_toggle(self, *args):
+        Lumberjack.info('< MyRecurrenceBox > - -> (on_radio_toggle)')
         activate = args[0]
         Lumberjack.debug('(on_toggle) - args = {}'.format(activate))
         if not activate:
             return
-        # for radio_button
+
+        for radio_button in self.radio_buttons:
+            if radio_button.isChecked():
+                self.selected_radio_button = radio_button
+                Lumberjack.debug('(on_toggle) - selected radiobutton.text = {}'.format(radio_button.text()))
+        rel_delta = self._calculate_value()
+        self._recurrenceValue = rel_delta
+
+    def on_value_spin(self, x):
+        Lumberjack.info('< MyRecurrenceBox > - -> (on_value_spin)')
+        rel_delta = self._calculate_value()
+        self._recurrenceValue = rel_delta
+
+    def _calculate_value(self):
+        Lumberjack.info('< MyRecurrenceBox > - -> (_calculate_value)')
+        x = self.spinBox.value()
+        kw = self.selected_radio_button.text().lower()
+        timespan = {kw: x}
+        Lumberjack.debug('(_calculate_value) - calculated value = {} {}'.format(timespan, type(timespan)))
+        return timespan
 
 
 class MyItemDelegate(QItemDelegate):
