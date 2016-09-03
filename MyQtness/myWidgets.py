@@ -262,6 +262,9 @@ class MyCurrencyBox(QFrame):
 class MyRecurrenceBox(QFrame):
     # TODO - Build a occurrence selector for Contract model based on spinbox
     # Used information type is DateTime.TimeDelta
+
+    _recurrenceValue = None
+
     def __init__(self, *args):
         super(MyRecurrenceBox, self).__init__(*args)
         Lumberjack.info('spawning a << MyRecurrenceBox >>')
@@ -283,23 +286,39 @@ class MyRecurrenceBox(QFrame):
         self.dailyRadioButton.setObjectName("dailyRadioButton")
         self.horizontalLayout_2.addWidget(self.dailyRadioButton)
         self.dailyRadioButton.setText(_translate("Form", "Days"))
+        self.dailyRadioButton.setChecked(True)
+        self.dailyRadioButton.toggled.connect(self.on_toggle)
 
         self.weeklyRadioButton = QRadioButton(self)
         self.weeklyRadioButton.setObjectName("weeklyRadioButton")
         self.horizontalLayout_2.addWidget(self.weeklyRadioButton)
         self.weeklyRadioButton.setText(_translate("Form", "Weeks"))
+        self.weeklyRadioButton.toggled.connect(self.on_toggle)
 
         self.monthlyRadioButton = QRadioButton(self)
         self.monthlyRadioButton.setObjectName("monthlyRadioButton")
         self.horizontalLayout_2.addWidget(self.monthlyRadioButton)
         self.monthlyRadioButton.setText(_translate("Form", "Months"))
+        self.monthlyRadioButton.toggled.connect(self.on_toggle)
 
         self.yearlyRadioButton = QRadioButton(self)
         self.yearlyRadioButton.setObjectName("yearlyRadioButton")
         self.horizontalLayout_2.addWidget(self.yearlyRadioButton)
         self.verticalLayout.addLayout(self.horizontalLayout_2)
         self.yearlyRadioButton.setText(_translate("Form", "Years"))
+        self.yearlyRadioButton.toggled.connect(self.on_toggle)
 
+    def getRecurrenceValue(self):
+        Lumberjack.info('< MyRecurrenceBox > - -> (getRecurrenceValue)')
+
+    def setRecurrenceValue(self):
+        Lumberjack.info('< MyRecurrenceBox > - -> (setRecurrenceValue)')
+
+    recurrenceValue = pyqtProperty(int, fget=getRecurrenceValue, fset=setRecurrenceValue)
+
+    def on_toggle(self):
+        Lumberjack.info('< MyRecurrenceBox > - -> (on_toggle)')
+        
 
 class MyItemDelegate(QItemDelegate):
 
