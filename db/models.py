@@ -367,9 +367,16 @@ class AlchemicalTableModel(QAbstractTableModel):
                 value = str(getattr(row, name))
                 value = '€ {},{}'.format(value[:-2], value[-2:])
                 return value
+            if field_type == 'recurrence':
+                if role == Qt.EditRole:
+                    return getattr(row, name)
+                value = getattr(row, name)
+                for key in value:
+                    parrot = '{} {}'.format(str(value[key]), key)
+                return parrot
 
         # TODO - create function for displaying scanfile present icon.
-        # TODO - create function to display currencies.
+
         if '.' in name:
             foreign_column = name.split('.')
             foreign_item = getattr(row, foreign_column[0])
