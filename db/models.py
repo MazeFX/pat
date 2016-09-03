@@ -347,7 +347,6 @@ class AlchemicalTableModel(QAbstractTableModel):
         return None
 
     def data(self, index, role):
-        Lumberjack.debug('< AlchemicalTableModel > - -> (data)')
         if not index.isValid():
             return QVariant()
         elif role == Qt.TextAlignmentRole:
@@ -387,9 +386,6 @@ class AlchemicalTableModel(QAbstractTableModel):
         return str(getattr(row, name))
 
     def setData(self, index, value, role=None):
-        Lumberjack.debug('< AlchemicalTableModel > - -> (setData)')
-        print(Fore.BLUE + '-- setting data for: ', index, 'with value: ', value)
-        print(Fore.BLUE + '-- index column', index.column(), 'with row: ', index.row())
         row = self.results[index.row()]
         name = self.fields[index.column()][2]
         if '.' in name:

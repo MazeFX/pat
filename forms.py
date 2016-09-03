@@ -306,6 +306,7 @@ class ContractForm(BasicForm, Ui_ContractFormInsert):
         Ui_ContractFormInsert.setupUi(self, self.FormContainer)
         Ui_ContractFormInsert.retranslateUi(self, self.FormContainer)
         self.setMaximumSize(QSize(450, 16777215))
+        Lumberjack.info('evolving to a << ContractForm >>')
 
         for x in range(self.formLayout.rowCount()):
             widget = self.formLayout.itemAt(x, QFormLayout.FieldRole)
@@ -316,6 +317,7 @@ class ContractForm(BasicForm, Ui_ContractFormInsert):
         self.set_mapper()
 
     def set_mapper(self):
+        Lumberjack.info('< ContractForm > - -> (set_mapper)')
         self.mapper.addMapping(self.relationComboBox, 0)
         self.mapper.addMapping(self.userComboBox, 1)
         self.mapper.addMapping(self.accountComboBox, 2)
@@ -330,6 +332,7 @@ class ContractForm(BasicForm, Ui_ContractFormInsert):
         self.mapper.setCurrentIndex(0)
 
     def set_controls(self):
+        Lumberjack.info('< ContractForm > - -> (set_controls)')
         session = self.dbhelper.get_app_db_session()
         relation_model = AlchemicalTableModel(
             session,
@@ -368,13 +371,32 @@ class ContractForm(BasicForm, Ui_ContractFormInsert):
         self.letterComboBox.setModel(letter_model)
         self.emailComboBox.setModel(email_model)
         self.contractTypeComboBox.setModel(type_model)
+
         recurIcon = qta.icon('fa.refresh', color='white')
         self.recurrenceCheckBox.setIcon(recurIcon)
-
-        # TODO - build toggle function for recurrence checkbox
-        # form.addRow for adding, and form.removeItem;form.removeWidget for removing controls
+        self.recurrenceCheckBox.stateChanged.connect(self.on_recurrence)
+        self.on_recurrence()
 
         self.toggle_edit_mode(False, None, None)
+
+    def on_recurrence(self):
+        Lumberjack.info('< ContractForm > - -> (on_recurrence)')
+        if self.recurrenceCheckBox.isChecked():
+            self.formLayout.insertRow(12, self.repeatLabel, self.recurrenceBox)
+            self.formLayout.insertRow(13, self.recurAmountLabel, self.recurAmountCurrencyEdit)
+            self.repeatLabel.show()
+            self.recurrenceBox.show()
+            self.recurAmountLabel.show()
+            self.recurAmountCurrencyEdit.show()
+        else:
+            self.repeatLabel.hide()
+            self.formLayout.removeWidget(self.repeatLabel)
+            self.recurrenceBox.hide()
+            self.formLayout.removeWidget(self.recurrenceBox)
+            self.recurAmountLabel.hide()
+            self.formLayout.removeWidget(self.recurAmountLabel)
+            self.recurAmountCurrencyEdit.hide()
+            self.formLayout.removeWidget(self.recurAmountCurrencyEdit)
 
 
 class EmailAddressForm(BasicForm, Ui_EmailAddressFormInsert):
