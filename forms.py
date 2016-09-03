@@ -218,7 +218,9 @@ class BasicForm(QWidget, Ui_BasicForm):
                 elif hasattr(widget, 'amount'):
                     new_value = widget.amount
                     print(Fore.CYAN + '-New Widget value for: ', widget, 'with value: ', new_value)
-                    # TODO - create selector for recurrenceValue
+                elif hasattr(widget, 'recurrenceValue'):
+                    new_value = widget.recurrenceValue
+                    print(Fore.CYAN + '-New Widget value for: ', widget, 'with value: ', new_value)
 
                 if old_value == new_value:
                     print(Fore.CYAN + '++++ Matching value for: ', widget, 'with values: ', old_value, new_value)
@@ -319,16 +321,17 @@ class ContractForm(BasicForm, Ui_ContractFormInsert):
     def set_mapper(self):
         Lumberjack.info('< ContractForm > - -> (set_mapper)')
         self.mapper.addMapping(self.relationComboBox, 0)
-        self.mapper.addMapping(self.userComboBox, 1)
-        self.mapper.addMapping(self.accountComboBox, 2)
-        self.mapper.addMapping(self.letterComboBox, 3)
-        self.mapper.addMapping(self.emailComboBox, 4)
-        self.mapper.addMapping(self.contractTypeComboBox, 5)
-        self.mapper.addMapping(self.totalAmountCurrencyEdit, 6)
-        self.mapper.addMapping(self.recurAmountCurrencyEdit, 7)
-        self.mapper.addMapping(self.recurrenceBox, 8)
-        self.mapper.addMapping(self.startDateDateEdit, 9)
-        self.mapper.addMapping(self.endDateDateEdit, 10)
+        self.mapper.addMapping(self.referenceLineEdit, 1)
+        self.mapper.addMapping(self.userComboBox, 2)
+        self.mapper.addMapping(self.accountComboBox, 3)
+        self.mapper.addMapping(self.letterComboBox, 4)
+        self.mapper.addMapping(self.emailComboBox, 5)
+        self.mapper.addMapping(self.contractTypeComboBox, 6)
+        self.mapper.addMapping(self.totalAmountCurrencyEdit, 7)
+        self.mapper.addMapping(self.recurAmountCurrencyEdit, 8)
+        self.mapper.addMapping(self.recurrenceBox, 9)
+        self.mapper.addMapping(self.startDateDateEdit, 10)
+        self.mapper.addMapping(self.endDateDateEdit, 11)
         self.mapper.setCurrentIndex(0)
 
     def set_controls(self):

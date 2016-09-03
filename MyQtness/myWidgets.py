@@ -390,7 +390,7 @@ class MyItemDelegate(QItemDelegate):
             widget.setText(modelIndex.data())
 
         elif hasattr(widget, 'recurrenceValue'):
-            widget.recurrenceValue = modelIndex.data()
+            widget.recurrenceValue = modelIndex.data(role=Qt.EditRole)
 
         else:
             Lumberjack.warning('(setEditorData) - NO MATCH FOUND!')
@@ -409,3 +409,5 @@ class MyItemDelegate(QItemDelegate):
             abstractItemModel.setData(modelIndex, widget.text())
         elif hasattr(widget, 'amount'):
             abstractItemModel.setData(modelIndex, widget.amount)
+        elif hasattr(widget, 'recurrenceValue'):
+            abstractItemModel.setData(modelIndex, widget.recurrenceValue)
