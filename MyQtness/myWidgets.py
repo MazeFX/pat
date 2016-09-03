@@ -15,6 +15,7 @@ Python Test docstring.
 import os
 import operator
 import datetime
+from dateutil.relativedelta import relativedelta
 
 from PyQt5.QtGui import  QFont, QPainter, QIntValidator
 from PyQt5.QtCore import QCoreApplication, Qt, pyqtProperty, pyqtSignal, QDate
@@ -316,9 +317,14 @@ class MyRecurrenceBox(QFrame):
 
     recurrenceValue = pyqtProperty(int, fget=getRecurrenceValue, fset=setRecurrenceValue)
 
-    def on_toggle(self):
+    def on_toggle(self, *args):
         Lumberjack.info('< MyRecurrenceBox > - -> (on_toggle)')
-        
+        activate = args[0]
+        Lumberjack.debug('(on_toggle) - args = {}'.format(activate))
+        if not activate:
+            return
+        # for radio_button
+
 
 class MyItemDelegate(QItemDelegate):
 
