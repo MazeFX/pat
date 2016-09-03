@@ -218,7 +218,7 @@ class BasicForm(QWidget, Ui_BasicForm):
                 elif hasattr(widget, 'amount'):
                     new_value = widget.amount
                     print(Fore.CYAN + '-New Widget value for: ', widget, 'with value: ', new_value)
-
+                    # TODO - create selector for recurrenceValue
 
                 if old_value == new_value:
                     print(Fore.CYAN + '++++ Matching value for: ', widget, 'with values: ', old_value, new_value)

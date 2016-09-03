@@ -381,15 +381,17 @@ class MyItemDelegate(QItemDelegate):
             qtDate = QDate.fromString(date, 'yyyy-MM-dd')
             widget.setDate(qtDate)
 
-        # TODO - create a link between the spinbox and a datetime.delta; possible with custom widget
         elif hasattr(widget, 'amount'):
             value = modelIndex.data(role=Qt.EditRole)
             Lumberjack.debug('(setEditorData) - amount = {}({})'.format(type(value), value))
             widget.amount = value
 
         elif hasattr(widget, 'text'):
-            text = modelIndex.data()
-            widget.setText(text)
+            widget.setText(modelIndex.data())
+
+        elif hasattr(widget, 'recurrenceValue'):
+            widget.recurrenceValue = modelIndex.data()
+
         else:
             Lumberjack.warning('(setEditorData) - NO MATCH FOUND!')
             Lumberjack.debug('(setEditorData) - mismatching widget = {}'.format(widget))
