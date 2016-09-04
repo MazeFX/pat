@@ -468,3 +468,31 @@ class AlchemicalTableModel(QAbstractTableModel):
         return True
 
 
+class TypeModel(AlchemicalTableModel):
+
+    def __init__(self, session, model, columns):
+        super(TypeModel, self).__init__(session, model, columns)
+        Lumberjack.info('spawning a << TypeModel >>')
+
+    def refresh(self):
+        """Recalculates, self.results and self.count"""
+        Lumberjack.info('< TypeModel > - -> (refresh)')
+
+        self.layoutAboutToBeChanged.emit()
+
+        q = self.query
+        if self.sort is not None:
+            order, col = self.sort
+            col = self.fields[col][1]
+            if order == Qt.DescendingOrder:
+                col = col.desc()
+        else:
+            col = None
+
+        q = q.filter(Type.contract != 'NULL')
+
+        q = q.order_by(col)
+
+        self.results = q.all()
+        self.count = q.count()
+        self.layoutChanged.emit()

@@ -17,7 +17,7 @@ from PyQt5.QtGui import QRegExpValidator
 from PyQt5.QtCore import QCoreApplication, Qt, QDate, QModelIndex, QRegExp, QSize, pyqtSignal
 from PyQt5.QtWidgets import QApplication, QWidget, QDataWidgetMapper, QPushButton, QFormLayout
 
-from db.models import AlchemicalTableModel, BankAccount, Contract, EmailAddress, \
+from db.models import AlchemicalTableModel, TypeModel, BankAccount, Contract, EmailAddress, \
     Letter, Relation, Type, User
 from db.helper import DbHelper, DbFileHandler
 
@@ -362,11 +362,10 @@ class ContractForm(BasicForm, Ui_ContractFormInsert):
             EmailAddress,
             [('Address', EmailAddress.address, 'address', {})])
 
-        type_model = AlchemicalTableModel(
+        type_model = TypeModel(
             session,
             Type,
             [('Contract type', Type.contract, 'contract', {})])
-        # FIXME - Type drop down also gives all None values
 
         self.relationComboBox.setModel(relation_model)
         self.userComboBox.setModel(user_model)
@@ -486,7 +485,7 @@ class LetterForm(BasicForm, Ui_LetterFormInsert):
             Relation,
             [('Name', Relation.name, 'name', {})])
 
-        type_model = AlchemicalTableModel(
+        type_model = TypeModel(
             session,
             Type,
             [('Letter type', Type.letter, 'letter', {})])
@@ -540,7 +539,7 @@ class RelationForm(BasicForm, Ui_RelationFormInsert):
 
     def set_controls(self):
         session = self.dbhelper.get_app_db_session()
-        type_model = AlchemicalTableModel(
+        type_model = TypeModel(
             session,
             Type,
             [('Relation', Type.relation, 'relation', {})])
