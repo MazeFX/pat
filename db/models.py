@@ -94,8 +94,8 @@ class Contract(Base):
         self.email_id = 1
         self.contract_type_id = 1
         self.total_amount = 0
-        self.recur_amount = 0
-        self.recurrence = {}
+        self.recur_amount = None
+        self.recurrence = None
         self.start_date = datetime.date.today()
         self.end_date = datetime.date.today()
 

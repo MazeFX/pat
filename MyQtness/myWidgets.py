@@ -237,6 +237,9 @@ class MyCurrencyBox(QFrame):
         self.currencyBoxlayout.addWidget(self.centsLineEdit)
         self.currencyBoxlayout.addItem(spacerItem2)
 
+        self.centsLineEdit.textChanged.connect(self.on_text_input)
+        self.euroLineEdit.textChanged.connect(self.on_text_input)
+
     def getAmount(self):
         Lumberjack.info('< MyCurrencyBox > - -> (getAmount)')
         if self._amount is None:
@@ -252,18 +255,27 @@ class MyCurrencyBox(QFrame):
         Lumberjack.info('< MyCurrencyBox > - -> (setAmount)')
         if amount is None:
             self._amount = None
-            return
-        euros = str(amount)[:-2]
-        if euros == '':
             euros = '0'
-        cents = str(amount)[-2:]
-        if cents == '0':
             cents = '00'
+        else:
+            euros = str(amount)[:-2]
+            if euros == '':
+                euros = '0'
+            cents = str(amount)[-2:]
+            if cents == '0':
+                cents = '00'
         self.euroLineEdit.setText(euros)
         self.centsLineEdit.setText(cents)
         self._amount = amount
 
     amount = pyqtProperty(int, fget=getAmount, fset=setAmount)
+
+    def on_text_input(self):
+        Lumberjack.info('< MyCurrencyBox {}> - -> (on_text_input)')
+        euros = self.euroLineEdit.text()
+        cents = self.centsLineEdit.text()
+        full_amount = euros + cents
+        self._amount = int(full_amount)
 
 
 class MyRecurrenceBox(QFrame):
