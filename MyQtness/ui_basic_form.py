@@ -22,6 +22,7 @@ class Ui_BasicForm(object):
         font.setPointSize(16)
         self.titleLabel.setFont(font)
         self.titleLabel.setAlignment(QtCore.Qt.AlignCenter)
+        self.titleLabel.setWordWrap(True)
         self.titleLabel.setObjectName("titleLabel")
         self.verticalLayout.addWidget(self.titleLabel)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout()

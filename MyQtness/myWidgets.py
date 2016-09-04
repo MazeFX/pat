@@ -217,6 +217,7 @@ class MyCurrencyBox(QFrame):
         self.currencyLabel = QLabel('€')
         self.euroLineEdit = QLineEdit()
         self.euroLineEdit.setText('0')
+        self.euroLineEdit.setAlignment(Qt.AlignRight)
         self.euroLineEdit.setObjectName("euroLineEdit")
         euroValidator = QIntValidator()
         self.euroLineEdit.setValidator(euroValidator)
@@ -224,6 +225,7 @@ class MyCurrencyBox(QFrame):
         self.commaLabel = QLabel(',')
         self.centsLineEdit = QLineEdit()
         self.centsLineEdit.setText('00')
+        self.euroLineEdit.setAlignment(Qt.AlignRight)
         self.centsLineEdit.setObjectName("centsLineEdit")
         centsValidator = QIntValidator(0, 99)
         self.centsLineEdit.setValidator(centsValidator)
@@ -244,7 +246,6 @@ class MyCurrencyBox(QFrame):
         Lumberjack.info('< MyCurrencyBox > - -> (getAmount)')
         if self._amount is None:
             return None
-        # FIXME - Something goes wrong with the Nuns, figure out what.
         euros = self.euroLineEdit.text()
         cents = self.centsLineEdit.text()
         full_amount = euros + cents
