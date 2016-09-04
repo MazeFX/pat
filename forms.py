@@ -413,12 +413,14 @@ class ContractForm(BasicForm, Ui_ContractFormInsert):
             self.recurrenceCheckBox.setCheckState(Qt.Unchecked)
         self.on_recurrence()
 
+
 class EmailAddressForm(BasicForm, Ui_EmailAddressFormInsert):
 
     def __init__(self, *args):
         super(EmailAddressForm, self).__init__(*args)
         Ui_EmailAddressFormInsert.setupUi(self, self.FormContainer)
         Ui_EmailAddressFormInsert.retranslateUi(self, self.FormContainer)
+        Lumberjack.info('evolving to a << EmailAddressForm >>')
 
         for x in range(self.formLayout.rowCount()):
             widget = self.formLayout.itemAt(x, QFormLayout.FieldRole)
@@ -429,11 +431,13 @@ class EmailAddressForm(BasicForm, Ui_EmailAddressFormInsert):
         self.set_mapper()
 
     def set_mapper(self):
+        Lumberjack.info('< EmailAddressForm > - -> (set_mapper)')
         self.mapper.addMapping(self.userComboBox, 0)
         self.mapper.addMapping(self.addressLineEdit, 1)
         self.mapper.setCurrentIndex(0)
 
     def set_controls(self):
+        Lumberjack.info('< EmailAddressForm > - -> (set_controls)')
         session = self.dbhelper.get_app_db_session()
         user_model = AlchemicalTableModel(
             session,
@@ -450,10 +454,9 @@ class LetterForm(BasicForm, Ui_LetterFormInsert):
 
     def __init__(self, *args):
         super(LetterForm, self).__init__(*args)
-        if self.mapper:
-            print(Fore.CYAN + 'Mapper exists: ', self.mapper)
         Ui_LetterFormInsert.setupUi(self, self.FormContainer)
         Ui_LetterFormInsert.retranslateUi(self, self.FormContainer)
+        Lumberjack.info('evolving to a << LetterForm >>')
 
         for x in range(self.formLayout.rowCount()):
             widget = self.formLayout.itemAt(x, QFormLayout.FieldRole)
@@ -464,6 +467,7 @@ class LetterForm(BasicForm, Ui_LetterFormInsert):
         self.set_mapper()
 
     def set_mapper(self):
+        Lumberjack.info('< LetterForm > - -> (set_mapper)')
         self.mapper.addMapping(self.dateDateEdit, 0)
         self.mapper.addMapping(self.subjectLineEdit, 1)
         self.mapper.addMapping(self.senderComboBox, 2)
@@ -474,6 +478,7 @@ class LetterForm(BasicForm, Ui_LetterFormInsert):
         self.mapper.setCurrentIndex(0)
 
     def set_controls(self):
+        Lumberjack.info('< LetterForm > - -> (set_controls)')
         session = self.dbhelper.get_app_db_session()
         user_model = AlchemicalTableModel(
             session,
@@ -496,6 +501,7 @@ class LetterForm(BasicForm, Ui_LetterFormInsert):
         self.toggle_edit_mode(False, None, None)
 
     def save_check(self):
+        Lumberjack.info('< LetterForm > - -> (save_check)')
         print('Scanning for file in db protocol.')
         mapper_file_name = self.scanFileDrop.getCurrentFile()
         print('Mapper file name = ', mapper_file_name)
