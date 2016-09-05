@@ -257,7 +257,7 @@ class TransactionListTab(QWidget):
              ('Transaction date', Transaction.transaction_date, 'transaction_date', {}),
              ('Payment date', Transaction.payment_date, 'payment_date', {}),
              ('Payed?', Transaction.payment_state, 'payment_state', {}),
-             ('Debit/Credit', Transaction.debit, 'debit', {}),
+             ('Debit/Credit', Transaction.debit, 'debit', {'type': 'debit', }),
              ('Date created', Transaction.date_created, 'date_created', {})])
 
         self.tableView = MyTableView()

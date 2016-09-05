@@ -60,9 +60,9 @@ class Ui_TransactionFormInsert(object):
         self.paymentStateCheckBox = QtWidgets.QCheckBox(TransactionFormInsert)
         self.paymentStateCheckBox.setObjectName("paymentStateCheckBox")
         self.formLayout.setWidget(6, QtWidgets.QFormLayout.FieldRole, self.paymentStateCheckBox)
-        self.dateLabel = QtWidgets.QLabel(TransactionFormInsert)
-        self.dateLabel.setObjectName("dateLabel")
-        self.formLayout.setWidget(7, QtWidgets.QFormLayout.LabelRole, self.dateLabel)
+        self.paymentDateLabel = QtWidgets.QLabel(TransactionFormInsert)
+        self.paymentDateLabel.setObjectName("paymentDateLabel")
+        self.formLayout.setWidget(7, QtWidgets.QFormLayout.LabelRole, self.paymentDateLabel)
         self.paymentDateEdit = QtWidgets.QDateEdit(TransactionFormInsert)
         self.paymentDateEdit.setEnabled(True)
         self.paymentDateEdit.setWrapping(False)
@@ -93,6 +93,6 @@ class Ui_TransactionFormInsert(object):
         self.transactionDateLabel.setText(_translate("TransactionFormInsert", "Transaction date"))
         self.paymentStateLabel.setText(_translate("TransactionFormInsert", "Status"))
         self.paymentStateCheckBox.setText(_translate("TransactionFormInsert", "Payed?"))
-        self.dateLabel.setText(_translate("TransactionFormInsert", "Payment date"))
+        self.paymentDateLabel.setText(_translate("TransactionFormInsert", "Payment date"))
 
 from MyQtness.myWidgets import MyComboBox, MyCurrencyBox

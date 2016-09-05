@@ -217,7 +217,7 @@ class TerminationDialog(QDialog, Ui_TerminationDialog):
 
         style.set_window_style(self)
 
-        errorIcon = qta.icon('fa.times-circle', color='red')
+        errorIcon = qta.icon('fa.times-circle', color='#FF1744')
         errorPixmap = errorIcon.pixmap(50, 50)
         self.iconContainer.setPixmap(errorPixmap)
 

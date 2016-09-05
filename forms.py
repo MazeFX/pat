@@ -591,8 +591,6 @@ class TransactionForm(BasicForm, Ui_TransactionFormInsert):
         self.mapper.setCurrentIndex(0)
         
     def set_controls(self):
-        # TODO - Checkboxes need to toggle instead of changing text also IO needs to stay boolean
-
         Lumberjack.info('< TransactionForm > - -> (set_controls)')
         session = self.dbhelper.get_app_db_session()        
         contract_model = AlchemicalTableModel(
@@ -613,9 +611,37 @@ class TransactionForm(BasicForm, Ui_TransactionFormInsert):
         self.contractComboBox.setModel(contract_model)
         self.letterComboBox.setModel(letter_model)
         self.accountComboBox.setModel(account_model)
-
         self.mapper.setCurrentIndex(0)
+
+        self.paymentStateCheckBox.stateChanged.connect(self.on_payment_checkbox_state)
+        self.debitCheckBox.stateChanged.connect(self.on_debit_checkbox_state)
+        self.on_payment_checkbox_state()
+        self.on_debit_checkbox_state()
+
         self.toggle_edit_mode(False, None, None)
+
+    def on_debit_checkbox_state(self):
+        if self.debitCheckBox.isChecked():
+            debitIcon = qta.icon('fa.plus', color='#00E676')
+            self.debitCheckBox.setIcon(debitIcon)
+        else:
+            creditIcon = qta.icon('fa.minus', color='#FF1744')
+            self.debitCheckBox.setIcon(creditIcon)
+
+    def on_payment_checkbox_state(self):
+        Lumberjack.info('< TransactionForm > - -> (on_checkbox_state)')
+        if self.paymentStateCheckBox.isChecked():
+            self.formLayout.insertRow(7, self.paymentDateLabel, self.paymentDateEdit)
+            self.paymentDateLabel.show()
+            self.paymentDateEdit.show()
+        else:
+            self.paymentDateLabel.hide()
+            self.formLayout.removeWidget(self.paymentDateLabel)
+            self.paymentDateEdit.hide()
+            self.formLayout.removeWidget(self.paymentDateEdit)
+
+            if self.paymentDateEdit.date() is not None:
+                self.paymentDateEdit.clear()
 
 
 class UserForm(BasicForm, Ui_UserFormInsert):

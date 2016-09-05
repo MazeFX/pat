@@ -21,6 +21,7 @@ from sqlalchemy import Column, ForeignKey
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
 from colorama import Fore, Back, Style
+import qtawesome as qta
 
 import logging
 Lumberjack = logging.getLogger(__name__)
@@ -182,7 +183,7 @@ class Transaction(Base):
     contract_id = Column(Integer, ForeignKey('contracts.id'))
     letter_id = Column(Integer, ForeignKey('letters.id'))
     account_id = Column(Integer, ForeignKey('bank_accounts.id'), nullable=False)
-    amount = Column(Currency)
+    amount = Column(Integer)
     transaction_date = Column(Date)
     payment_date = Column(Date)
     payment_state = Column(Boolean)
@@ -195,7 +196,7 @@ class Transaction(Base):
 
     def __repr__(self):
         return "<Transaction(id= '%s', account='%s', ammount='%s')>" % (
-            self.id, self.account, self.ammount)
+            self.id, self.account, self.amount)
 
     def load_dummy(self):
         self.contract_id = 1
@@ -353,7 +354,7 @@ class AlchemicalTableModel(QAbstractTableModel):
             return QVariant()
         elif role == Qt.TextAlignmentRole:
             return Qt.AlignCenter
-        elif role not in (Qt.DisplayRole, Qt.EditRole):
+        elif role not in (Qt.DisplayRole, Qt.EditRole, Qt.DecorationRole):
             return QVariant()
 
         row = self.results[index.row()]
@@ -379,9 +380,26 @@ class AlchemicalTableModel(QAbstractTableModel):
                 for key in value:
                     parrot = '{} {}'.format(str(value[key]), key)
                 return parrot
+            if field_type == 'debit':
+                Lumberjack.info('< AlchemicalTableModel > - -> (data) debit type')
+                if role == Qt.EditRole:
+                    return getattr(row, name)
+                if role == Qt.DisplayRole:
+                    return ''
+                value = getattr(row, name)
+                if value is None:
+                    return None
+                if role == Qt.DecorationRole:
+                    Lumberjack.info('< AlchemicalTableModel > - -> (data)Qt.DecorationRole')
+                    if value:
+                        parrot = qta.icon('fa.plus', color='#00E676')
+                    else:
+                        parrot = qta.icon('fa.minus', color='#FF1744')
+                    return parrot
 
         # TODO - create function for displaying scanfile present icon.
-
+        if role == Qt.DecorationRole:
+            return QVariant()
         if '.' in name:
             foreign_column = name.split('.')
             foreign_item = getattr(row, foreign_column[0])
