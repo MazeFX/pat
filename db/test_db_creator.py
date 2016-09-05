@@ -105,7 +105,7 @@ def create_letters(session):
                          subject='About 1',
                          reference='Reference for 1',
                          user_id=1,
-                         scan_file='',
+                         scan_file=None,
                          letter_type_id=1)
     session.add(new_letter1)
     new_letter2 = Letter(date=datetime.date.today(),
@@ -113,7 +113,7 @@ def create_letters(session):
                          subject='About 2',
                          reference='Reference for 2',
                          user_id=1,
-                         scan_file='',
+                         scan_file=None,
                          letter_type_id=1)
     session.add(new_letter2)
     new_letter3 = Letter(date=datetime.date.today(),
@@ -121,7 +121,7 @@ def create_letters(session):
                          subject='About 3',
                          reference='Reference for 3',
                          user_id=1,
-                         scan_file='Scan file path',
+                         scan_file=None,
                          letter_type_id=1)
     session.add(new_letter3)
 

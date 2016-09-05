@@ -152,6 +152,7 @@ class BasicForm(QWidget, Ui_BasicForm):
         self.toggle_edit_mode(True, 'add', row)
 
     def on_edit(self):
+        Lumberjack.info('< BasicForm > - -> (on_edit)')
         print(Fore.CYAN + 'Edit signal sent and recieved.')
         print(Fore.CYAN + 'mapper index: ', self.mapper.currentIndex())
         if self.edit_mode in ('add', 'edit'):
@@ -171,6 +172,7 @@ class BasicForm(QWidget, Ui_BasicForm):
             self.mapper.setCurrentIndex(0)
 
     def on_save(self):
+        Lumberjack.info('< BasicForm > - -> (on_save)')
         print(Fore.CYAN + 'Save signal sent and recieved.')
         if hasattr(self, 'save_check'):
             print(Fore.CYAN + 'Checking for onsave checks.')
@@ -236,6 +238,9 @@ class BasicForm(QWidget, Ui_BasicForm):
             save_dialog = SaveDialog()
             result = save_dialog.exec_()
             if result == SaveDialog.Success:
+                if hasattr(self, 'save_check'):
+                    print(Fore.CYAN + 'Checking for onsave checks.')
+                    self.save_check()
                 self.mapper.submit()
                 return True
 

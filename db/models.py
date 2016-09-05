@@ -146,7 +146,7 @@ class Letter(Base):
         self.subject = ''
         self.reference = ''
         self.user_id = 1
-        self.scan_file = ''
+        self.scan_file = None
         self.letter_type_id = 1
 
 

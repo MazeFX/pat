@@ -172,24 +172,25 @@ class DbFileHandler(object):
         self.settings = QSettings()
 
     def store_file(self, mapper_file_name, file_projection):
-        print('Storing File: ', mapper_file_name, ', for: ', file_projection)
-        print('ROOT_DIR = ', ROOT_DIR)
+        Lumberjack.info('< DbFileHandler > - -> (store_file)')
+        print(Back.GREEN + 'Storing File: ', mapper_file_name, ', for: ', file_projection)
+        print(Back.GREEN + 'ROOT_DIR = ', ROOT_DIR)
         if not mapper_file_name:
             return None
         db_path_type = self.settings.value('db_type')
         db_path = self.settings.value('db_base_path')
         if db_path_type == 0:
             db_dir_path = os.path.join(ROOT_DIR, db_path, file_projection[0])
-        print('DB_dir_path = ', db_dir_path)
+        print(Back.GREEN + 'DB_dir_path = ', db_dir_path)
         if not os.path.isdir(db_dir_path):
             os.makedirs(db_dir_path)
 
         full_file_name = os.path.join(db_dir_path, file_projection[1])
-        print('full file name = ', full_file_name)
-        print('with type = ', type(full_file_name))
-        print('mapper_file_name = ', mapper_file_name)
-        print('with type = ', type(mapper_file_name))
-        if not os.path.exists(full_file_name):
+        print(Back.GREEN + 'full file name = ', full_file_name)
+        print(Back.GREEN + 'with type = ', type(full_file_name))
+        print(Back.GREEN + 'mapper_file_name = ', mapper_file_name)
+        print(Back.GREEN + 'with type = ', type(mapper_file_name))
+        if not os.path.exists(full_file_name) or mapper_file_name[0] != full_file_name:
             copyfile(mapper_file_name[0], full_file_name)
 
         return full_file_name

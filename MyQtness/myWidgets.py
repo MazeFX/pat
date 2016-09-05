@@ -143,6 +143,7 @@ class MyDragDropBox(QFrame):
         self.edit = False
 
     def dragEnterEvent(self, event):
+        Lumberjack.info('< MyDragDropBox > - -> (getRecurrenceValue)')
         print(Fore.GREEN + '-- DRAGDROPBOX -- Enter with drag')
         print(Fore.GREEN + '-- DRAGDROPBOX -- passed event: ', event)
         if event.mimeData().hasUrls:
@@ -152,6 +153,7 @@ class MyDragDropBox(QFrame):
             event.ignore()
 
     def dropEvent(self, event):
+        Lumberjack.info('< MyDragDropBox > - -> (getRecurrenceValue)')
         print(Fore.GREEN + '-- DRAGDROPBOX -- Dropped something??')
         print(Fore.GREEN + '-- DRAGDROPBOX -- passed event: ', event)
         if not self.edit:
@@ -181,6 +183,7 @@ class MyDragDropBox(QFrame):
             Lumberjack.debug('(mouseDoubleClickEvent) - widget attr = {}'.format(attr))
 
     def getCurrentFile(self):
+        Lumberjack.info('< MyDragDropBox > - -> (getCurrentFile)')
         print(Fore.GREEN + '-- DRAGDROPBOX -- Getting the file: ')
         print(Fore.GREEN + '---------------------------------------')
         print(Fore.GREEN + 'Current File = ', self._currentFile)
@@ -188,6 +191,7 @@ class MyDragDropBox(QFrame):
         return self._currentFile
 
     def setCurrentFile(self, file):
+        Lumberjack.info('< MyDragDropBox > - -> (setCurrentFile)')
         print(Fore.GREEN + '-- DRAGDROPBOX -- Setting the file: ')
         print(Fore.GREEN + '---------------------------------------')
         print(Fore.GREEN + 'file value = ', file)
@@ -198,6 +202,7 @@ class MyDragDropBox(QFrame):
     currentFile = pyqtProperty(str, fget=getCurrentFile, fset=setCurrentFile)
 
     def check_widget_layout(self):
+        Lumberjack.info('< MyDragDropBox > - -> (check_widget_layout)')
         print(Fore.GREEN + '-- DRAGDROPBOX -- setting layout for: ', self.DropLabel)
         if self._currentFile:
             self.DropLabel.setText('Open File')
