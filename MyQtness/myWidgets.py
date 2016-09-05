@@ -408,6 +408,9 @@ class MyItemDelegate(QItemDelegate):
         elif hasattr(widget, 'currentFile'):
             widget.currentFile = modelIndex.data(role=Qt.EditRole)
 
+        elif hasattr(widget, 'isChecked'):
+            widget.setChecked(modelIndex.data(role=Qt.EditRole))
+
         elif hasattr(widget, 'date'):
             date = str(modelIndex.data(role=Qt.EditRole))
             qtDate = QDate.fromString(date, 'yyyy-MM-dd')
@@ -435,6 +438,8 @@ class MyItemDelegate(QItemDelegate):
             abstractItemModel.setData(modelIndex, widget.currentItem)
         elif hasattr(widget, 'currentFile'):
             abstractItemModel.setData(modelIndex, widget.currentFile)
+        elif hasattr(widget, 'isChecked'):
+            abstractItemModel.setData(modelIndex, widget.isChecked())
         elif hasattr(widget, 'date'):
             abstractItemModel.setData(modelIndex, widget.date())
         elif hasattr(widget, 'text'):
