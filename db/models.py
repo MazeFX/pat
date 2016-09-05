@@ -180,7 +180,7 @@ class Transaction(Base):
 
     id = Column(Integer, primary_key=True)
     contract_id = Column(Integer, ForeignKey('contracts.id'))
-    letter_id = Column(Integer, ForeignKey('letters.id'), nullable=False)
+    letter_id = Column(Integer, ForeignKey('letters.id'))
     account_id = Column(Integer, ForeignKey('bank_accounts.id'), nullable=False)
     amount = Column(Currency)
     transaction_date = Column(Date)

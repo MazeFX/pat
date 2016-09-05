@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>286</width>
-    <height>273</height>
+    <height>296</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,7 +22,7 @@
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="MyComboBox" name="letterComboBox"/>
+    <widget class="MyComboBox" name="contractComboBox"/>
    </item>
    <item row="1" column="0">
     <widget class="QLabel" name="letterLabel">
@@ -32,30 +32,7 @@
     </widget>
    </item>
    <item row="1" column="1">
-    <widget class="MyComboBox" name="contractComboBox"/>
-   </item>
-   <item row="8" column="0">
-    <widget class="QLabel" name="referenceLabel">
-     <property name="text">
-      <string>Reference</string>
-     </property>
-    </widget>
-   </item>
-   <item row="8" column="1">
-    <widget class="QLineEdit" name="referenceLineEdit">
-     <property name="toolTip">
-      <string/>
-     </property>
-     <property name="statusTip">
-      <string/>
-     </property>
-     <property name="accessibleDescription">
-      <string/>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="1">
-    <widget class="MyComboBox" name="accountComboBox"/>
+    <widget class="MyComboBox" name="letterComboBox"/>
    </item>
    <item row="2" column="0">
     <widget class="QLabel" name="accountLabel">
@@ -64,8 +41,8 @@
      </property>
     </widget>
    </item>
-   <item row="3" column="1">
-    <widget class="QLineEdit" name="amountLineEdit"/>
+   <item row="2" column="1">
+    <widget class="MyComboBox" name="accountComboBox"/>
    </item>
    <item row="3" column="0">
     <widget class="QLabel" name="amountLabel">
@@ -73,6 +50,16 @@
       <string>Amount</string>
      </property>
     </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="debitLabel">
+     <property name="text">
+      <string>Debit/Credit</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QCheckBox" name="debitCheckBox"/>
    </item>
    <item row="5" column="0">
     <widget class="QLabel" name="transactionDateLabel">
@@ -82,7 +69,7 @@
     </widget>
    </item>
    <item row="5" column="1">
-    <widget class="QDateEdit" name="dateDateEdit_2">
+    <widget class="QDateEdit" name="transactionDateEdit">
      <property name="enabled">
       <bool>true</bool>
      </property>
@@ -118,14 +105,28 @@
     </widget>
    </item>
    <item row="6" column="0">
+    <widget class="QLabel" name="paymentStateLabel">
+     <property name="text">
+      <string>Status</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1">
+    <widget class="QCheckBox" name="paymentStateCheckBox">
+     <property name="text">
+      <string>Payed?</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
     <widget class="QLabel" name="dateLabel">
      <property name="text">
       <string>Payment date</string>
      </property>
     </widget>
    </item>
-   <item row="6" column="1">
-    <widget class="QDateEdit" name="dateDateEdit">
+   <item row="7" column="1">
+    <widget class="QDateEdit" name="paymentDateEdit">
      <property name="enabled">
       <bool>true</bool>
      </property>
@@ -160,29 +161,15 @@
      </property>
     </widget>
    </item>
-   <item row="11" column="0">
-    <widget class="QLabel" name="paymentStateLabel">
-     <property name="text">
-      <string>Status</string>
+   <item row="3" column="1">
+    <widget class="MyCurrencyBox" name="amountCurrencyEdit">
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
      </property>
     </widget>
-   </item>
-   <item row="11" column="1">
-    <widget class="QCheckBox" name="paymentStateCheckBox">
-     <property name="text">
-      <string>Payed?</string>
-     </property>
-    </widget>
-   </item>
-   <item row="12" column="0">
-    <widget class="QLabel" name="debitLabel">
-     <property name="text">
-      <string>Debit/Credit</string>
-     </property>
-    </widget>
-   </item>
-   <item row="12" column="1">
-    <widget class="QCheckBox" name="debitCheckBox"/>
    </item>
   </layout>
  </widget>
@@ -191,6 +178,12 @@
    <class>MyComboBox</class>
    <extends>QComboBox</extends>
    <header>MyQtness.myWidgets.h</header>
+  </customwidget>
+  <customwidget>
+   <class>MyCurrencyBox</class>
+   <extends>QFrame</extends>
+   <header>MyQtness.myWidgets.h</header>
+   <container>1</container>
   </customwidget>
  </customwidgets>
  <resources/>

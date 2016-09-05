@@ -129,25 +129,23 @@ class SaveDialog(QDialog, Ui_SaveDialog):
         button_list = self.buttonBox.buttons()
         for button in button_list:
             button.setFocusPolicy(Qt.NoFocus)
-            print(Fore.YELLOW + 'Found button with Role: ', self.buttonBox.buttonRole(button))
 
         self.buttonBox.accepted.connect(self.on_accept)
         self.buttonBox.rejected.connect(self.on_reject)
         self.buttonBox.clicked.connect(self.on_click)
 
     def on_accept(self):
-        Lumberjack.debug('-functioncall (SaveDialog -- on accept)')
-        print(Fore.YELLOW + 'SaveDialog -- accept event for saving?')
+        Lumberjack.info('< SaveDialog > - -> (on_accept)')
         self.setResult(self.Success)
 
     def on_click(self, *args):
-        print(Fore.YELLOW + 'SaveDialog -- Button clicked: ', args)
+        Lumberjack.info('< SaveDialog > - -> (on_click)')
         button_role = self.buttonBox.buttonRole(args[0])
         if button_role == 2:
             self.done(self.Failed)
 
     def on_reject(self):
-        print(Fore.YELLOW + 'SaveDialog -- reject event for discarding')
+        Lumberjack.info('< SaveDialog > - -> (on_reject)')
         self.setResult(self.Rejected)
 
 
@@ -157,6 +155,7 @@ class CloseDialog(QDialog, Ui_CloseDialog):
     def __init__(self):
         QDialog.__init__(self)
         self.setupUi(self)
+        Lumberjack.info('spawning a << CloseDialog >>')
 
         style.set_window_style(self)
 
@@ -170,6 +169,7 @@ class CloseDialog(QDialog, Ui_CloseDialog):
         self.buttonBox.clicked.connect(self.on_click)
 
     def on_click(self, *args):
+        Lumberjack.info('< CloseDialog > - -> (on_click)')
         button_role = self.buttonBox.buttonRole(args[0])
         if button_role == 5:
             self.done(self.Minimize)
@@ -177,6 +177,7 @@ class CloseDialog(QDialog, Ui_CloseDialog):
             self.done(self.Exit)
 
     def on_reject(self):
+        Lumberjack.info('< CloseDialog > - -> (on_reject)')
         self.done(self.Rejected)
 
 

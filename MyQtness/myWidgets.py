@@ -106,11 +106,10 @@ class MyComboBox(QComboBox):
 
         model = self.model()
         for row in model.results:
-
             if hasattr(row, 'id'):
                 if hasattr(item, 'id'):
                     if row.id == item.id:
-                        self.setCurrentIndex(row.id - 1)
+                        self.setCurrentIndex(model.results.index(row))
                         self._currentItem = item
 
     currentItem = pyqtProperty(object, fget=getCurrentItem, fset=setCurrentItem)

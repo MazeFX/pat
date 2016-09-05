@@ -527,10 +527,9 @@ class RelationForm(BasicForm, Ui_RelationFormInsert):
 
     def __init__(self, *args):
         super(RelationForm, self).__init__(*args)
-        if self.mapper:
-            print(Fore.CYAN + 'Mapper exists: ', self.mapper)
         Ui_RelationFormInsert.setupUi(self, self.FormContainer)
         Ui_RelationFormInsert.retranslateUi(self, self.FormContainer)
+        Lumberjack.info('evolving to a << RelationForm >>')
 
         for x in range(self.formLayout.rowCount()):
             widget = self.formLayout.itemAt(x, QFormLayout.FieldRole)
@@ -541,6 +540,7 @@ class RelationForm(BasicForm, Ui_RelationFormInsert):
         self.set_mapper()
 
     def set_mapper(self):
+        Lumberjack.info('< RelationForm > - -> (set_mapper)')
         self.mapper.addMapping(self.nameLineEdit, 0)
         self.mapper.addMapping(self.fullNameLineEdit, 1)
         self.mapper.addMapping(self.referenceLineEdit, 2)
@@ -549,6 +549,7 @@ class RelationForm(BasicForm, Ui_RelationFormInsert):
         self.mapper.setCurrentIndex(0)
 
     def set_controls(self):
+        Lumberjack.info('< RelationForm > - -> (set_controls)')
         session = self.dbhelper.get_app_db_session()
         type_model = TypeModel(
             session,
@@ -567,6 +568,7 @@ class TransactionForm(BasicForm, Ui_TransactionFormInsert):
         super(TransactionForm, self).__init__(*args)
         Ui_TransactionFormInsert.setupUi(self, self.FormContainer)
         Ui_TransactionFormInsert.retranslateUi(self, self.FormContainer)
+        Lumberjack.info('evolving to a << TransactionForm >>')
 
         for x in range(self.formLayout.rowCount()):
             widget = self.formLayout.itemAt(x, QFormLayout.FieldRole)
@@ -577,10 +579,11 @@ class TransactionForm(BasicForm, Ui_TransactionFormInsert):
         self.set_mapper()
 
     def set_mapper(self):
+        Lumberjack.info('< TransactionForm > - -> (set_mapper)')
         self.mapper.addMapping(self.contractComboBox, 0)
         self.mapper.addMapping(self.letterComboBox, 1)
         self.mapper.addMapping(self.accountComboBox, 2)
-        self.mapper.addMapping(self.amountLineEdit, 3)
+        self.mapper.addMapping(self.amountCurrencyEdit, 3)
         self.mapper.addMapping(self.transactionDateEdit, 4)
         self.mapper.addMapping(self.paymentDateEdit, 5)
         self.mapper.addMapping(self.paymentStateCheckBox, 6)
@@ -588,6 +591,9 @@ class TransactionForm(BasicForm, Ui_TransactionFormInsert):
         self.mapper.setCurrentIndex(0)
         
     def set_controls(self):
+        # TODO - Checkboxes need to toggle instead of changing text also IO needs to stay boolean
+
+        Lumberjack.info('< TransactionForm > - -> (set_controls)')
         session = self.dbhelper.get_app_db_session()        
         contract_model = AlchemicalTableModel(
             session,
@@ -618,6 +624,7 @@ class UserForm(BasicForm, Ui_UserFormInsert):
         super(UserForm, self).__init__(*args)
         Ui_UserFormInsert.setupUi(self, self.FormContainer)
         Ui_UserFormInsert.retranslateUi(self, self.FormContainer)
+        Lumberjack.info('evolving to a << UserForm >>')
 
         for x in range(self.formLayout.rowCount()):
             widget = self.formLayout.itemAt(x, QFormLayout.FieldRole)
@@ -628,12 +635,14 @@ class UserForm(BasicForm, Ui_UserFormInsert):
         self.set_mapper()
 
     def set_mapper(self):
+        Lumberjack.info('< UserForm > - -> (set_mapper)')
         self.mapper.addMapping(self.nameLineEdit, 0)
         self.mapper.addMapping(self.fullnameLineEdit, 1)
         self.mapper.addMapping(self.passwordLineEdit, 2)
         self.mapper.setCurrentIndex(0)
         
     def set_controls(self):
+        Lumberjack.info('< UserForm > - -> (set_controls)')
         self.mapper.setCurrentIndex(0)
         self.toggle_edit_mode(False, None, None)
 

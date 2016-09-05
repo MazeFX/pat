@@ -253,7 +253,7 @@ class TransactionListTab(QWidget):
             [('Contract', Transaction.contract, 'contract.reference', {}),
              ('Letter', Transaction.letter, 'letter.reference', {}),
              ('Bank account', Transaction.account, 'account.account', {}),
-             ('Amount', Transaction.amount, 'amount', {}),
+             ('Amount', Transaction.amount, 'amount', {'type': 'currency', }),
              ('Transaction date', Transaction.transaction_date, 'transaction_date', {}),
              ('Payment date', Transaction.payment_date, 'payment_date', {}),
              ('Payed?', Transaction.payment_state, 'payment_state', {}),
