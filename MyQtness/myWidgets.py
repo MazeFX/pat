@@ -13,14 +13,11 @@ Python Test docstring.
 """
 
 import os
-import operator
-import datetime
-from dateutil.relativedelta import relativedelta
 
-from PyQt5.QtGui import  QFont, QPainter, QIntValidator
+from PyQt5.QtGui import QFont, QIntValidator
 from PyQt5.QtCore import QCoreApplication, Qt, pyqtProperty, pyqtSignal, QDate
-from PyQt5.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout, QSpacerItem, QSizePolicy, QTableView, QAbstractItemView, \
-    QFrame, QComboBox, QLineEdit, QLabel, QItemDelegate, QRadioButton, QSpinBox, QStyleOption, QStyle
+from PyQt5.QtWidgets import QHBoxLayout, QVBoxLayout, QSpacerItem, QSizePolicy, QTableView, QAbstractItemView, \
+    QFrame, QComboBox, QLineEdit, QLabel, QItemDelegate, QRadioButton, QSpinBox
 
 import logging
 Lumberjack = logging.getLogger(__name__)
