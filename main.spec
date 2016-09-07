@@ -6,11 +6,11 @@ block_cipher = None
 added_files = None
 
 a = Analysis(['main.py'],
-             pathex=['C:\\PDE\\envs\\qt\\pat\\Scripts', 'C:\\PDE\\envs\\qt\\pat\\Lib\\site-packages\\PyQt5\\Qt\\bin', 'C:\\PDE\\projects\\qt\\installer-test'],
+             pathex=['C:\\PDE\\envs\\qt\\pat\\Scripts', 'C:\\PDE\\envs\\qt\\pat\\Lib\\site-packages\\PyQt5\\Qt\\bin', 'C:\\PDE\\projects\\qt\\pat'],
              binaries=None,
              datas=added_files,
              hiddenimports=[],
-             hookspath=[],
+             hookspath=['./pyinstaller-hooks'],
              runtime_hooks=[],
              excludes=[],
              win_no_prefer_redirects=False,
