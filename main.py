@@ -279,7 +279,7 @@ if __name__ == "__main__":
     setup_logging()
     Lumberjack.info('=======================  Logger set up.. ')
 
-    def my_excepthook(excType, excValue, traceback, logger=Lumberjack):
+    def spot_the_looney(excType, excValue, traceback, logger=Lumberjack):
         logger.error("------  Logging an uncaught exception  ---------------------------->",
                      exc_info=(excType, excValue, traceback))
         termination_dialog = TerminationDialog()
@@ -289,7 +289,7 @@ if __name__ == "__main__":
             sys.exit(-1)
         Lumberjack.info('[result] = ', result)
 
-    sys.excepthook = my_excepthook
+    sys.excepthook = spot_the_looney
 
     Lumberjack.info('=======================  Starting Application.. ')
 

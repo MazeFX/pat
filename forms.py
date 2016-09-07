@@ -621,8 +621,10 @@ class TransactionForm(BasicForm, Ui_TransactionFormInsert):
         self.toggle_edit_mode(False, None, None)
 
     def on_debit_checkbox_state(self):
+        Lumberjack.info('< TransactionForm > - -> (on_debit_checkbox_state)')
         if self.debitCheckBox.isChecked():
             debitIcon = qta.icon('fa.plus', color='#00E676')
+            # TODO - create some mechanism for uniform colors
             self.debitCheckBox.setIcon(debitIcon)
         else:
             creditIcon = qta.icon('fa.minus', color='#FF1744')

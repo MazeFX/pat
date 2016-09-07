@@ -80,7 +80,7 @@ class LoginDialog(QDialog, Ui_LoginDialog):
 class SettingsDialog(QDialog, Ui_SettingsDialog):
     Rejected, Success, Failed = range(0, 3)
 
-    def __init__(self):
+    def __init__(self, reason=None):
         QDialog.__init__(self)
         Lumberjack.info('spawning a << SettingsDialog >>')
         self.setupUi(self)

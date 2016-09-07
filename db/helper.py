@@ -25,6 +25,8 @@ from db.models import Base, BankAccount, Contract, EmailAddress, Letter, \
     Relation, Transaction, Type, User
 from colorama import Fore, Back, Style
 
+from dialogs import SettingsDialog
+
 import logging
 Lumberjack = logging.getLogger(__name__)
 
@@ -32,73 +34,29 @@ Lumberjack = logging.getLogger(__name__)
 class DbHelper(object):
 
     session = None
+    engine = None
 
     def __init__(self, *args):
         Lumberjack.info('spawning the <<< DbHelper >>>, he says: There can be only one!')
         self.settings = QSettings()
-        self.db_string = 'sqlite:///{base}{db}'.format(
-            base=self.settings.value('db_base_path'),
-            db=self.settings.value('db_name'))
 
-        self.engine = create_engine(self.db_string)
+        db_file = os.path.join(self.settings.value('db_base_path'), self.settings.value('db_name'))
+        db_string = 'sqlite:///{db_file}'.format(db_file=db_file)
+        Lumberjack.debug('__init__ - db_file = {}'.format(db_file))
+        if os.path.exists(db_file):
+            self.engine = create_engine(db_string)
+        else:
+            Lumberjack.warning('__init__ - database not found')
+            settings_dialog = SettingsDialog()
+            settings_dialog.exec_()
 
-    def create_test_db(self):
+    def create_new_db(self):
 
-        engine = create_engine('sqlite:///db/db_development.db')
+        engine = self.engine
 
         Base.metadata.create_all(engine)
         Base.metadata.bind = engine
 
-        DBSession = sessionmaker(bind=engine)
-        session = DBSession()
-
-        # Insert Users in the user table
-        new_user = User(name='Nick', fullname='Nick Geense', password='Test')
-        session.add(new_user)
-        new_user = User(name='Stefanie', fullname='Stefanie Lacet', password='Test')
-        session.add(new_user)
-        session.commit()
-
-        # Insert Letters in the letter table
-        new_letter1 = Letter(date=datetime.date.today(),
-                             relation_id=1,
-                             subject='About 1',
-                             reference='Reference for 1',
-                             user_id=1,
-                             scan_file='',
-                             letter_type_id=1)
-        session.add(new_letter1)
-        new_letter2 = Letter(date=datetime.date.today(),
-                             relation_id=1,
-                             subject='About 2',
-                             reference='Reference for 2',
-                             user_id=1,
-                             scan_file='',
-                             letter_type_id=1)
-        session.add(new_letter2)
-        new_letter3 = Letter(date=datetime.date.today(),
-                             relation_id=1,
-                             subject='About 3',
-                             reference='Reference for 3',
-                             user_id=1,
-                             scan_file='Scan file path',
-                             letter_type_id=1)
-        session.add(new_letter3)
-
-        # Insert Relations in the relation table
-        new_relation1 = Relation(name='ING',
-                                 fullname='ING Bank B.V.',
-                                 reference='Reference for ING',
-                                 bank_account='This is where the money goes',
-                                 relation_type_id=1)
-        session.add(new_relation1)
-        new_relation2 = Relation(name='Ziekenfonds',
-                                 fullname='Ziekenfonds United Ltd.',
-                                 reference='Reference for Ziekenfonds',
-                                 bank_account='This is where the money goes',
-                                 relation_type_id=1)
-        session.add(new_relation2)
-        session.commit()
         self.create_types()
 
     def create_types(self):
