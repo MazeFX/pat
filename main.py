@@ -226,13 +226,16 @@ class MainApp(QMainWindow, Ui_MainWindow):
     def load_settings(self):
         self.settings = QSettings()
 
-        db_file = os.path.join(self.settings.value('db_base_path'), self.settings.value('db_name'))
-        db_string = 'sqlite:///{db_file}'.format(db_file=db_file)
-        Lumberjack.debug('__init__ - db_file = {}'.format(db_file))
-        if not os.path.exists(db_file):
-            Lumberjack.warning('(load_settings) - database not found')
-            settings_dialog = SettingsDialog()
-            settings_dialog.exec_()
+        db_path = self.settings.value('db_base_path')
+        db_name = self.settings.value('db_name')
+
+        if db_path is not None and db_name is not None:
+            db_file = os.path.join(db_path, db_name)
+            Lumberjack.debug('__init__ - db_file = {}'.format(db_file))
+            if not os.path.exists(db_file):
+                Lumberjack.warning('(load_settings) - database not found')
+                settings_dialog = SettingsDialog()
+                settings_dialog.exec_()
         int_value = self.settings.value('db_type', type=int)
         print(Fore.MAGENTA + "load choosen database setting: %s" % repr(int_value))
 
