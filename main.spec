@@ -3,7 +3,7 @@
 block_cipher = None
 
 
-added_files = None
+added_files = [('lumberjack_config.json', '.')]
 
 a = Analysis(['main.py'],
              pathex=['C:\\PDE\\envs\\qt\\pat\\Scripts', 'C:\\PDE\\envs\\qt\\pat\\Lib\\site-packages\\PyQt5\\Qt\\bin', 'C:\\PDE\\projects\\qt\\pat'],
