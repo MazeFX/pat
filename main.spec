@@ -3,6 +3,8 @@
 block_cipher = None
 
 
+added_binaries = [('C:\\Windows\\System32\\vcruntime140.dll', 'vcruntime140.dll')]
+
 added_files = [('lumberjack_config.json', '.')]
 
 a = Analysis(['main.py'],
@@ -21,11 +23,12 @@ pyz = PYZ(a.pure, a.zipped_data,
 exe = EXE(pyz,
           a.scripts,
           exclude_binaries=True,
-          name='main',
+          name='PAT',
           debug=False,
           strip=False,
           upx=False,
-          console=True )
+          console=False,
+          icon='PAT.ico')
 coll = COLLECT(exe,
                a.binaries,
                a.zipfiles,

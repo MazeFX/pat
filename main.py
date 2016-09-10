@@ -233,7 +233,6 @@ class MainApp(QMainWindow, Ui_MainWindow):
             Lumberjack.warning('(load_settings) - database not found')
             settings_dialog = SettingsDialog()
             settings_dialog.exec_()
-
         int_value = self.settings.value('db_type', type=int)
         print(Fore.MAGENTA + "load choosen database setting: %s" % repr(int_value))
 

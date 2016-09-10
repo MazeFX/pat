@@ -11,7 +11,7 @@ Description of the different task tags used in this project.
 
 * TODO  - A normal todo task
 
-* FIXME - Something is broken here (description of error occurse, maybe logfile)
+* FIXME - Something is broken here (description of error occurrence, maybe logfile)
 
 * IDEA  - When I put a bull and a frog together.. will I get a bullfrog??
 
@@ -30,8 +30,11 @@ Goal list.
 
 * TODO - Set up first functional test for Qt project
 
-* TODO - Create app logo's and icon around chosen theme
+* TODO - create installer section for creating first database and creating desktop links.
+    Make sure that it works for all users under windows
 
 * TODO - Choose theme for app:
     Current idea's - PAT The Squirrel, Go nuts with your papers!
+
+* TODO - Create app logo's and icon around chosen theme
 
