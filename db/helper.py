@@ -25,8 +25,6 @@ from db.models import Base, BankAccount, Contract, EmailAddress, Letter, \
     Relation, Transaction, Type, User
 from colorama import Fore, Back, Style
 
-from dialogs import SettingsDialog
-
 import logging
 Lumberjack = logging.getLogger(__name__)
 
@@ -39,29 +37,43 @@ class DbHelper(object):
     def __init__(self, *args):
         Lumberjack.info('spawning the <<< DbHelper >>>, he says: There can be only one!')
         self.settings = QSettings()
+        db_name = self.settings.value('db_name')
+        db_path = self.settings.value('db_base_path')
 
-        db_file = os.path.join(self.settings.value('db_base_path'), self.settings.value('db_name'))
+        self.engine = self.get_db_engine(db_path, db_name)
+
+    def get_db_engine(self, folder, file_name):
+        Lumberjack.info('<<< DbHelper >>> - -> (get_db_engine)')
+        engine = None
+
+        db_file = os.path.join(folder, file_name)
         db_string = 'sqlite:///{db_file}'.format(db_file=db_file)
-        Lumberjack.debug('__init__ - db_file = {}'.format(db_file))
+        Lumberjack.debug('(get_db_engine) - db_file = {}'.format(db_file))
+
         if os.path.exists(db_file):
-            self.engine = create_engine(db_string)
+            engine = create_engine(db_string)
         else:
             Lumberjack.warning('__init__ - database not found')
-            settings_dialog = SettingsDialog()
-            settings_dialog.exec_()
+            if not os.path.exists(folder):
+                os.makedirs(folder)
+            engine = self.create_new_db(db_string)
 
-    def create_new_db(self):
+        return engine
 
-        engine = self.engine
+    def create_new_db(self, db_string):
+        Lumberjack.info('<<< DbHelper >>> - -> (create_new_db)')
+        engine = create_engine(db_string)
 
         Base.metadata.create_all(engine)
         Base.metadata.bind = engine
 
-        self.create_types()
+        self.create_types(engine)
 
-    def create_types(self):
+        return engine
+
+    def create_types(self, engine):
+        Lumberjack.info('<<< DbHelper >>> - -> (create_types)')
         # TODO - integrate with db settings from app. Type are not only for testing
-        engine = create_engine('sqlite:///db/db_development.db')
         DBSession = sessionmaker(bind=engine)
         session = DBSession()
 
@@ -81,6 +93,7 @@ class DbHelper(object):
         session.commit()
 
     def get_app_db_session(self):
+        Lumberjack.info('<<< DbHelper >>> - -> (get_app_db_session)')
         if self.session:
             print(Fore.YELLOW + '====== RETURNING THE EXISTING SESSION =======')
             return self.session
@@ -91,6 +104,7 @@ class DbHelper(object):
         return self.session
 
     def get_table(self, model):
+        Lumberjack.info('<<< DbHelper >>> - -> (get_table)')
         tablemaker = TableMaker()
         print('tablemaker created.')
         tablemaker.header_data = model.get_headers_for_qt(model)
@@ -107,6 +121,7 @@ class DbHelper(object):
         return tablemaker
 
     def get_table_statistics(self):
+        Lumberjack.info('<<< DbHelper >>> - -> (get_table_statistics)')
         session = self.get_app_db_session()
         table_list = {}
 

@@ -84,8 +84,8 @@ class SettingsDialog(QDialog, Ui_SettingsDialog):
         QDialog.__init__(self)
         Lumberjack.info('spawning a << SettingsDialog >>')
         self.setupUi(self)
-        self.currentDatabaseComboBox.addItems(['DB for development',
-                                               'DB for storage'])
+        self.currentDatabaseComboBox.addItems(['Default',
+                                               'DB for development'])
 
         self.load_settings()
 
@@ -95,24 +95,30 @@ class SettingsDialog(QDialog, Ui_SettingsDialog):
         self.buttonBox.rejected.connect(self.on_reject)
 
     def load_settings(self):
+        Lumberjack.info('< SettingsDialog > - -> (load_settings)')
         self.settings = QSettings()
 
-        chosen_database = self.settings.value('db_type', type='int')
+        chosen_database = self.settings.value('db_type', type=int)
+        Lumberjack.debug('(load_settings) - chosen_database = {}'.format(chosen_database))
+        if chosen_database is None:
+            chosen_database = 0
         self.currentDatabaseComboBox.setCurrentIndex(chosen_database)
 
     def on_accept(self):
+        Lumberjack.info('< SettingsDialog > - -> (on_accept)')
         chosen_database = self.currentDatabaseComboBox.currentIndex()
         self.settings.setValue('db_type', chosen_database)
-        if chosen_database == 0:
+        if chosen_database == 1:
             self.settings.setValue('db_name', 'db_development.db')
             self.settings.setValue('db_base_path', 'db/db_files/')
-        if chosen_database == 1:
-            self.settings.setValue('db_name', 'PAT_db.db')
+        if chosen_database == 0:
+            self.settings.setValue('db_name', 'db_PAT.db')
             self.settings.setValue('db_base_path', 'c:/PAT_db_files/')
 
         self.setResult(self.Success)
 
     def on_reject(self):
+        Lumberjack.info('< SettingsDialog > - -> (on_reject)')
         self.setResult(self.Rejected)
 
 
