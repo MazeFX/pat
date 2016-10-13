@@ -13,14 +13,17 @@ After building a succesfull package with PyInstaller on windows 7 and get a litt
 Some screenshots for impression.
 
 Contracts screen.
+
 .. image:: screenshot_1.png
    :width: 40pt
 
 Letters screen.
+
 .. image:: screenshot_2.png
    :width: 40pt
 
 Transactions screen.
+
 .. image:: screenshot_3.png
    :width: 40pt
 
